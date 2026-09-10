@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Difficulty, GameMode, RoundResult, getRankTitle, generateShareText } from '../utils/gameLogic';
-import { Trophy, Share2, RotateCcw, Check, Sparkles } from 'lucide-react';
+import { Trophy, Share2, RotateCcw, Check, Sparkles, Edit2 } from 'lucide-react';
+import { getSavedUsername, saveUsername } from '../utils/leaderboard';
 import confetti from 'canvas-confetti';
 
 interface GameCompleteModalProps {
@@ -25,9 +26,15 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
   onOpenLeaderboard,
 }) => {
   const [copied, setCopied] = useState(false);
+  const [username, setUsername] = useState<string>(() => getSavedUsername() || 'Anonymous Warrior');
+  const [isEditingName, setIsEditingName] = useState<boolean>(false);
+  const [nameInput, setNameInput] = useState<string>(username);
 
   React.useEffect(() => {
     if (isOpen) {
+      const saved = getSavedUsername() || 'Anonymous Warrior';
+      setUsername(saved);
+      setNameInput(saved);
       confetti({
         particleCount: 100,
         spread: 80,
@@ -71,6 +78,59 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
             {rank.title}
           </span>
           <p className="text-xs text-white/60 mt-1">{rank.subtitle}</p>
+        </div>
+
+        {/* Leaderboard Submission & Player Name */}
+        <div className="w-full my-1 p-2.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between text-xs">
+          <div className="flex items-center space-x-2 min-w-0 flex-1">
+            <Trophy size={14} className="text-white/70 shrink-0" />
+            {isEditingName ? (
+              <div className="flex items-center space-x-1.5 flex-1 min-w-0">
+                <input
+                  type="text"
+                  value={nameInput}
+                  onChange={(e) => setNameInput(e.target.value)}
+                  maxLength={20}
+                  autoFocus
+                  placeholder="Your Name..."
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      const saved = saveUsername(nameInput);
+                      setUsername(saved || 'Anonymous Warrior');
+                      setIsEditingName(false);
+                    }
+                  }}
+                  className="bg-white/10 border border-white/20 rounded-lg px-2 py-0.5 text-xs text-white outline-none w-full"
+                />
+                <button
+                  onClick={() => {
+                    const saved = saveUsername(nameInput);
+                    setUsername(saved || 'Anonymous Warrior');
+                    setIsEditingName(false);
+                  }}
+                  className="p-1 rounded-lg bg-white text-black font-bold cursor-pointer active:scale-95 text-[10px]"
+                >
+                  <Check size={12} />
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-1.5 truncate">
+                <span className="text-white/50">Leaderboard:</span>
+                <strong className="text-white truncate">{username}</strong>
+                <button
+                  onClick={() => setIsEditingName(true)}
+                  className="text-white/50 hover:text-white p-1 rounded-md hover:bg-white/10 cursor-pointer transition-colors"
+                  title="Change player name on leaderboard"
+                >
+                  <Edit2 size={11} />
+                </button>
+              </div>
+            )}
+          </div>
+
+          {!isEditingName && (
+            <span className="text-[10px] text-white/40 font-mono shrink-0 ml-2">Score saved ✓</span>
+          )}
         </div>
 
         {/* Breakdown of 5 Rounds */}

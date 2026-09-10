@@ -15,8 +15,14 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
   initialMode = 'daily',
 }) => {
   const [activeTab, setActiveTab] = useState<GameMode>(initialMode);
-  const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [entries, setEntries] = useState<LeaderboardEntry[]>(() => {
+    try {
+      const cached = localStorage.getItem(`aurora_cached_leaderboard_${initialMode}`);
+      if (cached) return JSON.parse(cached);
+    } catch {}
+    return [];
+  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Username edit state
   const [username, setUsername] = useState<string>(getSavedUsername);
@@ -33,12 +39,15 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
   }, [isOpen, initialMode]);
 
   const loadScores = async (mode: GameMode) => {
-    setIsLoading(true);
+    // Only show full loader if we have zero cached items
+    if (entries.length === 0) {
+      setIsLoading(true);
+    }
     try {
       const data = await fetchLeaderboard(mode);
       setEntries(data);
     } catch {
-      setEntries([]);
+      // keep existing
     } finally {
       setIsLoading(false);
     }
@@ -46,6 +55,12 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
 
   const handleTabChange = (mode: GameMode) => {
     setActiveTab(mode);
+    try {
+      const cached = localStorage.getItem(`aurora_cached_leaderboard_${mode}`);
+      if (cached) {
+        setEntries(JSON.parse(cached));
+      }
+    } catch {}
     loadScores(mode);
   };
 
@@ -63,9 +78,9 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-md select-none animate-fade-in">
-      <div className="w-full max-w-lg max-h-[92dvh] overflow-hidden bg-black/60 backdrop-blur-3xl border border-white/15 rounded-3xl shadow-[0_24px_60px_rgba(0,0,0,0.6)] flex flex-col relative text-center">
+      <div className="w-full max-w-lg h-[560px] max-h-[90dvh] overflow-hidden bg-black/60 backdrop-blur-3xl border border-white/15 rounded-3xl shadow-[0_24px_60px_rgba(0,0,0,0.6)] flex flex-col relative text-center">
         {/* Header Bar */}
-        <div className="p-5 sm:p-6 pb-3 border-b border-white/10 flex items-center justify-between relative">
+        <div className="p-5 sm:p-6 pb-3 border-b border-white/10 flex items-center justify-between relative shrink-0">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white">
               <Trophy size={16} />
@@ -82,7 +97,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
         </div>
 
         {/* Mode Selector Tabs */}
-        <div className="px-5 pt-3 flex gap-2">
+        <div className="px-5 pt-3 flex gap-2 shrink-0">
           <button
             onClick={() => handleTabChange('daily')}
             className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all border flex items-center justify-center space-x-1.5 cursor-pointer active:scale-95 ${
@@ -108,10 +123,16 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
           </button>
         </div>
 
+        {/* Explanation Helper Bar */}
+        <div className="px-5 pt-2 pb-1 text-[11px] text-white/50 flex items-center justify-between shrink-0">
+          <span>Scores are recorded automatically.</span>
+          <span className="text-white/70">Custom name below 👇</span>
+        </div>
+
         {/* Scrollable Leaderboard Area */}
         <div className="p-4 sm:p-5 overflow-y-auto flex-1 space-y-4 touch-pan-y overscroll-contain">
-          {isLoading ? (
-            <div className="py-12 flex flex-col items-center justify-center space-y-3 text-white/50">
+          {isLoading && entries.length === 0 ? (
+            <div className="h-full flex flex-col items-center justify-center space-y-3 text-white/50 py-12">
               <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
               <span className="text-xs">Loading rankings...</span>
             </div>
