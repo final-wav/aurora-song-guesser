@@ -41,6 +41,22 @@ export function getSavedUsername(): string {
 }
 
 /**
+ * Synchronously get leaderboard entries for zero-latency tab switching
+ */
+export function getLeaderboardSync(mode: GameMode = 'daily'): LeaderboardEntry[] {
+  try {
+    const cached = localStorage.getItem(`${LOCAL_LEADERBOARD_KEY}_${mode}`);
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch {}
+  return SEEDED_SCORES.filter(s => s.mode === mode);
+}
+
+/**
  * Save player username
  */
 export function saveUsername(name: string): string {

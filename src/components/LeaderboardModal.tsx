@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GameMode } from '../utils/gameLogic';
-import { LeaderboardEntry, fetchLeaderboard, getSavedUsername, saveUsername } from '../utils/leaderboard';
+import { LeaderboardEntry, fetchLeaderboard, getLeaderboardSync, getSavedUsername, saveUsername } from '../utils/leaderboard';
 import { X, Trophy, User, Edit2, Check, Sparkles, Calendar } from 'lucide-react';
 
 interface LeaderboardModalProps {
@@ -15,14 +15,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
   initialMode = 'daily',
 }) => {
   const [activeTab, setActiveTab] = useState<GameMode>(initialMode);
-  const [entries, setEntries] = useState<LeaderboardEntry[]>(() => {
-    try {
-      const cached = localStorage.getItem(`aurora_cached_leaderboard_${initialMode}`);
-      if (cached) return JSON.parse(cached);
-    } catch {}
-    return [];
-  });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [entries, setEntries] = useState<LeaderboardEntry[]>(() => getLeaderboardSync(initialMode));
 
   // Username edit state
   const [username, setUsername] = useState<string>(getSavedUsername);
@@ -34,33 +27,26 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
       setActiveTab(initialMode);
       setUsername(getSavedUsername());
       setNameInput(getSavedUsername());
+      setEntries(getLeaderboardSync(initialMode));
       loadScores(initialMode);
     }
   }, [isOpen, initialMode]);
 
   const loadScores = async (mode: GameMode) => {
-    // Only show full loader if we have zero cached items
-    if (entries.length === 0) {
-      setIsLoading(true);
-    }
     try {
       const data = await fetchLeaderboard(mode);
-      setEntries(data);
+      if (data && data.length > 0) {
+        setEntries(data);
+      }
     } catch {
       // keep existing
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const handleTabChange = (mode: GameMode) => {
+    if (activeTab === mode) return;
     setActiveTab(mode);
-    try {
-      const cached = localStorage.getItem(`aurora_cached_leaderboard_${mode}`);
-      if (cached) {
-        setEntries(JSON.parse(cached));
-      }
-    } catch {}
+    setEntries(getLeaderboardSync(mode));
     loadScores(mode);
   };
 
@@ -131,112 +117,103 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
 
         {/* Scrollable Leaderboard Area */}
         <div className="p-4 sm:p-5 overflow-y-auto flex-1 space-y-4 touch-pan-y overscroll-contain">
-          {isLoading && entries.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center space-y-3 text-white/50 py-12">
-              <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-              <span className="text-xs">Loading rankings...</span>
-            </div>
-          ) : (
-            <>
-              {/* Top 3 Podium Cards */}
-              {top3.length > 0 && (
-                <div className="grid grid-cols-3 gap-2 pt-2 pb-1">
-                  {/* 2nd Place */}
-                  {top3[1] && (
-                    <div className="flex flex-col items-center p-2.5 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 relative mt-3 shadow-sm">
-                      <div className="w-6 h-6 rounded-full bg-slate-300 text-black font-extrabold text-[11px] flex items-center justify-center absolute -top-3 shadow-md">
-                        2
-                      </div>
-                      <span className="text-[11px] font-bold text-white truncate max-w-[80px] mt-1">
-                        {top3[1].username}
-                      </span>
-                      <span className="text-xs font-extrabold text-white font-mono mt-0.5">
-                        {top3[1].score.toLocaleString()}
-                      </span>
-                      <span className="text-[9px] text-white/50 font-mono">
-                        {activeTab === 'daily' ? `${top3[1].unlockedDuration}s` : (top3[1].difficulty?.toUpperCase() || '5 RND')}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* 1st Place (Center / Taller) */}
-                  {top3[0] && (
-                    <div className="flex flex-col items-center p-3 rounded-2xl bg-white/15 backdrop-blur-xl border border-white/30 relative shadow-lg">
-                      <div className="w-7 h-7 rounded-full bg-amber-300 text-black font-extrabold text-xs flex items-center justify-center absolute -top-3.5 shadow-md ring-2 ring-amber-300/40">
-                        👑
-                      </div>
-                      <span className="text-xs font-extrabold text-white truncate max-w-[90px] mt-1.5">
-                        {top3[0].username}
-                      </span>
-                      <span className="text-sm font-extrabold text-white font-mono mt-0.5">
-                        {top3[0].score.toLocaleString()}
-                      </span>
-                      <span className="text-[10px] text-amber-200/80 font-mono font-semibold">
-                        {activeTab === 'daily' ? `${top3[0].unlockedDuration}s` : (top3[0].difficulty?.toUpperCase() || 'CHAMPION')}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* 3rd Place */}
-                  {top3[2] && (
-                    <div className="flex flex-col items-center p-2.5 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 relative mt-4 shadow-sm">
-                      <div className="w-6 h-6 rounded-full bg-amber-700 text-white font-extrabold text-[11px] flex items-center justify-center absolute -top-3 shadow-md">
-                        3
-                      </div>
-                      <span className="text-[11px] font-bold text-white truncate max-w-[80px] mt-1">
-                        {top3[2].username}
-                      </span>
-                      <span className="text-xs font-extrabold text-white font-mono mt-0.5">
-                        {top3[2].score.toLocaleString()}
-                      </span>
-                      <span className="text-[9px] text-white/50 font-mono">
-                        {activeTab === 'daily' ? `${top3[2].unlockedDuration}s` : (top3[2].difficulty?.toUpperCase() || '5 RND')}
-                      </span>
-                    </div>
-                  )}
+          {/* Top 3 Podium Cards */}
+          {top3.length > 0 && (
+            <div className="grid grid-cols-3 gap-2 pt-2 pb-1">
+              {/* 2nd Place */}
+              {top3[1] && (
+                <div className="h-[105px] flex flex-col items-center justify-center p-2 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 relative mt-3 shadow-sm">
+                  <div className="w-6 h-6 rounded-full bg-slate-300 text-black font-extrabold text-[11px] flex items-center justify-center absolute -top-3 shadow-md">
+                    2
+                  </div>
+                  <span className="text-[11px] font-bold text-white truncate max-w-[80px] mt-1">
+                    {top3[1].username}
+                  </span>
+                  <span className="text-xs font-extrabold text-white font-mono mt-0.5">
+                    {top3[1].score.toLocaleString()}
+                  </span>
+                  <span className="text-[9px] text-white/50 font-mono">
+                    {activeTab === 'daily' ? `${top3[1].unlockedDuration}s` : (top3[1].difficulty?.toUpperCase() || '5 RND')}
+                  </span>
                 </div>
               )}
 
-              {/* Position 4-50 List */}
-              <div className="space-y-1.5 text-left">
-                {rest.map((entry, idx) => {
-                  const rank = idx + 4;
-                  const isCurrentUser = username && entry.username.toLowerCase() === username.toLowerCase();
+              {/* 1st Place (Center / Taller) */}
+              {top3[0] && (
+                <div className="h-[118px] flex flex-col items-center justify-center p-2.5 rounded-2xl bg-white/15 backdrop-blur-xl border border-white/30 relative shadow-lg">
+                  <div className="w-7 h-7 rounded-full bg-amber-300 text-black font-extrabold text-xs flex items-center justify-center absolute -top-3.5 shadow-md ring-2 ring-amber-300/40">
+                    👑
+                  </div>
+                  <span className="text-xs font-extrabold text-white truncate max-w-[90px] mt-1.5">
+                    {top3[0].username}
+                  </span>
+                  <span className="text-sm font-extrabold text-white font-mono mt-0.5">
+                    {top3[0].score.toLocaleString()}
+                  </span>
+                  <span className="text-[10px] text-amber-200/80 font-mono font-semibold">
+                    {activeTab === 'daily' ? `${top3[0].unlockedDuration}s` : (top3[0].difficulty?.toUpperCase() || 'CHAMPION')}
+                  </span>
+                </div>
+              )}
 
-                  return (
-                    <div
-                      key={entry.id || idx}
-                      className={`flex items-center justify-between p-2.5 rounded-xl border transition-colors text-xs ${
-                        isCurrentUser
-                          ? 'bg-white/20 border-white/30 shadow-sm'
-                          : 'bg-white/5 border-white/10 hover:bg-white/10'
-                      }`}
-                    >
-                      <div className="flex items-center space-x-3 min-w-0">
-                        <span className="w-6 text-center font-mono font-bold text-white/50 text-[11px]">
-                          #{rank}
-                        </span>
-                        <div className="flex flex-col min-w-0">
-                          <span className={`font-bold truncate ${isCurrentUser ? 'text-white' : 'text-white/90'}`}>
-                            {entry.username} {isCurrentUser && <span className="text-[10px] text-white/60">(You)</span>}
-                          </span>
-                          <span className="text-[10px] text-white/40">
-                            {activeTab === 'daily' ? `Time: ${entry.unlockedDuration}s` : `${entry.difficulty?.toUpperCase() || 'Match'}`}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center space-x-2 shrink-0">
-                        <span className="font-mono font-extrabold text-white text-xs">
-                          {entry.score.toLocaleString()}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
+              {/* 3rd Place */}
+              {top3[2] && (
+                <div className="h-[105px] flex flex-col items-center justify-center p-2 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 relative mt-3 shadow-sm">
+                  <div className="w-6 h-6 rounded-full bg-amber-700 text-white font-extrabold text-[11px] flex items-center justify-center absolute -top-3 shadow-md">
+                    3
+                  </div>
+                  <span className="text-[11px] font-bold text-white truncate max-w-[80px] mt-1">
+                    {top3[2].username}
+                  </span>
+                  <span className="text-xs font-extrabold text-white font-mono mt-0.5">
+                    {top3[2].score.toLocaleString()}
+                  </span>
+                  <span className="text-[9px] text-white/50 font-mono">
+                    {activeTab === 'daily' ? `${top3[2].unlockedDuration}s` : (top3[2].difficulty?.toUpperCase() || '5 RND')}
+                  </span>
+                </div>
+              )}
+            </div>
           )}
+
+          {/* Position 4-50 List */}
+          <div className="space-y-1.5 text-left">
+            {rest.map((entry, idx) => {
+              const rank = idx + 4;
+              const isCurrentUser = username && entry.username.toLowerCase() === username.toLowerCase();
+
+              return (
+                <div
+                  key={entry.id || idx}
+                  className={`h-11 flex items-center justify-between px-3 py-2 rounded-xl border transition-colors text-xs ${
+                    isCurrentUser
+                      ? 'bg-white/20 border-white/30 shadow-sm'
+                      : 'bg-white/5 border-white/10 hover:bg-white/10'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3 min-w-0">
+                    <span className="w-6 text-center font-mono font-bold text-white/50 text-[11px]">
+                      #{rank}
+                    </span>
+                    <div className="flex flex-col min-w-0">
+                      <span className={`font-bold truncate ${isCurrentUser ? 'text-white' : 'text-white/90'}`}>
+                        {entry.username} {isCurrentUser && <span className="text-[10px] text-white/60">(You)</span>}
+                      </span>
+                      <span className="text-[10px] text-white/40">
+                        {activeTab === 'daily' ? `Time: ${entry.unlockedDuration}s` : `${entry.difficulty?.toUpperCase() || 'Match'}`}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-2 shrink-0">
+                    <span className="font-mono font-extrabold text-white text-xs">
+                      {entry.score.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* Bottom Bar: Player Username Configuration */}
