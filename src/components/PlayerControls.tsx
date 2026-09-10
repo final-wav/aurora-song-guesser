@@ -188,6 +188,12 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
           <FastForward size={15} />
         </button>
       </div>
+
+      {/* Subtle iPhone Silent Switch Reminder */}
+      <div className="mt-3.5 sm:mt-4 text-[10px] sm:text-[11px] text-white/40 flex items-center justify-center gap-1.5 text-center px-2 font-medium">
+        <span className="opacity-70">🔇</span>
+        <span>iPhone: Falls kein Ton ertönt, bitte Stummschalter an der Geräteseite ausschalten</span>
+      </div>
     </div>
   );
 };

@@ -30,9 +30,62 @@ class AudioEngine {
   private onProgressUpdate?: (currentTime: number, progressRatio: number) => void;
 
   private htmlAudio: HTMLAudioElement | null = null;
+  private isUnlocked: boolean = false;
+  private silentAudioElement: HTMLAudioElement | null = null;
 
   constructor() {
-    // Lazy AudioContext initialization
+    if (typeof window !== 'undefined') {
+      const unlock = () => {
+        this.unlockForIOS();
+      };
+      window.addEventListener('touchstart', unlock, { passive: true, once: true });
+      window.addEventListener('pointerdown', unlock, { passive: true, once: true });
+      window.addEventListener('click', unlock, { passive: true, once: true });
+    }
+  }
+
+  /**
+   * Unlocks iOS Safari Web Audio API and forces iOS audio session from Ambient to Playback,
+   * enabling audio through speakers even if the hardware silent switch is active.
+   */
+  public unlockForIOS(): void {
+    if (this.isUnlocked) return;
+    this.isUnlocked = true;
+
+    try {
+      // 1. Play a 0.1s silent WAV to switch iOS session to Playback (Media)
+      if (!this.silentAudioElement && typeof Audio !== 'undefined') {
+        const silentWav = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+        const audio = new Audio(silentWav);
+        audio.volume = 0.01;
+        audio.play().then(() => {
+          audio.pause();
+        }).catch(() => {});
+        this.silentAudioElement = audio;
+      }
+
+      // 2. Initialize and unlock Web Audio AudioContext synchronously
+      const AudioCtxClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (AudioCtxClass && !this.ctx) {
+        this.ctx = new AudioCtxClass();
+        this.masterGainNode = this.ctx.createGain();
+        this.masterGainNode.gain.setValueAtTime(this.volume, this.ctx.currentTime);
+        this.masterGainNode.connect(this.ctx.destination);
+      }
+
+      if (this.ctx) {
+        if (this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+        const buffer = this.ctx.createBuffer(1, 1, 22050);
+        const source = this.ctx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(this.ctx.destination);
+        source.start(0);
+      }
+    } catch (e) {
+      console.warn('iOS audio unlock warning:', e);
+    }
   }
 
   public isCached(url: string): boolean {
@@ -157,6 +210,7 @@ class AudioEngine {
     duration: number,
     startOffset: number = 0
   ): Promise<void> {
+    this.unlockForIOS();
     this.stop();
     await this.initContext();
 
