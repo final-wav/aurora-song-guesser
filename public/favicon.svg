@@ -1,6 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
-  <rect width="100" height="100" rx="24" fill="#0e0e11"/>
-  <circle cx="50" cy="50" r="38" stroke="#1DB954" stroke-width="4" stroke-dasharray="6 4" opacity="0.6"/>
-  <path d="M30 65 L50 25 L70 65 L50 50 Z" fill="#1DB954"/>
-  <circle cx="50" cy="74" r="4" fill="#1DB954"/>
+  <!-- Minimalist Apple Dark Base -->
+  <rect width="100" height="100" rx="26" fill="#07070A"/>
+  <rect x="2" y="2" width="96" height="96" rx="24" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="3"/>
+
+  <!-- Minimalist Geometric 'A' (AURORA) in pure white & subtle frosted glass glow -->
+  <path d="M50 20L22 80H35L42.5 63H57.5L65 80H78L50 20ZM50 38L54.5 53H45.5L50 38Z" fill="#FFFFFF"/>
 </svg>
