@@ -1,0 +1,23 @@
+// Guaranteed high-resolution album cover bases for AURORA albums
+export const ALBUM_COVERS = {
+  allMyDemons: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/ce/27/05/ce270560-6dd8-d218-bb9e-4df7f4bb7d81/16UMGIM03789.rgb.jpg/600x600bb.jpg',
+  infectionsStep1: 'https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/44/e9/87/44e987c8-89c0-67eb-0797-2178ffca52b2/18UMGIM53265.rgb.jpg/600x600bb.jpg',
+  differentKindStep2: 'https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/cc/2d/69/cc2d69d3-61f2-1c69-159c-898bac81cc14/5056167113911.jpg/600x600bb.jpg',
+  theGodsWeCanTouch: 'https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/9a/5a/a5/9a5aa53b-e011-8be5-6d00-dfbb81881cf4/21UMGIM92955.rgb.jpg/600x600bb.jpg',
+  whatHappenedToTheHeart: 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg',
+  frozen2: 'https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/66/cf/70/66cf7012-98ed-b201-21ed-b1ee0e9ad26f/19UM1IM00155.rgb.jpg/600x600bb.jpg',
+  noGeography: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/21/2e/0f/212e0f2f-1178-38b8-2dc2-487ad04812aa/19UMGIM10188.rgb.jpg/600x600bb.jpg',
+  subUrbanParamour: 'https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/44/14/b6/4414b6fc-e570-5b56-fcad-6d4b9ea79930/093624874409.jpg/600x600bb.jpg',
+  bmthLimousine: 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a4/0c/34/a40c345a-c944-93c4-9549-34dcfebe394b/196871929342.jpg/600x600bb.jpg',
+  tomOdellButterflies: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/bb/e2/28/bbe22851-91a7-1906-8d59-adbb158a1bb4/197187652781.jpg/600x600bb.jpg',
+  sondreLercheAvatars: 'https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/5a/04/e7/5a04e76a-543e-c6e3-5f7a-2454f7623910/7090029584310.jpg/600x600bb.jpg',
+  askjell: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/64/00/f3/6400f3e6-e9e1-6d91-bb2a-a92c4ba98d1d/19UMGIM22312.rgb.jpg/600x600bb.jpg',
+  secretGarden: 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/0b/80/df/0b80dfbc-ec8e-f505-3f3d-8b0916c4a842/20UMGIM72652.rgb.jpg/600x600bb.jpg',
+  assassinsCreed: 'https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/02/3c/65/023c65c6-b5fa-2849-813c-fa588939c4a8/22UMGIM76356.rgb.jpg/600x600bb.jpg',
+  frozenPlanet2: 'https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/80/cb/09/80cb09ae-52a1-cf0b-ba62-a5e2f79623e1/196589376662.jpg/600x600bb.jpg',
+  stjernestov: 'https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/13/e4/83/13e483ec-b32a-26d0-48d4-96555df582d0/195497746484.jpg/600x600bb.jpg',
+  potionForLove: 'https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/4a/ad/2a/4aad2a46-b652-c1f9-5c0e-7a6398ef1661/196925304795.jpg/600x600bb.jpg',
+  devilIsHuman: 'https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/f4/bf/25/f4bf252e-5fe9-3e3c-ea36-3da756317b9b/22UMGIM70701.rgb.jpg/600x600bb.jpg',
+  womanIAm: 'https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/ad/c2/bf/adc2bf81-b51f-642a-2f4a-251f08cb3854/22UMGIM50532.rgb.jpg/600x600bb.jpg',
+  runningWithTheWolvesEp: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4f/2e/da/4f2edaeb-6232-a745-f09c-e7a9e0186199/15UMGIM20120.rgb.jpg/600x600bb.jpg',
+};

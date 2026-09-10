@@ -142,8 +142,11 @@ export const SongSearch: React.FC<SongSearchProps> = ({
                 <div className="flex items-center space-x-3 overflow-hidden">
                   {/* Album artwork thumbnail */}
                   <img
-                    src={song.artwork}
+                    src={song.artwork || 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg'}
                     alt={song.album}
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg';
+                    }}
                     className="w-10 h-10 rounded-lg object-cover bg-black/40 flex-shrink-0"
                     loading="lazy"
                   />

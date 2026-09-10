@@ -70,9 +70,12 @@ export const RoundResultModal: React.FC<RoundResultModalProps> = ({
         {/* Album Cover Art */}
         <div className="relative group my-2">
           <img
-            src={song.artwork}
+            src={song.artwork || 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg'}
             alt={song.album}
-            className="w-44 h-44 rounded-2xl object-cover shadow-2xl ring-1 ring-white/10"
+            onError={(e) => {
+              e.currentTarget.src = 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg';
+            }}
+            className="w-44 h-44 rounded-2xl object-cover shadow-2xl ring-1 ring-white/10 bg-[#1c1c27]"
           />
           <button
             onClick={isPlayingFull ? onStopAudio : onPlayFullSnippet}

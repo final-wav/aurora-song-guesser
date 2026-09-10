@@ -83,8 +83,11 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
             >
               <div className="flex items-center space-x-2.5 overflow-hidden">
                 <img
-                  src={r.song.artwork}
+                  src={r.song.artwork || 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg'}
                   alt={r.song.title}
+                  onError={(e) => {
+                    e.currentTarget.src = 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg';
+                  }}
                   className="w-8 h-8 rounded-lg object-cover flex-shrink-0"
                 />
                 <div className="flex flex-col min-w-0">
