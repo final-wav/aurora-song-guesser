@@ -1,19 +1,19 @@
 # 🌸 AURORA — Song Guesser
 
-An audio-snippet music guessing game dedicated entirely to the Norwegian artist **AURORA** (including all studio albums, EPs, movie soundtracks, and collaborations/features).
+An audio-snippet music guessing game dedicated entirely to the Norwegian artist **AURORA** — featuring her complete discography across all studio albums, standalone singles ("loosies"), acoustic sessions, movie soundtracks, covers, and collaborations.
 
 Built with **React 18**, **TypeScript**, **Tailwind CSS**, and the precision **Web Audio API** for millisecond-exact snippet playback without audio pops or clicks.
 
 ---
 
-## 🎮 Game Features
+## 🎮 Features
 
-- **Pioneering 0.10s Snippet Playback**: Starts with an ultra-short 0.10-second snippet (10,000 points) and expands step-by-step to 0.50s, 1.0s, 3.0s, 5.0s, and 30s.
+- **Pioneering 0.10s Snippet Playback**: Starts with an ultra-short 0.10-second snippet (10,000 points) and expands step-by-step to 0.50s, 1.0s, 3.0s, 5.0s, 10.0s, and 30s.
 - **5 Difficulty Tiers**:
   - `EASY`: Major singles & greatest hits (*Runaway*, *Cure for Me*, *Into the Unknown*).
   - `MEDIUM`: Full album tracks & prominent collaborations.
-  - `HARD`: Deep cuts, early EPs, and rare soundtrack songs.
-  - `EXPERT`: Snippet starts at a random mid-song position instead of the intro!
+  - `HARD`: Deep cuts, standalone singles, early EPs, and rare soundtrack songs.
+  - `EXPERT`: Snippet starts at a random mid-song timestamp instead of the intro!
   - `BRUTAL`: Ultra-short micro-slices anywhere across the entire complete discography.
 - **5-Round Match & Daily Mode**:
   - 5-Round Session with a maximum score of **50,000 points**.
@@ -29,7 +29,7 @@ Built with **React 18**, **TypeScript**, **Tailwind CSS**, and the precision **W
 
 ---
 
-## 💿 Discography Included
+## 💿 Complete Discography Included
 
 - **Studio Albums**:
   - *All My Demons Greeting Me as a Friend* (2016)
@@ -37,68 +37,35 @@ Built with **React 18**, **TypeScript**, **Tailwind CSS**, and the precision **W
   - *A Different Kind of Human (Step 2)* (2019)
   - *The Gods We Can Touch* (2022)
   - *What Happened To The Heart?* (2024)
+- **Standalone Singles & Loosies**:
+  - *Puppet* (2012), *Awakening* (2014), *Under Stars* (2014)
+  - *In Boxes*, *Little Boy in the Grass* (2015)
+  - *Stjernestøv* (2020)
+  - *A Potion for Love* (2022), *The Devil is Human* (2022), *The Woman I Am* (2022)
+  - *Hunting Shadows* (2022), *Pink Moon* (2023)
+  - *Earthly Delights*, *The Flood*, *The Dark* (2024)
 - **Features & Collaborations**:
-  - The Chemical Brothers (*Eve of Destruction*, *Bango*, *No Geography*)
   - Bring Me The Horizon (*liMOusIne*)
   - Sub Urban (*PARAMOUR*)
+  - The Chemical Brothers (*Eve of Destruction*, *Bango*, *No Geography*, *The Universe Sent Me*, *Catch Me I'm Falling*, *The Darkness That You Fear*)
   - Askjell (*To Be Loved*, *Sofia*)
   - Tom Odell (*Butterflies*)
   - Sondre Lerche (*Alone in the Night*)
+  - Wu Qing-feng (*Storm*)
   - Gundelach (*Fjernsyn*)
-- **Soundtracks & Covers**:
-  - *Into the Unknown* (Disney's Frozen II)
+  - Wardruna (*Helvegen*)
+  - Idina Menzel (*Into the Unknown*)
+  - Hans Zimmer & Bleeding Fingers (*Take Me Back Home*, *The Sun*)
+- **Covers & Rarities**:
   - *Half the World Away* (Oasis)
-  - *The Secret Garden* OST
-  - *Hunting Shadows* (Assassin's Creed 15th Anniversary)
-
----
-
-## 🚀 Quick Start (Local Development)
-
-```bash
-# 1. Clone the repository
-git clone <your-repo-url>
-cd gallant-hubble
-
-# 2. Install dependencies
-npm install
-
-# 3. Start local development server
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-## ☁️ Deployment on Cloudflare Workers & Cloudflare Pages
-
-### Option A: Cloudflare Workers (Static Assets)
-The project includes `wrangler.jsonc` preconfigured for Cloudflare Workers Static Assets:
-
-```bash
-# Build the production bundle
-npm run build
-
-# Deploy directly to Cloudflare
-npx wrangler deploy
-```
-
-### Option B: Cloudflare Pages via GitHub
-1. Push this repository to your GitHub account:
-   ```bash
-   git add .
-   git commit -m "Initial commit: AURORA Song Guesser"
-   git branch -M main
-   git remote add origin https://github.com/<YOUR_USERNAME>/aurora-song-guesser.git
-   git push -u origin main
-   ```
-2. In the **Cloudflare Dashboard**, navigate to **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-3. Select your repository and configure the build settings:
-   - **Framework preset**: `Vite`
-   - **Build command**: `npm run build`
-   - **Build output directory**: `dist`
-4. Click **Save and Deploy**. Your game will be live globally on Cloudflare's CDN!
+  - *Teardrop* (Massive Attack)
+  - *Believer* (Imagine Dragons)
+  - *Rasputin* (Boney M.)
+  - *Thank U* (Alanis Morissette)
+  - *Life on Mars* (David Bowie)
+  - *Across the Universe* (The Beatles)
+  - *Nature Boy* (Nat King Cole)
+  - *Walking in the Air*
 
 ---
 
