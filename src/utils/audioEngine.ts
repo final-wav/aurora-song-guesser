@@ -19,6 +19,7 @@ class AudioEngine {
   private currentSource: AudioBufferSourceNode | null = null;
   private currentGain: GainNode | null = null;
   private bufferCache = new Map<string, AudioBuffer>();
+  private inFlightLoads = new Map<string, Promise<AudioBuffer>>();
   private masterGainNode: GainNode | null = null;
   private volume: number = 0.8;
   private isPlaying: boolean = false;
@@ -32,6 +33,11 @@ class AudioEngine {
 
   constructor() {
     // Lazy AudioContext initialization
+  }
+
+  public isCached(url: string): boolean {
+    const resolvedUrl = resolveAudioUrl(url);
+    return this.bufferCache.has(resolvedUrl);
   }
 
   public setCallbacks(
@@ -73,25 +79,48 @@ class AudioEngine {
   }
 
   /**
-   * Loads and decodes an audio file from URL with caching
+   * Preload a batch of songs in background for 0ms zero-latency instant playback
+   */
+  public preloadBatch(urls: string[]): void {
+    urls.forEach((url) => {
+      if (url && !this.isCached(url)) {
+        this.loadAudio(url).catch(() => {});
+      }
+    });
+  }
+
+  /**
+   * Loads and decodes an audio file from URL with in-flight deduplication and caching
    */
   public async loadAudio(url: string): Promise<AudioBuffer> {
-    await this.initContext();
-
     const resolvedUrl = resolveAudioUrl(url);
     if (this.bufferCache.has(resolvedUrl)) {
       return this.bufferCache.get(resolvedUrl)!;
     }
 
-    const response = await fetch(resolvedUrl);
-    if (!response.ok) {
-      throw new Error(`Failed to load audio stream (${response.status})`);
+    if (this.inFlightLoads.has(resolvedUrl)) {
+      return this.inFlightLoads.get(resolvedUrl)!;
     }
 
-    const arrayBuffer = await response.arrayBuffer();
-    const decodedBuffer = await this.ctx!.decodeAudioData(arrayBuffer);
-    this.bufferCache.set(resolvedUrl, decodedBuffer);
-    return decodedBuffer;
+    const loadPromise = (async () => {
+      await this.initContext();
+      const response = await fetch(resolvedUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to load audio stream (${response.status})`);
+      }
+
+      const arrayBuffer = await response.arrayBuffer();
+      const decodedBuffer = await this.ctx!.decodeAudioData(arrayBuffer);
+      this.bufferCache.set(resolvedUrl, decodedBuffer);
+      this.inFlightLoads.delete(resolvedUrl);
+      return decodedBuffer;
+    })().catch((err) => {
+      this.inFlightLoads.delete(resolvedUrl);
+      throw err;
+    });
+
+    this.inFlightLoads.set(resolvedUrl, loadPromise);
+    return loadPromise;
   }
 
   /**

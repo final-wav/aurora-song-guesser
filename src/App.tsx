@@ -126,10 +126,12 @@ export const App: React.FC = () => {
       const { song } = getDailySong();
       setPlaylist([song]);
       setStartOffset(0);
+      audioEngine.loadAudio(song.previewUrl).catch(() => {});
     } else {
       const matchTracks = generateMatchPlaylist(diff, 5);
       setPlaylist(matchTracks);
       setStartOffset(calculateSongStartOffset(diff));
+      audioEngine.preloadBatch(matchTracks.map((s) => s.previewUrl));
     }
   }, []);
 
@@ -164,15 +166,23 @@ export const App: React.FC = () => {
     };
   }, [currentSong]);
 
-  // Play snippet for currently active step
+  // Play snippet for currently active step with instant response
   const handlePlaySnippet = async () => {
     const urlToPlay = activeAudioUrl || currentSong?.previewUrl;
     if (!urlToPlay) return;
     const interval = STEP_INTERVALS[currentStepIndex] || STEP_INTERVALS[0];
+
+    // If buffer is still decoding in background, show instant visual feedback
+    if (!audioEngine.isCached(urlToPlay)) {
+      setIsLoadingAudio(true);
+    }
+
     try {
       await audioEngine.playSnippet(urlToPlay, interval.duration, startOffset);
     } catch (err) {
       console.error('Playback failed', err);
+    } finally {
+      setIsLoadingAudio(false);
     }
   };
 
