@@ -45,10 +45,10 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
   return (
     <div className="w-full max-w-xl mx-auto px-4 my-6 select-none">
       {/* Waveform Box */}
-      <div className="relative h-20 bg-[#121217] rounded-xl border border-white/5 p-3 flex items-center justify-between overflow-hidden shadow-inner">
+      <div className="relative h-20 bg-[#0e121a]/90 rounded-2xl border border-emerald-500/15 p-3.5 flex items-center justify-between overflow-hidden shadow-[0_4px_30px_-5px_rgba(0,0,0,0.7),inset_0_0_20px_rgba(16,185,129,0.05)]">
         {/* Unlocked audio highlight background glow */}
         <div
-          className="absolute top-0 bottom-0 bg-gradient-to-r from-emerald-500/10 to-emerald-500/5 transition-all duration-300 pointer-events-none"
+          className="absolute top-0 bottom-0 bg-gradient-to-r from-emerald-500/20 via-teal-500/15 to-cyan-500/10 transition-all duration-300 pointer-events-none"
           style={{
             left: `${startRatio * 100}%`,
             width: `${(unlockedRatio - startRatio) * 100}%`,
@@ -62,11 +62,11 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
             const isUnlocked = barRatio >= startRatio && barRatio <= unlockedRatio;
             const isPlayed = isPlaying && barRatio <= currentPlayRatio;
 
-            let barColor = 'bg-[#282834]'; // locked / inactive
+            let barColor = 'bg-[#1e2433]'; // locked / inactive
             if (isPlayed) {
-              barColor = 'bg-[#1DB954] shadow-[0_0_8px_#1DB954]'; // actively playing
+              barColor = 'bg-gradient-to-t from-emerald-400 via-teal-300 to-cyan-200 shadow-[0_0_10px_rgba(52,211,153,0.8)]'; // actively playing
             } else if (isUnlocked) {
-              barColor = 'bg-[#6b7280] hover:bg-gray-300'; // unlocked
+              barColor = 'bg-gradient-to-t from-emerald-700/80 to-teal-500/80 hover:from-emerald-400 hover:to-teal-300'; // unlocked
             }
 
             return (
@@ -75,7 +75,7 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
                 className="flex-1 flex items-center justify-center h-full"
               >
                 <div
-                  className={`w-full rounded-full transition-colors duration-150 ${barColor}`}
+                  className={`w-full rounded-full transition-all duration-150 ${barColor}`}
                   style={{
                     height: `${Math.round(peak * 100)}%`,
                     minHeight: '4px',
@@ -88,12 +88,12 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
 
         {/* Moving Scrubber Line */}
         <div
-          className="absolute top-0 bottom-0 w-[2.5px] bg-white z-20 pointer-events-none transition-[left] duration-75 shadow-[0_0_10px_white]"
+          className="absolute top-0 bottom-0 w-[2.5px] bg-gradient-to-b from-white via-cyan-200 to-emerald-300 z-20 pointer-events-none transition-[left] duration-75 shadow-[0_0_12px_rgba(52,211,153,0.9)]"
           style={{
             left: `${Math.min(99.5, Math.max(0.5, currentPlayRatio * 100))}%`,
           }}
         >
-          <div className="w-2.5 h-2.5 bg-white rounded-full -ml-[3.5px] -mt-1 shadow-md" />
+          <div className="w-2.5 h-2.5 bg-white rounded-full -ml-[3.5px] -mt-1 shadow-[0_0_8px_white]" />
         </div>
       </div>
 

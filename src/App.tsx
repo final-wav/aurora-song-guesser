@@ -270,7 +270,13 @@ export const App: React.FC = () => {
   const currentInterval = STEP_INTERVALS[currentStepIndex] || STEP_INTERVALS[0];
 
   return (
-    <div className="min-h-screen bg-[#0c0c0f] text-white flex flex-col justify-between aurora-bg">
+    <div className="min-h-screen bg-[#07080c] text-white flex flex-col justify-between aurora-bg relative overflow-x-hidden">
+      {/* Ambient Animated Northern Lights Curtain Glow */}
+      <div className="aurora-curtain" />
+
+      {/* Decorative Aurora Ethereal Light Spots */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-emerald-500/10 via-cyan-500/8 to-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-0" />
+
       {/* Top Header */}
       <Header
         difficulty={difficulty}
@@ -293,7 +299,7 @@ export const App: React.FC = () => {
       />
 
       {/* Main Interactive Stage */}
-      <main className="flex-1 flex flex-col items-center justify-center py-4 sm:py-8 w-full max-w-2xl mx-auto">
+      <main className="flex-1 flex flex-col items-center justify-center py-4 sm:py-8 w-full max-w-2xl mx-auto relative z-10">
         {/* Audio Waveform Scrubber */}
         <AudioWaveform
           unlockedDuration={currentInterval.duration}
@@ -329,9 +335,13 @@ export const App: React.FC = () => {
       </main>
 
       {/* Footer Branding & Track Count */}
-      <footer className="w-full py-4 text-center text-xs text-[#6e6e80] border-t border-white/5 select-none">
-        <p>
-          <strong className="text-gray-300">AURORA</strong> Song Guesser • {AURORA_SONGS.length} Tracks & Collaborations
+      <footer className="w-full py-4 text-center text-xs text-[#788299] border-t border-emerald-500/10 select-none relative z-10 backdrop-blur-md bg-[#07090e]/40">
+        <p className="flex items-center justify-center gap-2">
+          <span className="text-emerald-400">✦</span>
+          <span><strong className="text-white font-semibold">AURORA</strong> Song Guesser</span>
+          <span>•</span>
+          <span className="text-emerald-300/80">{AURORA_SONGS.length} Songs & Collaborations</span>
+          <span className="text-emerald-400">✦</span>
         </p>
       </footer>
 

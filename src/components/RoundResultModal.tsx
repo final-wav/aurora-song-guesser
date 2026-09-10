@@ -34,12 +34,12 @@ export const RoundResultModal: React.FC<RoundResultModalProps> = ({
 }) => {
   useEffect(() => {
     if (isOpen && isGuessed) {
-      // Fire festive confetti
+      // Fire festive Aurora confetti
       confetti({
-        particleCount: 70,
-        spread: 60,
+        particleCount: 80,
+        spread: 70,
         origin: { y: 0.6 },
-        colors: ['#1DB954', '#ffffff', '#e11d48', '#38bdf8'],
+        colors: ['#10b981', '#34d399', '#06b6d4', '#8b5cf6', '#fbbf24', '#ffffff'],
       });
     }
   }, [isOpen, isGuessed]);
@@ -50,19 +50,19 @@ export const RoundResultModal: React.FC<RoundResultModalProps> = ({
   const spotifySearchUrl = `https://open.spotify.com/search/${encodeURIComponent(`AURORA ${song.title}`)}`;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in select-none">
-      <div className="w-full max-w-md bg-[#16161f] border border-white/10 rounded-2xl p-6 shadow-2xl flex flex-col items-center text-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-fade-in select-none">
+      <div className="w-full max-w-md bg-[#0e131d]/95 border border-emerald-500/25 rounded-3xl p-6 shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_35px_rgba(16,185,129,0.15)] flex flex-col items-center text-center">
         {/* Result Header Badge */}
         <div className="flex items-center space-x-2 mb-4">
           {isGuessed ? (
             <>
-              <CheckCircle2 size={24} className="text-[#1DB954]" />
-              <span className="text-xl font-bold text-white">CORRECT!</span>
+              <CheckCircle2 size={24} className="text-emerald-400" />
+              <span className="text-xl font-extrabold text-white tracking-wide text-aurora-glow">CORRECT!</span>
             </>
           ) : (
             <>
-              <XCircle size={24} className="text-rose-500" />
-              <span className="text-xl font-bold text-white">ROUND OVER</span>
+              <XCircle size={24} className="text-rose-400" />
+              <span className="text-xl font-extrabold text-white tracking-wide">ROUND OVER</span>
             </>
           )}
         </div>
