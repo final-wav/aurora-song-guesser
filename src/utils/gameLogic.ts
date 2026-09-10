@@ -132,5 +132,9 @@ export function generateShareText(
     return '🟧'; // 3.0s+
   }).join('');
 
-  return `${modeHeader}\n${scoreLine}\n${squares}\n\nPlay at: https://aurora-guesser.pages.dev`;
+  const siteUrl = typeof window !== 'undefined' && window.location.href
+    ? window.location.href.split('?')[0].split('#')[0]
+    : 'https://final-wav.github.io/aurora-song-guesser/';
+
+  return `${modeHeader}\n${scoreLine}\n${squares}\n\nPlay at: ${siteUrl}`;
 }
