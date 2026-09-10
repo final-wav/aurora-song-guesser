@@ -272,12 +272,8 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#08080c] text-white flex flex-col justify-between relative overflow-x-hidden">
-      {/* Dynamic Apple Music-style Aurora Blurred Canvas & Ethereal Light Mesh */}
-      <AuroraBackground
-        activeArtwork={currentSong?.artwork}
-        isPlaying={isPlaying}
-        albumName={currentSong?.album}
-      />
+      {/* Clean blurred cover / Aurora backdrop */}
+      <AuroraBackground activeArtwork={currentSong?.artwork} />
 
       {/* Top Header */}
       <div className="relative z-10 w-full">
