@@ -29,7 +29,8 @@ export const SongSearch: React.FC<SongSearchProps> = ({
       const albumMatch = s.album.toLowerCase().includes(q);
       const artistMatch = s.artist.toLowerCase().includes(q);
       const yearMatch = s.year.toString().includes(q);
-      return titleMatch || albumMatch || artistMatch || yearMatch;
+      const tagMatch = s.tags ? s.tags.some(t => t.toLowerCase().includes(q)) : false;
+      return titleMatch || albumMatch || artistMatch || yearMatch || tagMatch;
     }).slice(0, 8); // Top 8 matches
   }, [query]);
 
@@ -164,13 +165,17 @@ export const SongSearch: React.FC<SongSearchProps> = ({
                   </div>
                 </div>
 
-                {/* Collab / Soundtrack Badge */}
+                {/* Collab / Soundtrack / TOMORA Badge */}
                 <div className="flex items-center space-x-1 shrink-0 ml-1.5">
-                  {song.isFeature && (
+                  {song.tags?.includes('TOMORA') ? (
+                    <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded-md bg-white/20 text-white border border-white/30">
+                      TOMORA
+                    </span>
+                  ) : song.isFeature ? (
                     <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded-md bg-white/15 text-white/90 border border-white/20">
                       Collab
                     </span>
-                  )}
+                  ) : null}
                   {song.isSoundtrack && (
                     <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded-md bg-white/15 text-white/90 border border-white/20">
                       OST

@@ -1099,6 +1099,186 @@ export const AURORA_SONGS: Song[] = [
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/91/9f/8e/919f8e02-4ae0-aebf-ebaa-3d3f2ea066df/mzaf_10014781467499142104.plus.aac.p.m4a",
     "difficulty": "expert",
     "isCover": true
+  },
+  {
+    "id": "tomora-please",
+    "title": "Please",
+    "artist": "TOMORA (AURORA & Tom Rowlands)",
+    "album": "COME CLOSER",
+    "year": 2026,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/46/10/7f/46107fb0-ccff-4370-49f4-3ddd29b2729c/25UM2IM08119.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/7b/df/1d/7bdf1d4c-eb8e-3456-b6bc-586a1f99754a/mzaf_7111606817870741912.plus.aac.p.m4a",
+    "difficulty": "medium",
+    "isFeature": true,
+    "tags": ["TOMORA", "Electronic", "Come Closer", "Tom Rowlands"]
+  },
+  {
+    "id": "tomora-come-closer",
+    "title": "Come Closer",
+    "artist": "TOMORA (AURORA & Tom Rowlands)",
+    "album": "COME CLOSER",
+    "year": 2026,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/46/10/7f/46107fb0-ccff-4370-49f4-3ddd29b2729c/25UM2IM08119.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/fb/d1/8e/fbd18ed1-fceb-ee16-4aaa-7112ddf28e64/mzaf_14585520915246521667.plus.aac.p.m4a",
+    "difficulty": "easy",
+    "isFeature": true,
+    "tags": ["TOMORA", "Electronic", "Come Closer", "Tom Rowlands"]
+  },
+  {
+    "id": "tomora-a-boy-like-you",
+    "title": "A Boy Like You",
+    "artist": "TOMORA (AURORA & Tom Rowlands)",
+    "album": "COME CLOSER",
+    "year": 2026,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/46/10/7f/46107fb0-ccff-4370-49f4-3ddd29b2729c/25UM2IM08119.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/34/00/23/3400234c-433d-95ae-ca19-6e2292eed96f/mzaf_921107273951418604.plus.aac.p.m4a",
+    "difficulty": "medium",
+    "isFeature": true,
+    "tags": ["TOMORA", "Electronic", "Come Closer", "Tom Rowlands"]
+  },
+  {
+    "id": "tomora-ring-the-alarm",
+    "title": "Ring the Alarm",
+    "artist": "TOMORA (AURORA & Tom Rowlands)",
+    "album": "COME CLOSER",
+    "year": 2025,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/46/10/7f/46107fb0-ccff-4370-49f4-3ddd29b2729c/25UM2IM08119.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/db/f3/f0/dbf3f048-41fd-91eb-6166-5fb189a50f21/mzaf_13369444948561044952.plus.aac.p.m4a",
+    "difficulty": "easy",
+    "isFeature": true,
+    "tags": ["TOMORA", "Electronic", "Come Closer", "Tom Rowlands"]
+  },
+  {
+    "id": "tomora-my-baby",
+    "title": "My Baby",
+    "artist": "TOMORA (AURORA & Tom Rowlands)",
+    "album": "COME CLOSER",
+    "year": 2026,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/46/10/7f/46107fb0-ccff-4370-49f4-3ddd29b2729c/25UM2IM08119.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/dd/85/6c/dd856cc8-600b-57b0-c491-d7a898bd20ea/mzaf_10631308387674134375.plus.aac.p.m4a",
+    "difficulty": "medium",
+    "isFeature": true,
+    "tags": ["TOMORA", "Electronic", "Come Closer", "Tom Rowlands"]
+  },
+  {
+    "id": "tomora-have-you-seen-me-dance-alone",
+    "title": "Have You Seen Me Dance Alone",
+    "artist": "TOMORA (AURORA & Tom Rowlands)",
+    "album": "COME CLOSER",
+    "year": 2026,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/46/10/7f/46107fb0-ccff-4370-49f4-3ddd29b2729c/25UM2IM08119.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/96/af/5e/96af5ea1-5db4-a08b-0cfd-060ff6143148/mzaf_3889591112580011378.plus.aac.p.m4a",
+    "difficulty": "medium",
+    "isFeature": true,
+    "tags": ["TOMORA", "Electronic", "Come Closer", "Tom Rowlands"]
+  },
+  {
+    "id": "tomora-somewhere-else",
+    "title": "Somewhere Else",
+    "artist": "TOMORA (AURORA & Tom Rowlands)",
+    "album": "COME CLOSER",
+    "year": 2026,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/46/10/7f/46107fb0-ccff-4370-49f4-3ddd29b2729c/25UM2IM08119.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/c8/42/4e/c8424e59-8198-e733-c9d9-5dbf65dca8eb/mzaf_5251648526015924034.plus.aac.p.m4a",
+    "difficulty": "easy",
+    "isFeature": true,
+    "tags": ["TOMORA", "Electronic", "Come Closer", "Tom Rowlands"]
+  },
+  {
+    "id": "tomora-i-drink-the-light",
+    "title": "I Drink the Light",
+    "artist": "TOMORA (AURORA & Tom Rowlands)",
+    "album": "COME CLOSER",
+    "year": 2026,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/46/10/7f/46107fb0-ccff-4370-49f4-3ddd29b2729c/25UM2IM08119.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/65/2e/91/652e91d2-bbaf-d349-6e05-9a3e429310d0/mzaf_15220199120743919593.plus.aac.p.m4a",
+    "difficulty": "medium",
+    "isFeature": true,
+    "tags": ["TOMORA", "Electronic", "Come Closer", "Tom Rowlands"]
+  },
+  {
+    "id": "tomora-wavelengths",
+    "title": "Wavelengths",
+    "artist": "TOMORA (AURORA & Tom Rowlands)",
+    "album": "COME CLOSER",
+    "year": 2026,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/46/10/7f/46107fb0-ccff-4370-49f4-3ddd29b2729c/25UM2IM08119.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/54/7c/43/547c430f-a04c-58b0-ce82-79cded25f904/mzaf_16981891030846972311.plus.aac.p.m4a",
+    "difficulty": "medium",
+    "isFeature": true,
+    "tags": ["TOMORA", "Electronic", "Come Closer", "Tom Rowlands"]
+  },
+  {
+    "id": "tomora-side-by-side",
+    "title": "Side by Side",
+    "artist": "TOMORA (AURORA & Tom Rowlands)",
+    "album": "COME CLOSER",
+    "year": 2026,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/46/10/7f/46107fb0-ccff-4370-49f4-3ddd29b2729c/25UM2IM08119.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/0d/b8/31/0db8312f-381c-d8ab-ae5e-f56f72cfe97c/mzaf_8428612459070382163.plus.aac.p.m4a",
+    "difficulty": "medium",
+    "isFeature": true,
+    "tags": ["TOMORA", "Electronic", "Come Closer", "Tom Rowlands"]
+  },
+  {
+    "id": "tomora-the-thing",
+    "title": "The Thing",
+    "artist": "TOMORA (AURORA & Tom Rowlands)",
+    "album": "COME CLOSER",
+    "year": 2026,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/46/10/7f/46107fb0-ccff-4370-49f4-3ddd29b2729c/25UM2IM08119.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/79/e6/10/79e61066-62cb-91bd-7083-98ec18d20703/mzaf_8351578238721476982.plus.aac.p.m4a",
+    "difficulty": "easy",
+    "isFeature": true,
+    "tags": ["TOMORA", "Electronic", "Come Closer", "Tom Rowlands"]
+  },
+  {
+    "id": "tomora-in-a-minute",
+    "title": "In a Minute",
+    "artist": "TOMORA (AURORA & Tom Rowlands)",
+    "album": "COME CLOSER",
+    "year": 2026,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/46/10/7f/46107fb0-ccff-4370-49f4-3ddd29b2729c/25UM2IM08119.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e9/27/20/e9272037-c3e9-477b-774a-3573108d97cb/mzaf_5774180020663843384.plus.aac.p.m4a",
+    "difficulty": "medium",
+    "isFeature": true,
+    "tags": ["TOMORA", "Electronic", "Come Closer", "Tom Rowlands"]
+  },
+  {
+    "id": "chemical-brothers-eve-of-destruction",
+    "title": "Eve of Destruction (feat. AURORA)",
+    "artist": "The Chemical Brothers & AURORA",
+    "album": "No Geography",
+    "year": 2019,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/65/20/7a/65207a0f-88d6-6808-e4d4-bdf814490f4b/00602577080241.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/cf/ea/23/cfea239d-d17c-5363-b19b-5991b9dc5e79/mzaf_5304965978479019483.plus.aac.p.m4a",
+    "difficulty": "hard",
+    "isFeature": true,
+    "tags": ["The Chemical Brothers", "No Geography", "Tom Rowlands", "Collab"]
+  },
+  {
+    "id": "chemical-brothers-bango",
+    "title": "Bango (feat. AURORA)",
+    "artist": "The Chemical Brothers & AURORA",
+    "album": "No Geography",
+    "year": 2019,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/65/20/7a/65207a0f-88d6-6808-e4d4-bdf814490f4b/00602577080241.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/2d/f8/63/2df8638b-8f3d-e9f1-1581-f922c45744dc/mzaf_1008740640006240595.plus.aac.p.m4a",
+    "difficulty": "hard",
+    "isFeature": true,
+    "tags": ["The Chemical Brothers", "No Geography", "Tom Rowlands", "Collab"]
+  },
+  {
+    "id": "chemical-brothers-no-geography",
+    "title": "No Geography (feat. AURORA)",
+    "artist": "The Chemical Brothers & AURORA",
+    "album": "No Geography",
+    "year": 2019,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/65/20/7a/65207a0f-88d6-6808-e4d4-bdf814490f4b/00602577080241.rgb.jpg/600x600bb.jpg",
+    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/f3/8e/76/f38e76f5-329f-d286-fdeb-096ed59b6b0a/mzaf_3816286094182858470.plus.aac.p.m4a",
+    "difficulty": "hard",
+    "isFeature": true,
+    "tags": ["The Chemical Brothers", "No Geography", "Tom Rowlands", "Collab"]
   }
 ];
 
@@ -1114,7 +1294,8 @@ export async function fetchLiveTrackDetails(song: Song): Promise<{ previewUrl: s
 
   try {
     const cleanTitle = song.title.replace(/\s*\(feat\..*?\)/i, '').replace(/\s*\[.*?\]/i, '').trim();
-    const query = encodeURIComponent(`AURORA ${cleanTitle}`);
+    const artistTerm = song.artist.includes('TOMORA') ? 'TOMORA' : (song.artist.includes('Chemical Brothers') ? 'The Chemical Brothers' : 'AURORA');
+    const query = encodeURIComponent(`${artistTerm} ${cleanTitle}`);
     const res = await fetch(`https://itunes.apple.com/search?term=${query}&entity=song&limit=5`);
     if (res.ok) {
       const data = await res.json();
