@@ -82,10 +82,10 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
     <div className="w-full max-w-xl mx-auto px-4 flex flex-col items-center select-none">
       {/* WORTH NOW Points Counter */}
       <div className="flex flex-col items-center mb-6">
-        <span className="text-[11px] font-bold tracking-[0.25em] text-emerald-400/80 uppercase">
+        <span className="text-[11px] font-bold tracking-[0.2em] text-[#8e8ea0] uppercase">
           WORTH NOW
         </span>
-        <span className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mt-1 font-mono text-aurora-glow">
+        <span className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mt-1 font-mono">
           {currentInterval.points.toLocaleString()}
         </span>
       </div>
@@ -103,10 +103,10 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
               disabled={!isUnlocked}
               className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
                 isSelected
-                  ? 'bg-gradient-to-r from-emerald-400 to-teal-300 text-black font-bold shadow-[0_0_15px_rgba(52,211,153,0.5)] scale-105'
+                  ? 'bg-white text-black shadow-lg scale-105'
                   : isUnlocked
-                  ? 'bg-[#151c28] text-emerald-100 hover:bg-[#1f2a3c] border border-emerald-500/20'
-                  : 'bg-[#0e121a]/80 text-gray-600 cursor-not-allowed opacity-40 border border-white/5'
+                  ? 'bg-[#22222d] text-gray-200 hover:bg-[#2e2e3c]'
+                  : 'bg-[#15151b] text-gray-600 cursor-not-allowed opacity-50'
               }`}
             >
               {interval.label}
@@ -117,16 +117,16 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
 
       {/* Primary Action Buttons Row */}
       <div className="w-full flex items-center justify-center gap-3">
-        {/* Big Aurora Gradient Play / Pause Button */}
+        {/* Big Green Play / Pause Button */}
         <button
           onClick={isPlaying ? onStopSnippet : onPlaySnippet}
           disabled={isLoadingAudio}
-          className={`flex-1 max-w-[280px] h-12 rounded-full font-bold text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-200 shadow-[0_0_20px_rgba(16,185,129,0.3)] cursor-pointer ${
+          className={`flex-1 max-w-[280px] h-12 rounded-full font-bold text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-200 shadow-lg cursor-pointer ${
             isPlaying
-              ? 'bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white animate-pulse'
+              ? 'bg-emerald-600 text-white animate-pulse'
               : isLoadingAudio
-              ? 'bg-emerald-600/60 text-black cursor-wait'
-              : 'bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-200 text-black hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(52,211,153,0.6)]'
+              ? 'bg-[#1DB954]/60 text-black cursor-wait'
+              : 'bg-[#1DB954] hover:bg-[#1ed760] text-black hover:scale-[1.02]'
           }`}
         >
           {isLoadingAudio ? (
@@ -159,8 +159,8 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
             disabled={cooldownRemaining > 0}
             className={`h-12 px-4 rounded-full border font-semibold text-xs flex items-center gap-1.5 transition-all duration-200 select-none ${
               cooldownRemaining > 0
-                ? 'bg-[#10141d] text-gray-500 border-white/5 cursor-not-allowed opacity-60'
-                : 'bg-[#151c28] hover:bg-[#1f2a3c] text-white border-emerald-500/20 hover:scale-105 active:scale-95 shadow-[0_0_12px_rgba(16,185,129,0.15)] cursor-pointer'
+                ? 'bg-[#14141a] text-gray-500 border-white/5 cursor-not-allowed opacity-60'
+                : 'bg-[#1c1c24] hover:bg-[#282834] text-white border-white/5 hover:scale-105 active:scale-95 cursor-pointer'
             }`}
             title={
               cooldownRemaining > 0
@@ -175,7 +175,7 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
               </>
             ) : (
               <>
-                <Plus size={14} className="text-emerald-400" />
+                <Plus size={14} className="text-[#1DB954]" />
                 <span>More</span>
               </>
             )}
@@ -185,7 +185,7 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
         {/* Skip / Next Attempt Button */}
         <button
           onClick={onSkipRound}
-          className="h-12 w-12 rounded-full bg-[#151c28] hover:bg-[#1f2a3c] text-[#8e8ea0] hover:text-white border border-emerald-500/15 flex items-center justify-center transition-all hover:scale-105 active:scale-95 shadow-[0_0_10px_rgba(0,0,0,0.5)] cursor-pointer"
+          className="h-12 w-12 rounded-full bg-[#1c1c24] hover:bg-[#282834] text-[#8e8ea0] hover:text-white border border-white/5 flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer"
           title="Skip / Give up this round"
         >
           <FastForward size={16} />

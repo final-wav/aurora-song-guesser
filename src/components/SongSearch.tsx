@@ -98,8 +98,8 @@ export const SongSearch: React.FC<SongSearchProps> = ({
           }}
           onKeyDown={handleKeyDown}
           disabled={disabled}
-          placeholder={disabled ? "Round complete" : "Search AURORA songs, albums, features..."}
-          className="w-full h-12 pl-10 pr-10 bg-[#0f141e]/90 text-white placeholder-[#68738a] rounded-2xl border border-emerald-500/20 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 outline-none text-sm transition-all shadow-[0_4px_25px_-5px_rgba(0,0,0,0.6)] focus:shadow-[0_0_20px_rgba(52,211,153,0.2)] disabled:opacity-50"
+          placeholder={disabled ? "Round complete" : "Search songs..."}
+          className="w-full h-12 pl-10 pr-10 bg-[#15151c] text-white placeholder-[#6e6e80] rounded-xl border border-white/10 focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954] outline-none text-sm transition-all shadow-inner disabled:opacity-50"
         />
 
         {query && (
@@ -120,7 +120,7 @@ export const SongSearch: React.FC<SongSearchProps> = ({
       {isOpen && filteredSongs.length > 0 && (
         <div
           ref={dropdownRef}
-          className="absolute left-4 right-4 mt-2 bg-[#0d121c]/95 backdrop-blur-xl border border-emerald-500/25 rounded-2xl shadow-[0_15px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(16,185,129,0.15)] overflow-hidden z-50 max-h-80 overflow-y-auto"
+          className="absolute left-4 right-4 mt-2 bg-[#181822] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50 max-h-80 overflow-y-auto"
         >
           {filteredSongs.map((song, idx) => {
             const isSelected = idx === selectedIndex;
@@ -133,10 +133,10 @@ export const SongSearch: React.FC<SongSearchProps> = ({
                 onMouseEnter={() => setSelectedIndex(idx)}
                 className={`flex items-center justify-between px-3.5 py-2.5 cursor-pointer border-b border-white/5 transition-colors ${
                   isAlreadyGuessed
-                    ? 'opacity-40 line-through cursor-not-allowed bg-[#080b10]'
+                    ? 'opacity-40 line-through cursor-not-allowed bg-[#14141a]'
                     : isSelected
-                    ? 'bg-gradient-to-r from-emerald-950/60 to-teal-950/40 text-white border-l-2 border-l-emerald-400'
-                    : 'text-gray-300 hover:bg-[#131926]'
+                    ? 'bg-[#252533] text-white'
+                    : 'text-gray-300 hover:bg-[#20202c]'
                 }`}
               >
                 <div className="flex items-center space-x-3 overflow-hidden">

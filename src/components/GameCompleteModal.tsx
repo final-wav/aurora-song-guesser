@@ -27,10 +27,9 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
   React.useEffect(() => {
     if (isOpen) {
       confetti({
-        particleCount: 120,
-        spread: 90,
+        particleCount: 100,
+        spread: 80,
         origin: { y: 0.5 },
-        colors: ['#10b981', '#34d399', '#06b6d4', '#8b5cf6', '#fbbf24', '#ffffff'],
       });
     }
   }, [isOpen]);
@@ -48,18 +47,18 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-fade-in select-none">
-      <div className="w-full max-w-lg bg-[#0e131d]/95 border border-emerald-500/25 rounded-3xl p-6 shadow-[0_25px_70px_rgba(0,0,0,0.9),0_0_35px_rgba(16,185,129,0.15)] flex flex-col items-center text-center max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in select-none">
+      <div className="w-full max-w-lg bg-[#16161f] border border-white/10 rounded-2xl p-6 shadow-2xl flex flex-col items-center text-center max-h-[90vh] overflow-y-auto">
         {/* Trophy icon & Final Score */}
-        <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-3 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
-          <Trophy size={28} className="text-emerald-400" />
+        <div className="w-14 h-14 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-3">
+          <Trophy size={28} className="text-amber-400" />
         </div>
 
-        <span className="text-xs font-semibold tracking-widest text-emerald-400/80 uppercase">
+        <span className="text-xs font-semibold tracking-widest text-[#8e8ea0] uppercase">
           Match Completed
         </span>
 
-        <h2 className="text-4xl font-extrabold text-white tracking-tight my-1 font-mono text-aurora-glow">
+        <h2 className="text-4xl font-extrabold text-white tracking-tight my-1 font-mono">
           {finalScore.toLocaleString()} <span className="text-lg text-[#8e8ea0]">/ {maxPossibleScore.toLocaleString()}</span>
         </h2>
 

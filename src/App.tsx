@@ -13,6 +13,7 @@ import { audioEngine } from './utils/audioEngine';
 import { loadUserStats, saveGameMatchResult, recordGuessStep, UserStats } from './utils/stats';
 
 import { Header } from './components/Header';
+import { AuroraBackground } from './components/AuroraBackground';
 import { AudioWaveform } from './components/AudioWaveform';
 import { PlayerControls } from './components/PlayerControls';
 import { SongSearch } from './components/SongSearch';
@@ -270,78 +271,79 @@ export const App: React.FC = () => {
   const currentInterval = STEP_INTERVALS[currentStepIndex] || STEP_INTERVALS[0];
 
   return (
-    <div className="min-h-screen bg-[#07080c] text-white flex flex-col justify-between aurora-bg relative overflow-x-hidden">
-      {/* Ambient Animated Northern Lights Curtain Glow */}
-      <div className="aurora-curtain" />
-
-      {/* Decorative Aurora Ethereal Light Spots */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-emerald-500/10 via-cyan-500/8 to-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-0" />
-
-      {/* Top Header */}
-      <Header
-        difficulty={difficulty}
-        onSelectDifficulty={(diff) => {
-          setDifficulty(diff);
-          initGame(diff, gameMode);
-        }}
-        gameMode={gameMode}
-        onSelectGameMode={(mode) => {
-          setGameMode(mode);
-          initGame(difficulty, mode);
-        }}
-        currentScore={matchScore}
-        maxPossibleScore={maxPossibleScore}
-        currentRound={currentSongIndex + 1}
-        totalRounds={totalRounds}
-        onResetGame={() => initGame(difficulty, gameMode)}
-        onOpenStats={() => setIsStatsModalOpen(true)}
-        onOpenSettings={() => setIsSettingsModalOpen(true)}
+    <div className="min-h-screen bg-[#08080c] text-white flex flex-col justify-between relative overflow-x-hidden">
+      {/* Dynamic Apple Music-style Aurora Blurred Canvas & Ethereal Light Mesh */}
+      <AuroraBackground
+        activeArtwork={currentSong?.artwork}
+        isPlaying={isPlaying}
+        albumName={currentSong?.album}
       />
 
-      {/* Main Interactive Stage */}
-      <main className="flex-1 flex flex-col items-center justify-center py-4 sm:py-8 w-full max-w-2xl mx-auto relative z-10">
-        {/* Audio Waveform Scrubber */}
-        <AudioWaveform
-          unlockedDuration={currentInterval.duration}
-          totalMaxDuration={30.0}
-          playbackProgressRatio={playbackRatio}
-          isPlaying={isPlaying}
-          peaks={peaks}
-          startOffset={startOffset}
-        />
-
-        {/* Player Controls (Pills, Play/Stop Button, +1s, Skip) */}
-        <PlayerControls
-          currentStepIndex={currentStepIndex}
-          onSelectStepIndex={(idx) => {
-            setCurrentStepIndex(idx);
-            const intv = STEP_INTERVALS[idx];
-            audioEngine.playSnippet(activeAudioUrl, intv.duration, startOffset);
+      {/* Top Header */}
+      <div className="relative z-10 w-full">
+        <Header
+          difficulty={difficulty}
+          onSelectDifficulty={(diff) => {
+            setDifficulty(diff);
+            initGame(diff, gameMode);
           }}
-          onPlaySnippet={handlePlaySnippet}
-          onStopSnippet={handleStopSnippet}
-          onUnlockNextStep={handleUnlockNextStep}
-          onSkipRound={handleSkipRound}
-          isPlaying={isPlaying}
-          isLoadingAudio={isLoadingAudio}
+          gameMode={gameMode}
+          onSelectGameMode={(mode) => {
+            setGameMode(mode);
+            initGame(difficulty, mode);
+          }}
+          currentScore={matchScore}
+          maxPossibleScore={maxPossibleScore}
+          currentRound={currentSongIndex + 1}
+          totalRounds={totalRounds}
+          onResetGame={() => initGame(difficulty, gameMode)}
+          onOpenStats={() => setIsStatsModalOpen(true)}
+          onOpenSettings={() => setIsSettingsModalOpen(true)}
         />
+      </div>
 
-        {/* Real-time Song Search & Autocomplete Dropdown */}
-        <SongSearch
-          onSelectSong={handleSelectSong}
-          wrongGuesses={wrongGuesses}
-          disabled={isRoundModalOpen || isGameCompleteModalOpen}
-        />
+      {/* Main Interactive Stage */}
+      <main className="relative z-10 flex-1 flex flex-col items-center justify-center py-4 sm:py-6 px-4 w-full max-w-2xl mx-auto">
+        <div className="w-full glass-panel border border-white/10 rounded-3xl p-4 sm:p-7 shadow-[0_24px_60px_rgba(0,0,0,0.7)] backdrop-blur-2xl flex flex-col items-center">
+          {/* Audio Waveform Scrubber */}
+          <AudioWaveform
+            unlockedDuration={currentInterval.duration}
+            totalMaxDuration={30.0}
+            playbackProgressRatio={playbackRatio}
+            isPlaying={isPlaying}
+            peaks={peaks}
+            startOffset={startOffset}
+          />
+
+          {/* Player Controls (Pills, Play/Stop Button, +1s, Skip) */}
+          <PlayerControls
+            currentStepIndex={currentStepIndex}
+            onSelectStepIndex={(idx) => {
+              setCurrentStepIndex(idx);
+              const intv = STEP_INTERVALS[idx];
+              audioEngine.playSnippet(activeAudioUrl, intv.duration, startOffset);
+            }}
+            onPlaySnippet={handlePlaySnippet}
+            onStopSnippet={handleStopSnippet}
+            onUnlockNextStep={handleUnlockNextStep}
+            onSkipRound={handleSkipRound}
+            isPlaying={isPlaying}
+            isLoadingAudio={isLoadingAudio}
+          />
+
+          {/* Real-time Song Search & Autocomplete Dropdown */}
+          <SongSearch
+            onSelectSong={handleSelectSong}
+            wrongGuesses={wrongGuesses}
+            disabled={isRoundModalOpen || isGameCompleteModalOpen}
+          />
+        </div>
       </main>
 
       {/* Footer Branding & Track Count */}
-      <footer className="w-full py-4 text-center text-xs text-[#788299] border-t border-emerald-500/10 select-none relative z-10 backdrop-blur-md bg-[#07090e]/40">
-        <p className="flex items-center justify-center gap-2">
-          <span className="text-emerald-400">✦</span>
-          <span><strong className="text-white font-semibold">AURORA</strong> Song Guesser</span>
-          <span>•</span>
-          <span className="text-emerald-300/80">{AURORA_SONGS.length} Songs & Collaborations</span>
-          <span className="text-emerald-400">✦</span>
+      <footer className="relative z-10 w-full py-4 text-center text-xs text-[#8e8ea0] border-t border-white/5 select-none bg-black/20 backdrop-blur-md">
+        <p className="tracking-wide">
+          <strong className="text-white font-semibold tracking-wider">AURORA</strong> Song Guesser • {AURORA_SONGS.length} Songs, EPs & Collaborations
         </p>
       </footer>
 

@@ -16,12 +16,12 @@ interface HeaderProps {
   onOpenSettings: () => void;
 }
 
-const DIFFICULTIES: { key: Difficulty; label: string; activeColor: string }[] = [
-  { key: 'easy', label: 'EASY', activeColor: 'text-emerald-400 border-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.5)]' },
-  { key: 'medium', label: 'MEDIUM', activeColor: 'text-cyan-400 border-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.5)]' },
-  { key: 'hard', label: 'HARD', activeColor: 'text-purple-400 border-purple-400 shadow-[0_0_12px_rgba(192,132,252,0.5)]' },
-  { key: 'expert', label: 'EXPERT', activeColor: 'text-amber-400 border-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.5)]' },
-  { key: 'brutal', label: 'BRUTAL', activeColor: 'text-rose-400 border-rose-400 shadow-[0_0_12px_rgba(251,113,133,0.5)]' },
+const DIFFICULTIES: { key: Difficulty; label: string }[] = [
+  { key: 'easy', label: 'EASY' },
+  { key: 'medium', label: 'MEDIUM' },
+  { key: 'hard', label: 'HARD' },
+  { key: 'expert', label: 'EXPERT' },
+  { key: 'brutal', label: 'BRUTAL' },
 ];
 
 export const Header: React.FC<HeaderProps> = ({
@@ -38,52 +38,45 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSettings,
 }) => {
   return (
-    <header className="w-full max-w-2xl mx-auto pt-3 pb-2 px-4 select-none relative z-10">
-      {/* Brand Header Banner */}
-      <div className="flex items-center justify-between mb-3 pb-1 border-b border-emerald-500/10">
-        <div className="flex items-center space-x-2.5">
-          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-emerald-500 via-teal-400 to-purple-500 p-[1.5px] shadow-[0_0_12px_rgba(16,185,129,0.35)]">
-            <div className="w-full h-full rounded-full bg-[#090b10] flex items-center justify-center">
-              <span className="text-xs font-serif font-black text-emerald-300">A</span>
-            </div>
-          </div>
-          <div>
-            <h1 className="text-sm font-extrabold tracking-[0.28em] text-white uppercase text-aurora-glow">
-              A U R O R A
-            </h1>
-            <p className="text-[9px] font-semibold tracking-[0.2em] text-emerald-400/80 uppercase -mt-0.5">
-              Song Guesser
-            </p>
-          </div>
+    <header className="w-full max-w-2xl mx-auto pt-4 pb-2 px-4 select-none">
+      {/* Aurora Title Branding */}
+      <div className="flex items-center justify-between pb-3">
+        <div className="flex items-center space-x-2">
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_12px_rgba(52,211,153,0.8)]" />
+          <h1 className="text-sm font-extrabold tracking-[0.25em] text-white uppercase flex items-center gap-1.5">
+            AURORA <span className="text-[10px] text-emerald-400 font-mono font-medium px-1.5 py-0.5 rounded-md bg-emerald-950/60 border border-emerald-500/30">GUESSER</span>
+          </h1>
         </div>
 
         {/* Game Mode Switcher */}
-        <button
-          onClick={() => onSelectGameMode(gameMode === 'match' ? 'daily' : 'match')}
-          className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#141a24] to-[#1c2230] hover:from-[#1c2433] hover:to-[#252f44] text-[11px] font-medium text-emerald-300 transition-all border border-emerald-500/20 shadow-[0_0_15px_-3px_rgba(16,185,129,0.2)] cursor-pointer"
-          title="Switch Game Mode"
-        >
-          <Sparkles size={12} className="text-emerald-400 animate-pulse" />
-          <span className="capitalize">{gameMode === 'daily' ? 'Daily Challenge' : '5-Round Match'}</span>
-        </button>
+        <div className="flex items-center space-x-1">
+          <button
+            onClick={() => onSelectGameMode(gameMode === 'match' ? 'daily' : 'match')}
+            className="flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/10 hover:bg-white/15 text-[11px] font-medium text-gray-200 transition-all border border-white/10 backdrop-blur-md cursor-pointer shadow-sm hover:scale-105 active:scale-95"
+            title="Switch Game Mode"
+          >
+            <Sparkles size={12} className="text-emerald-400" />
+            <span className="capitalize">{gameMode === 'daily' ? 'Daily Challenge' : '5-Round Match'}</span>
+          </button>
+        </div>
       </div>
 
-      {/* Difficulty Navigation Tabs */}
-      <div className="flex items-center justify-between border-b border-white/5 pb-2 text-xs font-semibold tracking-wider text-[#7e859a]">
-        <div className="flex items-center space-x-4 sm:space-x-8 overflow-x-auto no-scrollbar py-0.5 w-full justify-between">
+      {/* Top Difficulty Navigation Tabs */}
+      <div className="flex items-center justify-between border-b border-white/10 pb-2 text-xs font-semibold tracking-wider text-[#8e8ea0]">
+        <div className="flex items-center space-x-4 sm:space-x-8 overflow-x-auto no-scrollbar py-1">
           {DIFFICULTIES.map(d => {
             const isActive = difficulty === d.key;
             return (
               <button
                 key={d.key}
                 onClick={() => onSelectDifficulty(d.key)}
-                className={`transition-all duration-200 relative pb-1 whitespace-nowrap cursor-pointer text-[11px] sm:text-xs tracking-wider ${
-                  isActive ? `${d.activeColor} font-bold scale-105` : 'hover:text-gray-200 opacity-60 hover:opacity-100'
+                className={`transition-all duration-200 relative pb-1 whitespace-nowrap cursor-pointer ${
+                  isActive ? 'text-white font-bold scale-105' : 'hover:text-gray-300'
                 }`}
               >
                 {d.label}
                 {isActive && (
-                  <span className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full bg-current`} />
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-emerald-400 to-teal-300 rounded-full shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
                 )}
               </button>
             );
