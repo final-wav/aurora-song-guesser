@@ -72,7 +72,7 @@ export const AuroraBackground: React.FC = () => {
           return 'A';
         }
       });
-    }, 8000);
+    }, 28000); // Calm 28-second ambient rotation interval
 
     return () => {
       isMounted = false;
@@ -84,22 +84,22 @@ export const AuroraBackground: React.FC = () => {
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none bg-[#0a0a0e]">
       {/* Layer A */}
       <div
-        className={`absolute inset-0 bg-cover bg-center scale-105 filter blur-[18px] sm:blur-[24px] brightness-95 transition-opacity duration-1000 ease-in-out transform-gpu ${
-          activeLayer === 'A' ? 'opacity-85 z-10' : 'opacity-0 z-0'
+        className={`absolute inset-0 bg-cover bg-center scale-105 filter blur-[28px] sm:blur-[36px] brightness-90 transition-opacity duration-[3000ms] ease-in-out transform-gpu ${
+          activeLayer === 'A' ? 'opacity-75 z-10' : 'opacity-0 z-0'
         }`}
         style={{ backgroundImage: `url(${layerA})` }}
       />
 
       {/* Layer B */}
       <div
-        className={`absolute inset-0 bg-cover bg-center scale-105 filter blur-[18px] sm:blur-[24px] brightness-95 transition-opacity duration-1000 ease-in-out transform-gpu ${
-          activeLayer === 'B' ? 'opacity-85 z-10' : 'opacity-0 z-0'
+        className={`absolute inset-0 bg-cover bg-center scale-105 filter blur-[28px] sm:blur-[36px] brightness-90 transition-opacity duration-[3000ms] ease-in-out transform-gpu ${
+          activeLayer === 'B' ? 'opacity-75 z-10' : 'opacity-0 z-0'
         }`}
         style={{ backgroundImage: `url(${layerB})` }}
       />
 
       {/* Soft dark gradient vignette so UI text & controls remain crystal clear */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-black/60 z-20" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/35 to-black/70 z-20" />
     </div>
   );
 };
