@@ -38,18 +38,18 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSettings,
 }) => {
   return (
-    <header className="w-full max-w-2xl mx-auto pt-4 pb-2 px-4 select-none">
+    <header className="w-full max-w-2xl mx-auto pt-3 sm:pt-4 pb-2 px-3 sm:px-4 select-none">
       {/* Top Difficulty Navigation Tabs */}
-      <div className="flex items-center justify-between border-b border-white/10 pb-2 text-xs font-semibold tracking-wider text-[#8e8ea0]">
-        <div className="flex items-center space-x-4 sm:space-x-8 overflow-x-auto no-scrollbar py-1">
+      <div className="flex items-center justify-between border-b border-white/10 pb-2 text-xs font-semibold tracking-wider text-[#8e8ea0] gap-2">
+        <div className="flex items-center space-x-3 sm:space-x-7 overflow-x-auto no-scrollbar py-1 touch-pan-x flex-1 min-w-0">
           {DIFFICULTIES.map(d => {
             const isActive = difficulty === d.key;
             return (
               <button
                 key={d.key}
                 onClick={() => onSelectDifficulty(d.key)}
-                className={`transition-colors duration-200 relative pb-1 whitespace-nowrap cursor-pointer ${
-                  isActive ? 'text-white font-bold' : 'hover:text-gray-300'
+                className={`transition-colors duration-200 relative pb-1 whitespace-nowrap cursor-pointer text-[11px] sm:text-xs shrink-0 active:scale-95 ${
+                  isActive ? 'text-white font-bold' : 'hover:text-gray-300 text-gray-400'
                 }`}
               >
                 {d.label}
@@ -62,59 +62,59 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Game Mode Switcher */}
-        <div className="flex items-center space-x-1 pl-2">
+        <div className="flex items-center pl-1 shrink-0">
           <button
             onClick={() => onSelectGameMode(gameMode === 'match' ? 'daily' : 'match')}
-            className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/15 text-[11px] font-medium text-gray-300 transition-colors border border-white/10 cursor-pointer"
+            className="flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/15 text-[10px] sm:text-[11px] font-medium text-gray-300 transition-colors border border-white/10 cursor-pointer active:scale-95 shrink-0"
             title="Switch Game Mode"
           >
-            <Sparkles size={12} className="text-gray-300" />
+            <Sparkles size={11} className="text-gray-300" />
             <span className="capitalize">{gameMode === 'daily' ? 'Daily' : '5-Round'}</span>
           </button>
         </div>
       </div>
 
       {/* Subheader Status: Score, Round, Actions */}
-      <div className="flex items-center justify-between mt-4 text-sm">
+      <div className="flex items-center justify-between mt-3 sm:mt-4 text-sm gap-2">
         {/* Score indicator */}
-        <div className="flex items-baseline space-x-1">
-          <span className="text-xl font-bold text-white tracking-tight">
+        <div className="flex items-baseline space-x-1 shrink-0">
+          <span className="text-lg sm:text-xl font-bold text-white tracking-tight font-mono">
             {currentScore.toLocaleString()}
           </span>
-          <span className="text-xs text-[#8e8ea0]">/ {maxPossibleScore.toLocaleString()}</span>
+          <span className="text-[10px] sm:text-xs text-[#8e8ea0]">/ {maxPossibleScore.toLocaleString()}</span>
         </div>
 
         {/* Center / Round Tracker */}
-        <div className="text-xs font-medium text-[#8e8ea0] tracking-wide">
+        <div className="text-[11px] sm:text-xs font-medium text-[#8e8ea0] tracking-wide text-center truncate">
           {gameMode === 'match' ? (
             <span>Round <strong className="text-white">{currentRound}</strong> / {totalRounds}</span>
           ) : (
-            <span className="text-emerald-400 font-semibold">Today's Daily Challenge</span>
+            <span className="text-emerald-400 font-semibold">Today's Daily</span>
           )}
         </div>
 
         {/* Action icons */}
-        <div className="flex items-center space-x-1 sm:space-x-2">
+        <div className="flex items-center space-x-1 shrink-0">
           <button
             onClick={onResetGame}
-            className="p-1.5 rounded-lg text-[#8e8ea0] hover:text-white hover:bg-[#1f1f2a] transition-colors"
+            className="p-1.5 sm:p-2 rounded-lg text-[#8e8ea0] hover:text-white hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
             title="Restart Match"
           >
-            <RotateCcw size={16} />
+            <RotateCcw size={15} />
           </button>
           <button
             onClick={onOpenStats}
-            className="p-1.5 rounded-lg text-[#8e8ea0] hover:text-white hover:bg-[#1f1f2a] transition-colors"
+            className="p-1.5 sm:p-2 rounded-lg text-[#8e8ea0] hover:text-white hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
             title="Statistics & Streaks"
           >
-            <BarChart3 size={16} />
+            <BarChart3 size={15} />
           </button>
           <button
             onClick={onOpenSettings}
-            className="p-1.5 rounded-lg text-[#8e8ea0] hover:text-white hover:bg-[#1f1f2a] transition-colors"
+            className="p-1.5 sm:p-2 rounded-lg text-[#8e8ea0] hover:text-white hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
             title="Settings & Audio"
           >
-            <Settings2 size={16} />
+            <Settings2 size={15} />
           </button>
         </div>
       </div>

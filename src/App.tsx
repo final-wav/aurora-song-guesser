@@ -271,7 +271,7 @@ export const App: React.FC = () => {
   const currentInterval = STEP_INTERVALS[currentStepIndex] || STEP_INTERVALS[0];
 
   return (
-    <div className="min-h-screen bg-[#08080c] text-white flex flex-col justify-between relative overflow-x-hidden">
+    <div className="min-h-[100dvh] bg-[#08080c] text-white flex flex-col justify-between relative overflow-x-hidden">
       {/* Clean blurred cover / Aurora backdrop */}
       <AuroraBackground activeArtwork={currentSong?.artwork} />
 
@@ -299,8 +299,8 @@ export const App: React.FC = () => {
       </div>
 
       {/* Main Interactive Stage */}
-      <main className="relative z-10 flex-1 flex flex-col items-center justify-center py-4 sm:py-6 px-4 w-full max-w-2xl mx-auto">
-        <div className="w-full glass-panel border border-white/10 rounded-3xl p-4 sm:p-7 shadow-[0_24px_60px_rgba(0,0,0,0.7)] backdrop-blur-2xl flex flex-col items-center">
+      <main className="relative z-10 flex-1 flex flex-col items-center justify-center py-2 sm:py-6 px-2 sm:px-4 w-full max-w-2xl mx-auto">
+        <div className="w-full glass-panel border border-white/10 rounded-2xl sm:rounded-3xl p-3 sm:p-7 shadow-[0_24px_60px_rgba(0,0,0,0.7)] backdrop-blur-2xl flex flex-col items-center">
           {/* Audio Waveform Scrubber */}
           <AudioWaveform
             unlockedDuration={currentInterval.duration}
@@ -337,7 +337,7 @@ export const App: React.FC = () => {
       </main>
 
       {/* Footer Branding & Track Count */}
-      <footer className="relative z-10 w-full py-4 text-center text-xs text-[#8e8ea0] border-t border-white/5 select-none bg-black/20 backdrop-blur-md">
+      <footer className="relative z-10 w-full py-2.5 sm:py-4 text-center text-[10px] sm:text-xs text-[#8e8ea0] border-t border-white/5 select-none bg-black/20 backdrop-blur-md">
         <p className="tracking-wide">
           <strong className="text-white font-semibold tracking-wider">AURORA</strong> Song Guesser • {AURORA_SONGS.length} Songs, EPs & Collaborations
         </p>

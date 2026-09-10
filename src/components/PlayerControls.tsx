@@ -79,19 +79,19 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto px-4 flex flex-col items-center select-none">
+    <div className="w-full max-w-xl mx-auto px-2 sm:px-4 flex flex-col items-center select-none">
       {/* WORTH NOW Points Counter */}
-      <div className="flex flex-col items-center mb-6">
-        <span className="text-[11px] font-bold tracking-[0.2em] text-[#8e8ea0] uppercase">
+      <div className="flex flex-col items-center mb-3 sm:mb-6">
+        <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#8e8ea0] uppercase">
           WORTH NOW
         </span>
-        <span className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mt-1 font-mono">
+        <span className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mt-0.5 sm:mt-1 font-mono">
           {currentInterval.points.toLocaleString()}
         </span>
       </div>
 
       {/* Interval Selector Pills (0.10s, 0.50s, 1.0s, 3.0s...) */}
-      <div className="flex items-center justify-center flex-wrap gap-2 mb-6">
+      <div className="flex items-center justify-center flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6">
         {STEP_INTERVALS.slice(0, 5).map((interval, idx) => {
           const isUnlocked = idx <= currentStepIndex;
           const isSelected = idx === currentStepIndex;
@@ -101,7 +101,7 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
               key={interval.step}
               onClick={() => isUnlocked && onSelectStepIndex(idx)}
               disabled={!isUnlocked}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
+              className={`px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold transition-all duration-200 cursor-pointer active:scale-95 ${
                 isSelected
                   ? 'bg-white text-black shadow-lg scale-105'
                   : isUnlocked
@@ -116,12 +116,12 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
       </div>
 
       {/* Primary Action Buttons Row */}
-      <div className="w-full flex items-center justify-center gap-3">
+      <div className="w-full flex items-center justify-center gap-2 sm:gap-3">
         {/* Big Green Play / Pause Button */}
         <button
           onClick={isPlaying ? onStopSnippet : onPlaySnippet}
           disabled={isLoadingAudio}
-          className={`flex-1 max-w-[280px] h-12 rounded-full font-bold text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-200 shadow-lg cursor-pointer ${
+          className={`flex-1 min-w-0 max-w-[280px] h-11 sm:h-12 rounded-full font-bold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-1.5 sm:gap-2 transition-all duration-200 shadow-lg cursor-pointer active:scale-95 ${
             isPlaying
               ? 'bg-emerald-600 text-white animate-pulse'
               : isLoadingAudio
@@ -130,15 +130,15 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
           }`}
         >
           {isLoadingAudio ? (
-            <div className="flex items-center gap-2 text-black font-semibold">
-              <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+            <div className="flex items-center gap-2 text-black font-semibold text-xs sm:text-sm truncate">
+              <div className="w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full animate-spin shrink-0" />
               <span>Loading Audio...</span>
             </div>
           ) : isPlaying ? (
             <>
-              <Square size={16} className="fill-current" />
-              <span>Stop ({currentInterval.label})</span>
-              <div className="flex items-center gap-0.5 ml-2">
+              <Square size={15} className="fill-current shrink-0" />
+              <span className="truncate">Stop ({currentInterval.label})</span>
+              <div className="flex items-center gap-0.5 ml-1 shrink-0">
                 <span className="w-1 bg-black rounded-full animate-bar-1" />
                 <span className="w-1 bg-black rounded-full animate-bar-2" />
                 <span className="w-1 bg-black rounded-full animate-bar-3" />
@@ -146,8 +146,8 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
             </>
           ) : (
             <>
-              <Play size={18} className="fill-current ml-0.5" />
-              <span>Play {currentInterval.label}</span>
+              <Play size={16} className="fill-current ml-0.5 shrink-0" />
+              <span className="truncate">Play {currentInterval.label}</span>
             </>
           )}
         </button>
@@ -157,7 +157,7 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
           <button
             onClick={handleMoreClick}
             disabled={cooldownRemaining > 0}
-            className={`h-12 px-4 rounded-full border font-semibold text-xs flex items-center gap-1.5 transition-all duration-200 select-none ${
+            className={`h-11 sm:h-12 px-3 sm:px-4 rounded-full border font-semibold text-[11px] sm:text-xs flex items-center gap-1 sm:gap-1.5 transition-all duration-200 select-none shrink-0 ${
               cooldownRemaining > 0
                 ? 'bg-[#14141a] text-gray-500 border-white/5 cursor-not-allowed opacity-60'
                 : 'bg-[#1c1c24] hover:bg-[#282834] text-white border-white/5 hover:scale-105 active:scale-95 cursor-pointer'
@@ -170,12 +170,12 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
           >
             {cooldownRemaining > 0 ? (
               <>
-                <Clock size={13} className="text-gray-500 animate-spin" />
+                <Clock size={12} className="text-gray-500 animate-spin shrink-0" />
                 <span>More ({cooldownRemaining}s)</span>
               </>
             ) : (
               <>
-                <Plus size={14} className="text-[#1DB954]" />
+                <Plus size={13} className="text-[#1DB954] shrink-0" />
                 <span>More</span>
               </>
             )}
@@ -185,10 +185,10 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
         {/* Skip / Next Attempt Button */}
         <button
           onClick={onSkipRound}
-          className="h-12 w-12 rounded-full bg-[#1c1c24] hover:bg-[#282834] text-[#8e8ea0] hover:text-white border border-white/5 flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer"
+          className="h-11 w-11 sm:h-12 sm:w-12 rounded-full bg-[#1c1c24] hover:bg-[#282834] text-[#8e8ea0] hover:text-white border border-white/5 flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shrink-0"
           title="Skip / Give up this round"
         >
-          <FastForward size={16} />
+          <FastForward size={15} />
         </button>
       </div>
     </div>

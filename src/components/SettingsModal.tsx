@@ -17,8 +17,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md select-none">
-      <div className="w-full max-w-md bg-[#16161f] border border-white/10 rounded-2xl p-6 shadow-2xl relative text-left max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md select-none">
+      <div className="w-full max-w-md bg-[#16161f] border border-white/10 rounded-2xl p-4 sm:p-6 shadow-2xl relative text-left max-h-[90dvh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}

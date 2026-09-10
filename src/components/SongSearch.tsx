@@ -77,7 +77,7 @@ export const SongSearch: React.FC<SongSearchProps> = ({
   }, []);
 
   return (
-    <div className="w-full max-w-xl mx-auto px-4 mt-6 relative select-none">
+    <div className="w-full max-w-xl mx-auto px-2 sm:px-4 mt-4 sm:mt-6 relative select-none">
       {/* Search Input Box */}
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8e8ea0]">
@@ -99,7 +99,7 @@ export const SongSearch: React.FC<SongSearchProps> = ({
           onKeyDown={handleKeyDown}
           disabled={disabled}
           placeholder={disabled ? "Round complete" : "Search songs..."}
-          className="w-full h-12 pl-10 pr-10 bg-[#15151c] text-white placeholder-[#6e6e80] rounded-xl border border-white/10 focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954] outline-none text-sm transition-all shadow-inner disabled:opacity-50"
+          className="w-full h-11 sm:h-12 pl-10 pr-10 bg-[#15151c] text-white placeholder-[#6e6e80] rounded-xl border border-white/10 focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954] outline-none text-base sm:text-sm transition-all shadow-inner disabled:opacity-50"
         />
 
         {query && (
@@ -109,7 +109,7 @@ export const SongSearch: React.FC<SongSearchProps> = ({
               setIsOpen(false);
               inputRef.current?.focus();
             }}
-            className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#8e8ea0] hover:text-white cursor-pointer"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#8e8ea0] hover:text-white cursor-pointer active:scale-95"
           >
             <X size={16} />
           </button>
@@ -120,7 +120,7 @@ export const SongSearch: React.FC<SongSearchProps> = ({
       {isOpen && filteredSongs.length > 0 && (
         <div
           ref={dropdownRef}
-          className="absolute left-4 right-4 mt-2 bg-[#181822] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50 max-h-80 overflow-y-auto"
+          className="absolute left-2 right-2 sm:left-4 sm:right-4 mt-2 bg-[#181822] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50 max-h-56 sm:max-h-80 overflow-y-auto touch-pan-y overscroll-contain"
         >
           {filteredSongs.map((song, idx) => {
             const isSelected = idx === selectedIndex;
@@ -131,7 +131,7 @@ export const SongSearch: React.FC<SongSearchProps> = ({
                 key={song.id}
                 onClick={() => !isAlreadyGuessed && handleChoose(song)}
                 onMouseEnter={() => setSelectedIndex(idx)}
-                className={`flex items-center justify-between px-3.5 py-2.5 cursor-pointer border-b border-white/5 transition-colors ${
+                className={`flex items-center justify-between px-3 py-2 sm:px-3.5 sm:py-2.5 cursor-pointer border-b border-white/5 transition-colors ${
                   isAlreadyGuessed
                     ? 'opacity-40 line-through cursor-not-allowed bg-[#14141a]'
                     : isSelected
@@ -139,23 +139,23 @@ export const SongSearch: React.FC<SongSearchProps> = ({
                     : 'text-gray-300 hover:bg-[#20202c]'
                 }`}
               >
-                <div className="flex items-center space-x-3 overflow-hidden">
+                <div className="flex items-center space-x-2.5 sm:space-x-3 overflow-hidden min-w-0">
                   {/* Album artwork thumbnail */}
                   <img
-                    src={song.artwork || 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg'}
+                    src={song.artwork || 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-faa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg'}
                     alt={song.album}
                     onError={(e) => {
-                      e.currentTarget.src = 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg';
+                      e.currentTarget.src = 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-faa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg';
                     }}
-                    className="w-10 h-10 rounded-lg object-cover bg-black/40 flex-shrink-0"
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg object-cover bg-black/40 shrink-0"
                     loading="lazy"
                   />
                   <div className="flex flex-col min-w-0">
-                    <span className="font-semibold text-sm truncate text-white">
+                    <span className="font-semibold text-xs sm:text-sm truncate text-white">
                       {song.title}
                     </span>
-                    <div className="flex items-center space-x-1.5 text-xs text-[#8e8ea0] truncate">
-                      <span>{song.artist}</span>
+                    <div className="flex items-center space-x-1 sm:space-x-1.5 text-[10px] sm:text-xs text-[#8e8ea0] truncate">
+                      <span className="truncate">{song.artist}</span>
                       <span>•</span>
                       <span className="truncate">{song.album}</span>
                       <span>•</span>
@@ -165,19 +165,19 @@ export const SongSearch: React.FC<SongSearchProps> = ({
                 </div>
 
                 {/* Collab / Soundtrack Badge */}
-                <div className="flex items-center space-x-1 flex-shrink-0 ml-2">
+                <div className="flex items-center space-x-1 shrink-0 ml-1.5">
                   {song.isFeature && (
-                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                    <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
                       Collab
                     </span>
                   )}
                   {song.isSoundtrack && (
-                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                    <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
                       OST
                     </span>
                   )}
                   {song.isCover && (
-                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
                       Cover
                     </span>
                   )}
@@ -190,16 +190,16 @@ export const SongSearch: React.FC<SongSearchProps> = ({
 
       {/* Wrong Guesses Pill Tray */}
       {wrongGuesses.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-3 items-center">
-          <span className="text-xs text-[#8e8ea0] mr-1">Tries:</span>
+        <div className="flex flex-wrap gap-1.5 mt-2.5 items-center">
+          <span className="text-[10px] sm:text-xs text-[#8e8ea0] mr-1">Tries:</span>
           {wrongGuesses.map(id => {
             const song = AURORA_SONGS.find(s => s.id === id);
             return (
               <span
                 key={id}
-                className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-md bg-red-950/40 border border-red-500/20 text-red-300 text-xs line-through"
+                className="inline-flex items-center space-x-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-red-950/40 border border-red-500/20 text-red-300 text-[10px] sm:text-xs line-through"
               >
-                <span>{song?.title || id}</span>
+                <span className="truncate max-w-[150px]">{song?.title || id}</span>
               </span>
             );
           })}

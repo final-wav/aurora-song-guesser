@@ -43,9 +43,9 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
     : startRatio;
 
   return (
-    <div className="w-full max-w-xl mx-auto px-4 my-6 select-none">
+    <div className="w-full max-w-xl mx-auto px-2 sm:px-4 my-3 sm:my-6 select-none">
       {/* Waveform Box */}
-      <div className="relative h-20 bg-[#121217] rounded-xl border border-white/5 p-3 flex items-center justify-between overflow-hidden shadow-inner">
+      <div className="relative h-14 sm:h-20 bg-[#121217] rounded-xl border border-white/5 p-2 sm:p-3 flex items-center justify-between overflow-hidden shadow-inner">
         {/* Unlocked audio highlight background glow */}
         <div
           className="absolute top-0 bottom-0 bg-gradient-to-r from-emerald-500/10 to-emerald-500/5 transition-all duration-300 pointer-events-none"
@@ -56,7 +56,7 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
         />
 
         {/* Waveform Bars */}
-        <div className="w-full h-full flex items-center justify-between gap-[2px] z-10">
+        <div className="w-full h-full flex items-center justify-between gap-[1.5px] sm:gap-[2px] z-10">
           {barData.map((peak, idx) => {
             const barRatio = idx / (barData.length - 1);
             const isUnlocked = barRatio >= startRatio && barRatio <= unlockedRatio;
@@ -78,7 +78,7 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
                   className={`w-full rounded-full transition-colors duration-150 ${barColor}`}
                   style={{
                     height: `${Math.round(peak * 100)}%`,
-                    minHeight: '4px',
+                    minHeight: '3px',
                   }}
                 />
               </div>
@@ -88,19 +88,19 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
 
         {/* Moving Scrubber Line */}
         <div
-          className="absolute top-0 bottom-0 w-[2.5px] bg-white z-20 pointer-events-none transition-[left] duration-75 shadow-[0_0_10px_white]"
+          className="absolute top-0 bottom-0 w-[2px] sm:w-[2.5px] bg-white z-20 pointer-events-none transition-[left] duration-75 shadow-[0_0_10px_white]"
           style={{
             left: `${Math.min(99.5, Math.max(0.5, currentPlayRatio * 100))}%`,
           }}
         >
-          <div className="w-2.5 h-2.5 bg-white rounded-full -ml-[3.5px] -mt-1 shadow-md" />
+          <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 bg-white rounded-full -ml-[3px] -mt-1 shadow-md" />
         </div>
       </div>
 
       {/* Time indicators below the waveform */}
-      <div className="flex justify-between items-center mt-2 px-1 text-xs text-[#8e8ea0] font-mono">
+      <div className="flex justify-between items-center mt-1.5 sm:mt-2 px-1 text-[10px] sm:text-xs text-[#8e8ea0] font-mono">
         <span>{unlockedDuration < 1 ? `0.${Math.round(unlockedDuration * 100)}s` : `${unlockedDuration.toFixed(1)}s`}</span>
-        <span className="text-white font-semibold text-sm">
+        <span className="text-white font-semibold text-xs sm:text-sm">
           {unlockedDuration >= 1 ? `${unlockedDuration.toFixed(2)}s` : `${unlockedDuration.toFixed(2)}s`}
         </span>
         <span>30s</span>
