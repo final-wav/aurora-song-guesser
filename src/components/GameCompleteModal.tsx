@@ -11,6 +11,7 @@ interface GameCompleteModalProps {
   difficulty: Difficulty;
   gameMode: GameMode;
   onPlayAgain: () => void;
+  onOpenLeaderboard?: () => void;
 }
 
 export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
@@ -21,6 +22,7 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
   difficulty,
   gameMode,
   onPlayAgain,
+  onOpenLeaderboard,
 }) => {
   const [copied, setCopied] = useState(false);
 
@@ -112,11 +114,21 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
           ))}
         </div>
 
-        {/* Play Again CTA */}
-        <div className="w-full flex gap-3 mt-2">
+        {/* Action CTAs */}
+        <div className="w-full flex flex-col sm:flex-row gap-2.5 mt-2">
+          {onOpenLeaderboard && (
+            <button
+              onClick={onOpenLeaderboard}
+              className="w-full sm:flex-1 h-12 rounded-2xl bg-white/15 hover:bg-white/25 text-white border border-white/20 font-bold text-xs flex items-center justify-center space-x-2 transition-all backdrop-blur-xl cursor-pointer active:scale-95 shadow-sm"
+            >
+              <Trophy size={15} />
+              <span>Leaderboard</span>
+            </button>
+          )}
+
           <button
             onClick={handleShare}
-            className="flex-1 h-12 rounded-2xl bg-white/15 hover:bg-white/25 text-white border border-white/20 font-bold text-xs flex items-center justify-center space-x-2 transition-all backdrop-blur-xl cursor-pointer active:scale-95 shadow-sm"
+            className="w-full sm:flex-1 h-12 rounded-2xl bg-white/10 hover:bg-white/20 text-white border border-white/15 font-bold text-xs flex items-center justify-center space-x-2 transition-all backdrop-blur-xl cursor-pointer active:scale-95 shadow-sm"
           >
             {copied ? (
               <>
@@ -126,13 +138,14 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
             ) : (
               <>
                 <Share2 size={16} />
-                <span>Share Result</span>
+                <span>Share</span>
               </>
             )}
           </button>
+
           <button
             onClick={onPlayAgain}
-            className="flex-1 h-12 rounded-2xl bg-white hover:bg-white/90 text-black font-bold text-xs flex items-center justify-center space-x-2 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer shadow-[0_8px_24px_rgba(0,0,0,0.35)] border border-white/30"
+            className="w-full sm:flex-1 h-12 rounded-2xl bg-white hover:bg-white/90 text-black font-bold text-xs flex items-center justify-center space-x-2 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer shadow-[0_8px_24px_rgba(0,0,0,0.35)] border border-white/30"
           >
             <RotateCcw size={15} />
             <span>Play Again</span>

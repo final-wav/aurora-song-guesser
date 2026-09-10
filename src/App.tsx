@@ -21,6 +21,8 @@ import { RoundResultModal } from './components/RoundResultModal';
 import { GameCompleteModal } from './components/GameCompleteModal';
 import { StatsModal } from './components/StatsModal';
 import { SettingsModal } from './components/SettingsModal';
+import { LeaderboardModal } from './components/LeaderboardModal';
+import { submitScore } from './utils/leaderboard';
 
 export const App: React.FC = () => {
   // Game Setup State
@@ -51,6 +53,8 @@ export const App: React.FC = () => {
   const [isGameCompleteModalOpen, setIsGameCompleteModalOpen] = useState<boolean>(false);
   const [isStatsModalOpen, setIsStatsModalOpen] = useState<boolean>(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
+  const [isLeaderboardOpen, setIsLeaderboardOpen] = useState<boolean>(false);
+  const [leaderboardInitialMode, setLeaderboardInitialMode] = useState<GameMode>('daily');
   const [userStats, setUserStats] = useState<UserStats>(loadUserStats());
 
   const currentSong: Song | undefined = playlist[currentSongIndex];
@@ -214,6 +218,16 @@ export const App: React.FC = () => {
       setRoundResults((prev) => [...prev, result]);
       setIsLastGuessCorrect(true);
       setIsRoundModalOpen(true);
+
+      // Auto-submit daily score if daily mode
+      if (gameMode === 'daily') {
+        submitScore({
+          score: points,
+          mode: 'daily',
+          unlockedDuration: interval.duration,
+          totalRoundsWon: 1,
+        });
+      }
     } else {
       // Wrong guess
       const updatedWrongs = [...wrongGuesses, guessedSong.id];
@@ -240,6 +254,16 @@ export const App: React.FC = () => {
         setRoundResults((prev) => [...prev, result]);
         setIsLastGuessCorrect(false);
         setIsRoundModalOpen(true);
+
+        // Auto-submit daily score (0 pts) if daily mode
+        if (gameMode === 'daily') {
+          submitScore({
+            score: 0,
+            mode: 'daily',
+            unlockedDuration: 30.0,
+            totalRoundsWon: 0,
+          });
+        }
       }
     }
   };
@@ -258,13 +282,24 @@ export const App: React.FC = () => {
       setStartOffset(calculateSongStartOffset(difficulty));
     } else {
       // Match Finished!
+      const wonCount = roundResults.filter((r) => r.guessed).length;
       const updatedStats = saveGameMatchResult(
         matchScore,
-        roundResults.filter((r) => r.guessed).length,
+        wonCount,
         totalRounds
       );
       setUserStats(updatedStats);
       setIsGameCompleteModalOpen(true);
+
+      // Submit match score to leaderboard
+      if (gameMode === 'match') {
+        submitScore({
+          score: matchScore,
+          mode: 'match',
+          difficulty: difficulty,
+          totalRoundsWon: wonCount,
+        });
+      }
     }
   };
 
@@ -295,6 +330,10 @@ export const App: React.FC = () => {
           onResetGame={() => initGame(difficulty, gameMode)}
           onOpenStats={() => setIsStatsModalOpen(true)}
           onOpenSettings={() => setIsSettingsModalOpen(true)}
+          onOpenLeaderboard={() => {
+            setLeaderboardInitialMode(gameMode);
+            setIsLeaderboardOpen(true);
+          }}
         />
       </div>
 
@@ -369,6 +408,10 @@ export const App: React.FC = () => {
         difficulty={difficulty}
         gameMode={gameMode}
         onPlayAgain={() => initGame(difficulty, gameMode)}
+        onOpenLeaderboard={() => {
+          setLeaderboardInitialMode(gameMode);
+          setIsLeaderboardOpen(true);
+        }}
       />
 
       <StatsModal
@@ -385,6 +428,12 @@ export const App: React.FC = () => {
           setVolume(vol);
           audioEngine.setVolume(vol);
         }}
+      />
+
+      <LeaderboardModal
+        isOpen={isLeaderboardOpen}
+        onClose={() => setIsLeaderboardOpen(false)}
+        initialMode={leaderboardInitialMode}
       />
     </div>
   );

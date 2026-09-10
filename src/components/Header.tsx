@@ -1,6 +1,6 @@
 import React from 'react';
 import { Difficulty, GameMode } from '../utils/gameLogic';
-import { BarChart3, Settings2, RotateCcw, Sparkles } from 'lucide-react';
+import { BarChart3, Settings2, RotateCcw, Sparkles, Trophy } from 'lucide-react';
 
 interface HeaderProps {
   difficulty: Difficulty;
@@ -14,6 +14,7 @@ interface HeaderProps {
   onResetGame: () => void;
   onOpenStats: () => void;
   onOpenSettings: () => void;
+  onOpenLeaderboard: () => void;
 }
 
 const DIFFICULTIES: { key: Difficulty; label: string }[] = [
@@ -36,6 +37,7 @@ export const Header: React.FC<HeaderProps> = ({
   onResetGame,
   onOpenStats,
   onOpenSettings,
+  onOpenLeaderboard,
 }) => {
   return (
     <header className="w-full max-w-2xl mx-auto pt-3 sm:pt-4 pb-2 px-3 sm:px-4 select-none">
@@ -95,6 +97,13 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Action icons */}
         <div className="flex items-center space-x-1.5 shrink-0">
+          <button
+            onClick={onOpenLeaderboard}
+            className="p-2 rounded-xl text-white/70 hover:text-white bg-white/10 hover:bg-white/20 border border-white/10 active:scale-95 transition-all cursor-pointer backdrop-blur-md shadow-sm"
+            title="Global Leaderboard"
+          >
+            <Trophy size={15} />
+          </button>
           <button
             onClick={onResetGame}
             className="p-2 rounded-xl text-white/70 hover:text-white bg-white/10 hover:bg-white/20 border border-white/10 active:scale-95 transition-all cursor-pointer backdrop-blur-md shadow-sm"
