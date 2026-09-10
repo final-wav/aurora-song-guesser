@@ -8,7 +8,7 @@ import {
   getDailySong,
   calculateSongStartOffset,
 } from './utils/gameLogic';
-import { Song, fetchLiveTrackPreview, AURORA_SONGS } from './data/auroraSongs';
+import { Song, AURORA_SONGS } from './data/auroraSongs';
 import { audioEngine } from './utils/audioEngine';
 import { loadUserStats, saveGameMatchResult, recordGuessStep, UserStats } from './utils/stats';
 
@@ -106,33 +106,20 @@ export const App: React.FC = () => {
     if (!currentSong) return;
 
     let isCancelled = false;
-    setIsLoadingAudio(true);
+    const url = currentSong.previewUrl;
+    setActiveAudioUrl(url);
+    setIsLoadingAudio(false);
     setPeaks([]);
     audioEngine.stop();
 
-    fetchLiveTrackPreview(currentSong).then(async (liveUrl) => {
-      if (isCancelled) return;
-      const url = liveUrl || currentSong.previewUrl;
-      setActiveAudioUrl(url);
-
-      try {
-        const buffer = await audioEngine.loadAudio(url);
-        if (!isCancelled) {
-          const extractedPeaks = audioEngine.extractWaveformPeaks(buffer, 65);
-          setPeaks(extractedPeaks);
-          setIsLoadingAudio(false);
-        }
-      } catch (err) {
-        console.warn('Audio background decode fallback:', err);
-        if (!isCancelled) {
-          setIsLoadingAudio(false);
-        }
-      }
-    }).catch(() => {
+    // Preload audio buffer in background for waveform and instant playback
+    audioEngine.loadAudio(url).then((buffer) => {
       if (!isCancelled) {
-        setActiveAudioUrl(currentSong.previewUrl);
-        setIsLoadingAudio(false);
+        const extractedPeaks = audioEngine.extractWaveformPeaks(buffer, 65);
+        setPeaks(extractedPeaks);
       }
+    }).catch((err) => {
+      console.warn('Audio background decode fallback:', err);
     });
 
     return () => {
