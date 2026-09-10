@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { STEP_INTERVALS, StepInterval } from '../utils/gameLogic';
-import { Play, Square, FastForward, Plus } from 'lucide-react';
+import { Play, Square, FastForward, Plus, Clock } from 'lucide-react';
 
 interface PlayerControlsProps {
   currentStepIndex: number;
@@ -25,6 +25,58 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
 }) => {
   const currentInterval: StepInterval = STEP_INTERVALS[currentStepIndex] || STEP_INTERVALS[0];
   const canUnlockMore = currentStepIndex < STEP_INTERVALS.length - 1;
+
+  const [cooldownRemaining, setCooldownRemaining] = useState<number>(0);
+  const cooldownTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Reset cooldown on new round / step 0
+  useEffect(() => {
+    if (currentStepIndex === 0) {
+      setCooldownRemaining(0);
+      if (cooldownTimerRef.current) {
+        clearInterval(cooldownTimerRef.current);
+        cooldownTimerRef.current = null;
+      }
+    }
+  }, [currentStepIndex]);
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (cooldownTimerRef.current) {
+        clearInterval(cooldownTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleMoreClick = () => {
+    if (cooldownRemaining > 0 || !canUnlockMore) return;
+
+    onUnlockNextStep();
+
+    // 2-second safety cooldown timer with live countdown
+    setCooldownRemaining(2);
+    if (cooldownTimerRef.current) {
+      clearInterval(cooldownTimerRef.current);
+    }
+
+    const startTime = Date.now();
+    const durationMs = 2000;
+
+    cooldownTimerRef.current = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const remainingSec = Math.max(0, Math.ceil((durationMs - elapsed) / 1000));
+      setCooldownRemaining(remainingSec);
+
+      if (elapsed >= durationMs) {
+        if (cooldownTimerRef.current) {
+          clearInterval(cooldownTimerRef.current);
+          cooldownTimerRef.current = null;
+        }
+        setCooldownRemaining(0);
+      }
+    }, 100);
+  };
 
   return (
     <div className="w-full max-w-xl mx-auto px-4 flex flex-col items-center select-none">
@@ -103,12 +155,30 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
         {/* +1s / Next Interval Button */}
         {canUnlockMore && (
           <button
-            onClick={onUnlockNextStep}
-            className="h-12 px-4 rounded-full bg-[#1c1c24] hover:bg-[#282834] text-white border border-white/5 font-semibold text-xs flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 cursor-pointer"
-            title="Unlock more seconds (reduces points)"
+            onClick={handleMoreClick}
+            disabled={cooldownRemaining > 0}
+            className={`h-12 px-4 rounded-full border font-semibold text-xs flex items-center gap-1.5 transition-all duration-200 select-none ${
+              cooldownRemaining > 0
+                ? 'bg-[#14141a] text-gray-500 border-white/5 cursor-not-allowed opacity-60'
+                : 'bg-[#1c1c24] hover:bg-[#282834] text-white border-white/5 hover:scale-105 active:scale-95 cursor-pointer'
+            }`}
+            title={
+              cooldownRemaining > 0
+                ? `Please wait ${cooldownRemaining}s...`
+                : 'Unlock more seconds (reduces points)'
+            }
           >
-            <Plus size={14} className="text-[#1DB954]" />
-            <span>More</span>
+            {cooldownRemaining > 0 ? (
+              <>
+                <Clock size={13} className="text-gray-500 animate-spin" />
+                <span>More ({cooldownRemaining}s)</span>
+              </>
+            ) : (
+              <>
+                <Plus size={14} className="text-[#1DB954]" />
+                <span>More</span>
+              </>
+            )}
           </button>
         )}
 
