@@ -109,6 +109,16 @@ export const AURORA_SONGS: Song[] = [
     "difficulty": "hard"
   },
   {
+    "id": "home",
+    "title": "Home",
+    "artist": "AURORA",
+    "album": "All My Demons Greeting Me as a Friend",
+    "year": 2016,
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/18/ad/13/18ad13c3-ff24-0b31-45c4-06b9064471cc/0044003184152_Cover.jpg/600x600bb.jpg",
+    "previewUrl": "./audio/home.mp3",
+    "difficulty": "medium"
+  },
+  {
     "id": "under-the-water",
     "title": "Under the Water",
     "artist": "AURORA",
