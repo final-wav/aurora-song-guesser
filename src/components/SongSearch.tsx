@@ -18,6 +18,7 @@ export const SongSearch: React.FC<SongSearchProps> = ({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Filtered list of songs matching the query
   const filteredSongs = useMemo(() => {
@@ -33,6 +34,13 @@ export const SongSearch: React.FC<SongSearchProps> = ({
       return titleMatch || albumMatch || artistMatch || yearMatch || tagMatch;
     }).slice(0, 8); // Top 8 matches
   }, [query]);
+
+  // Scroll active item into view on keyboard navigation
+  useEffect(() => {
+    if (isOpen && itemRefs.current[selectedIndex]) {
+      itemRefs.current[selectedIndex]?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  }, [selectedIndex, isOpen]);
 
   // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -81,7 +89,7 @@ export const SongSearch: React.FC<SongSearchProps> = ({
     <div className="w-full max-w-xl mx-auto px-2 sm:px-4 mt-4 sm:mt-6 relative select-none">
       {/* Search Input Box */}
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8e8ea0]">
+        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-white/50">
           <Search size={16} />
         </div>
 
@@ -121,7 +129,7 @@ export const SongSearch: React.FC<SongSearchProps> = ({
       {isOpen && filteredSongs.length > 0 && (
         <div
           ref={dropdownRef}
-          className="absolute left-2 right-2 sm:left-4 sm:right-4 mt-2 bg-black/60 backdrop-blur-3xl border border-white/15 rounded-2xl shadow-[0_16px_48px_rgba(0,0,0,0.5)] overflow-hidden z-50 max-h-56 sm:max-h-80 overflow-y-auto touch-pan-y overscroll-contain"
+          className="absolute left-1 right-1 sm:left-2 sm:right-2 mt-2 bg-[#0c0c14]/95 sm:bg-[#0c0c14]/90 backdrop-blur-3xl border border-white/20 rounded-2xl shadow-[0_24px_64px_rgba(0,0,0,0.85)] overflow-hidden z-50 max-h-52 sm:max-h-60 overflow-y-auto touch-pan-y overscroll-contain divide-y divide-white/5"
         >
           {filteredSongs.map((song, idx) => {
             const isSelected = idx === selectedIndex;
@@ -130,11 +138,12 @@ export const SongSearch: React.FC<SongSearchProps> = ({
             return (
               <div
                 key={song.id}
+                ref={el => { itemRefs.current[idx] = el; }}
                 onClick={() => !isAlreadyGuessed && handleChoose(song)}
                 onMouseEnter={() => setSelectedIndex(idx)}
-                className={`flex items-center justify-between px-3 py-2 sm:px-3.5 sm:py-2.5 cursor-pointer border-b border-white/10 transition-colors ${
+                className={`flex items-center justify-between px-3 py-2 sm:px-3.5 sm:py-2 cursor-pointer transition-colors ${
                   isAlreadyGuessed
-                    ? 'opacity-40 line-through cursor-not-allowed bg-black/30'
+                    ? 'opacity-40 line-through cursor-not-allowed bg-black/40'
                     : isSelected
                     ? 'bg-white/20 text-white'
                     : 'text-white/80 hover:bg-white/10'
@@ -148,7 +157,7 @@ export const SongSearch: React.FC<SongSearchProps> = ({
                     onError={(e) => {
                       e.currentTarget.src = 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-faa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg';
                     }}
-                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg object-cover bg-black/40 shrink-0 border border-white/10"
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg object-cover bg-black/40 shrink-0 border border-white/10"
                     loading="lazy"
                   />
                   <div className="flex flex-col min-w-0">

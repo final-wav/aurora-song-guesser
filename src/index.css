@@ -30,23 +30,23 @@ body {
   scrollbar-width: none;  /* Firefox */
 }
 
-/* Custom scrollbars */
+/* Custom Apple Glass scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #111116;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2b2b38;
+  background: rgba(255, 255, 255, 0.25);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3e3e50;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 /* Glassmorphism utility */
