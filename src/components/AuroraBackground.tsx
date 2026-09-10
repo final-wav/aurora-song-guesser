@@ -34,12 +34,17 @@ export const AuroraBackground: React.FC<AuroraBackgroundProps> = ({
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none bg-[#0c0c0f]">
       {/* Blurred Cover / Photo Background */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out scale-125 filter blur-[90px] sm:blur-[120px] opacity-40"
+        className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out scale-110 filter blur-[45px] sm:blur-[60px] opacity-75 sm:opacity-85"
         style={{ backgroundImage: `url(${bgImage})` }}
       />
 
-      {/* Dark tint overlay for readability */}
-      <div className="absolute inset-0 bg-[#0c0c0f]/60" />
+      {/* Subtle Dark Vignette Overlay for Readability */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(circle at center, rgba(0,0,0,0.25) 0%, rgba(12,12,15,0.65) 100%)',
+        }}
+      />
     </div>
   );
 };
