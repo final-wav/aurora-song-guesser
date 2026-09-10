@@ -15,7 +15,7 @@ export interface Song {
   spotifySearchUrl?: string;
 }
 
-export const DEFAULT_AURORA_ARTWORK = 'https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg';
+export const DEFAULT_AURORA_ARTWORK = 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg';
 
 export const AURORA_SONGS: Song[] = [
   {
@@ -24,7 +24,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "All My Demons Greeting Me as a Friend",
     "year": 2015,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/18/ad/13/18ad13c3-ff24-0b31-45c4-06b9064471cc/0044003184152_Cover.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/b7/5f/76/b75f7659-c7ac-36d8-e01f-2f6d02f5ef34/5056167160632.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/91/9f/8e/919f8e02-4ae0-aebf-ebaa-3d3f2ea066df/mzaf_10014781467499142104.plus.aac.p.m4a",
     "difficulty": "easy"
   },
@@ -44,7 +44,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "All My Demons Greeting Me as a Friend",
     "year": 2015,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/18/ad/13/18ad13c3-ff24-0b31-45c4-06b9064471cc/0044003184152_Cover.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ad/6b/5d/ad6b5d0e-99ef-5657-643c-2367be8cedbd/0044003184138_Cover.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/5c/49/a2/5c49a21f-a3cf-7956-6548-ef23bc751d3b/mzaf_13506163351996963286.plus.aac.p.m4a",
     "difficulty": "easy"
   },
@@ -84,7 +84,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "All My Demons Greeting Me as a Friend",
     "year": 2015,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/b2/96/94/b2969431-157a-9c2b-fb03-920cc3e67984/0044003183100_Cover.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ad/6b/5d/ad6b5d0e-99ef-5657-643c-2367be8cedbd/0044003184138_Cover.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/e5/a0/08/e5a008c2-3e2f-8700-1127-1422b404d7c0/mzaf_1745484838644569502.plus.aac.p.m4a",
     "difficulty": "medium"
   },
@@ -166,7 +166,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "All My Demons Greeting Me as a Friend (Deluxe)",
     "year": 2015,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/b2/96/94/b2969431-157a-9c2b-fb03-920cc3e67984/0044003183100_Cover.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/18/ad/13/18ad13c3-ff24-0b31-45c4-06b9064471cc/0044003184152_Cover.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/0d/1b/c9/0d1bc94a-38c2-42fe-cfd8-e7178044733e/mzaf_6385311096739958172.plus.aac.p.m4a",
     "difficulty": "hard"
   },
@@ -336,7 +336,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "A Different Kind of Human (Step 2)",
     "year": 2019,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ce/75/bf/ce75bf98-5c94-9c9d-2311-280ef8744637/5056167119357.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/cc/2d/69/cc2d69d3-61f2-1c69-159c-898bac81cc14/5056167113911.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/d0/7d/5a/d07d5ab7-c9a9-3990-b183-b784a95610ec/mzaf_15732152431671911963.plus.aac.p.m4a",
     "difficulty": "medium"
   },
@@ -479,7 +479,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "Pink Moon - Single (Loosie)",
     "year": 2023,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/17/99/87/179987cf-14ce-eb41-be48-5fe53581660c/0810098500135.png/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/4a/c0/83/4ac08365-5c1c-3b0d-dfc5-e5f8f90bbbe4/mzaf_16480749005953049581.plus.aac.p.m4a",
     "difficulty": "hard",
     "isCover": true
@@ -490,7 +490,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "Cure for Me (Acoustic) - Single (Loosie)",
     "year": 2021,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/80/43/87/80438719-a658-d4f4-09ab-3b32a95b8017/5056167165248.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/17/ee/5e/17ee5e67-1dcd-beab-a5d4-4845f9dbacbf/5056167167433.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/31/3d/bf/313dbf07-8ff8-9bf1-d576-cfbf84e51147/mzaf_4098622115160867823.plus.aac.p.m4a",
     "difficulty": "medium"
   },
@@ -561,7 +561,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "The Gods We Can Touch",
     "year": 2022,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/17/ee/5e/17ee5e67-1dcd-beab-a5d4-4845f9dbacbf/5056167167433.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/52/eb/31/52eb31e4-3f97-54ea-d13c-070ec539d65d/5056167171744.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/51/e6/51/51e651eb-98ff-8a22-38d5-94f71a0d8e27/mzaf_10795498877526713801.plus.aac.p.m4a",
     "difficulty": "medium"
   },
@@ -661,7 +661,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2023,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/d8/6c/c9/d86cc9af-f415-8879-796d-b222a911f058/197190224337.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/44/e9/87/44e987c8-89c0-67eb-0797-2178ffca52b2/mzaf_10014781467499142104.plus.aac.p.m4a",
     "difficulty": "easy"
   },
@@ -681,7 +681,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/69/d5/53/69d553cf-c070-3dd0-6c46-9fd660b897c4/197190569520.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/9a/5a/a5/9a5aa53b-e011-8be5-6d00-dfbb81881cf4/mzaf_4098622115160867823.plus.aac.p.m4a",
     "difficulty": "medium"
   },
@@ -691,7 +691,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/74/55/ff/7455ff66-95f2-01fe-104a-0a7dc6375268/198588087459.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/21/5c/4b/215c4b8b-e85d-8547-5d5d-6cbf20165e38/mzaf_10986708304033320296.plus.aac.p.m4a",
     "difficulty": "medium"
   },
@@ -701,7 +701,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/66/97/85/66978511-3fbd-7c77-756d-187b9705c6a6/198391581359.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/4a/c0/83/4ac08365-5c1c-3b0d-dfc5-e5f8f90bbbe4/mzaf_16480749005953049581.plus.aac.p.m4a",
     "difficulty": "medium"
   },
@@ -711,7 +711,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/66/97/85/66978511-3fbd-7c77-756d-187b9705c6a6/198391581359.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d0/7d/5a/d07d5ab7-c9a9-3990-b183-b784a95610ec/mzaf_15732152431671911963.plus.aac.p.m4a",
     "difficulty": "medium"
   },
@@ -721,7 +721,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/f5/f8/e5/f5f8e55c-6a6b-0db5-6771-33f2a18bbd20/199350453915.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e5/a0/08/e5a008c2-3e2f-8700-1127-1422b404d7c0/mzaf_1745484838644569502.plus.aac.p.m4a",
     "difficulty": "hard"
   },
@@ -731,7 +731,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/f5/f8/e5/f5f8e55c-6a6b-0db5-6771-33f2a18bbd20/199350453915.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/31/6a/d0/316ad06b-5bb9-74d1-678c-07c8a6fcf7a9/mzaf_9954707267150117467.plus.aac.p.m4a",
     "difficulty": "hard"
   },
@@ -741,7 +741,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/f5/f8/e5/f5f8e55c-6a6b-0db5-6771-33f2a18bbd20/199350453915.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/b4/0f/58/b40f585d-85fa-1ff1-bbfa-b50a2e5828da/mzaf_10014781467499142104.plus.aac.p.m4a",
     "difficulty": "hard"
   },
@@ -751,7 +751,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/f5/f8/e5/f5f8e55c-6a6b-0db5-6771-33f2a18bbd20/199350453915.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/91/3d/bf/913dbf07-8ff8-9bf1-d576-cfbf84e51147/mzaf_4098622115160867823.plus.aac.p.m4a",
     "difficulty": "medium"
   },
@@ -761,7 +761,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/f5/f8/e5/f5f8e55c-6a6b-0db5-6771-33f2a18bbd20/199350453915.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/21/5c/4b/215c4b8b-e85d-8547-5d5d-6cbf20165e38/mzaf_10986708304033320296.plus.aac.p.m4a",
     "difficulty": "hard"
   },
@@ -771,7 +771,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/f5/f8/e5/f5f8e55c-6a6b-0db5-6771-33f2a18bbd20/199350453915.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/71/e6/51/71e651eb-98ff-8a22-38d5-94f71a0d8e27/mzaf_10795498877526713801.plus.aac.p.m4a",
     "difficulty": "medium"
   },
@@ -781,7 +781,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/e4/b1/52/e4b152db-f682-ed13-f550-e7a7d8825b9c/7799192004219_cover.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/4a/c0/83/4ac08365-5c1c-3b0d-dfc5-e5f8f90bbbe4/mzaf_16480749005953049581.plus.aac.p.m4a",
     "difficulty": "hard"
   },
@@ -791,7 +791,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/f5/f8/e5/f5f8e55c-6a6b-0db5-6771-33f2a18bbd20/199350453915.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/80/7e/6e/807e6e58-9a4f-561b-90c7-cb991a0c0b8f/mzaf_11306351918349258079.plus.aac.p.m4a",
     "difficulty": "hard"
   },
@@ -801,7 +801,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart?",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/66/97/85/66978511-3fbd-7c77-756d-187b9705c6a6/198391581359.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ce/27/6f/ce276fb8-bbbb-d567-c1d0-b3e1572d42d3/mzaf_14167156976694766914.plus.aac.p.m4a",
     "difficulty": "hard"
   },
@@ -811,7 +811,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart? (Deluxe)",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/f5/f8/e5/f5f8e55c-6a6b-0db5-6771-33f2a18bbd20/199350453915.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d1/aa/20/d1aa2016-56be-5fa5-388f-6fa105151525/mzaf_14167156976694766914.plus.aac.p.m4a",
     "difficulty": "hard"
   },
@@ -821,7 +821,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "What Happened To The Heart? (Deluxe)",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/86/84/2f/86842f0b-51a8-f991-8862-ae79abc253cd/199350288548.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/9a/5a/a5/9a5aa53b-e011-8be5-6d00-dfbb81881cf4/mzaf_4098622115160867823.plus.aac.p.m4a",
     "difficulty": "hard"
   },
@@ -831,7 +831,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "Idina Menzel & AURORA",
     "album": "Frozen II (Original Motion Picture Soundtrack)",
     "year": 2019,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/66/cf/70/66cf7012-98ed-b201-21ed-b1ee0e9ad26f/19UM1IM00155.rgb.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/31/7d/73/317d7343-9844-1dbc-dd0d-d63d990e7938/19UMGIM88564.rgb.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/80/7e/6e/807e6e58-9a4f-561b-90c7-cb991a0c0b8f/mzaf_11306351918349258079.plus.aac.p.m4a",
     "difficulty": "easy",
     "isSoundtrack": true
@@ -853,7 +853,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "Hans Zimmer, Bleeding Fingers & AURORA",
     "album": "Frozen Planet II (Original Television Soundtrack)",
     "year": 2022,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/67/bd/50/67bd500c-26a3-f25f-e9e8-e42673919fba/00670211033847.rgb.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/08/e0/f0/08e0f0a7-cbaf-3f72-9d91-fa51e94ad8dc/199350083990.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/f4/19/27/f4192777-be8e-1736-243e-329b359f42df/mzaf_7852179838183141150.plus.aac.p.m4a",
     "difficulty": "hard",
     "isSoundtrack": true
@@ -875,7 +875,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "Bring Me The Horizon & AURORA",
     "album": "POST HUMAN: NeX GEn",
     "year": 2024,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/1f/03/ce/1f03ce37-0cfc-1579-2428-cb9ecfa50e39/196871929342.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/d1/8d/f9/d18df9d1-a843-21b3-6bd0-171b4871b504/cover.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/47/31/34/47313498-8422-9577-a8a5-d85fe3367733/mzaf_17294474773212850983.plus.aac.p.m4a",
     "difficulty": "medium",
     "isFeature": true
@@ -941,7 +941,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "The Chemical Brothers & AURORA",
     "album": "The Darkness That You Fear",
     "year": 2021,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/65/20/7a/65207a0f-88d6-6808-e4d4-bdf814490f4b/00602577080241.rgb.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/a8/b7/37/a8b7377e-9653-c83e-2877-8b337e339005/21UMGIM12211.rgb.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/f4/19/27/f4192777-be8e-1736-243e-329b359f42df/mzaf_7852179838183141150.plus.aac.p.m4a",
     "difficulty": "expert",
     "isFeature": true
@@ -974,7 +974,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "Askjell, iris & AURORA",
     "album": "everything will be ok",
     "year": 2020,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/79/10/96/7910963a-98da-734c-8228-a958f7ca7472/19UMGIM40566.rgb.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/bc/02/58/bc025862-0794-6d25-e5af-ceb0860da4d0/21UMGIM41019.rgb.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/21/5c/4b/215c4b8b-e85d-8547-5d5d-6cbf20165e38/mzaf_10986708304033320296.plus.aac.p.m4a",
     "difficulty": "expert",
     "isFeature": true
@@ -996,7 +996,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "Wu Qing-feng & AURORA",
     "album": "Storm - Single",
     "year": 2022,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/17/ee/5e/17ee5e67-1dcd-beab-a5d4-4845f9dbacbf/5056167167433.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/6a/b3/82/6ab382cf-bf87-5c92-1636-de1c684904af/22UMGIM57234.rgb.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/31/3d/bf/313dbf07-8ff8-9bf1-d576-cfbf84e51147/mzaf_4098622115160867823.plus.aac.p.m4a",
     "difficulty": "hard",
     "isFeature": true
@@ -1007,7 +1007,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "Gundelach & AURORA",
     "album": "Baltus",
     "year": 2018,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/0d/bb/ea/0dbbea4b-fe72-88f5-93c4-f20387b32549/7090029581029.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/f1/81/f6/f181f696-a8eb-35d3-1d9e-4cadbedf7de4/192641428258_Cover.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview128/v4/91/3d/bf/913dbf07-8ff8-9bf1-d576-cfbf84e51147/mzaf_4098622115160867823.plus.aac.p.m4a",
     "difficulty": "brutal",
     "isFeature": true
@@ -1040,7 +1040,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "Triple J Like A Version (Cover)",
     "year": 2019,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/cc/2d/69/cc2d69d3-61f2-1c69-159c-898bac81cc14/5056167113911.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/ef/02/55/ef025575-aa1d-efc2-f789-04f592275b8a/888880335630.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/f4/19/27/f4192777-be8e-1736-243e-329b359f42df/mzaf_7852179838183141150.plus.aac.p.m4a",
     "difficulty": "expert",
     "isCover": true
@@ -1095,7 +1095,7 @@ export const AURORA_SONGS: Song[] = [
     "artist": "AURORA",
     "album": "Christmas Live (Cover)",
     "year": 2016,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/18/ad/13/18ad13c3-ff24-0b31-45c4-06b9064471cc/0044003184152_Cover.jpg/600x600bb.jpg",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/e3/71/19/e3711920-b693-5893-e155-2f4e268370b3/886972025025.jpg/600x600bb.jpg",
     "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/91/9f/8e/919f8e02-4ae0-aebf-ebaa-3d3f2ea066df/mzaf_10014781467499142104.plus.aac.p.m4a",
     "difficulty": "expert",
     "isCover": true
