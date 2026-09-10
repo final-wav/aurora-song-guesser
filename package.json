@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/verify-catalog.mjs",
     "build": "tsc && vite build",
+    "verify-catalog": "node scripts/verify-catalog.mjs",
+    "add-song": "node scripts/add-song.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -4,6 +4,16 @@
  * peak extraction for waveforms, and instant buffer caching.
  */
 
+export function resolveAudioUrl(url: string): string {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:') || url.startsWith('data:')) {
+    return url;
+  }
+  const cleanPath = url.replace(/^\.\//, '');
+  const base = import.meta.env.BASE_URL || './';
+  return base.endsWith('/') ? `${base}${cleanPath}` : `${base}/${cleanPath}`;
+}
+
 class AudioEngine {
   private ctx: AudioContext | null = null;
   private currentSource: AudioBufferSourceNode | null = null;
@@ -68,18 +78,19 @@ class AudioEngine {
   public async loadAudio(url: string): Promise<AudioBuffer> {
     await this.initContext();
 
-    if (this.bufferCache.has(url)) {
-      return this.bufferCache.get(url)!;
+    const resolvedUrl = resolveAudioUrl(url);
+    if (this.bufferCache.has(resolvedUrl)) {
+      return this.bufferCache.get(resolvedUrl)!;
     }
 
-    const response = await fetch(url);
+    const response = await fetch(resolvedUrl);
     if (!response.ok) {
       throw new Error(`Failed to load audio stream (${response.status})`);
     }
 
     const arrayBuffer = await response.arrayBuffer();
     const decodedBuffer = await this.ctx!.decodeAudioData(arrayBuffer);
-    this.bufferCache.set(url, decodedBuffer);
+    this.bufferCache.set(resolvedUrl, decodedBuffer);
     return decodedBuffer;
   }
 
@@ -180,7 +191,8 @@ class AudioEngine {
    */
   private playSnippetHTMLAudioFallback(url: string, duration: number, startOffset: number = 0) {
     try {
-      const audio = new Audio(url);
+      const resolvedUrl = resolveAudioUrl(url);
+      const audio = new Audio(resolvedUrl);
       audio.volume = this.volume;
       audio.currentTime = startOffset;
       this.htmlAudio = audio;
