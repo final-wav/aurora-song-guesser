@@ -1222,14 +1222,6 @@ const dynamicPreviewCache = new Map<string, { previewUrl: string; artwork: strin
  * Returns the verified preview URL and artwork for the song, strictly guarding against artist mismatches
  */
 export async function fetchLiveTrackDetails(song: Song): Promise<{ previewUrl: string; artwork: string }> {
-  // If the dataset already has a valid high-quality preview URL, use it directly (100% reliable)
-  if (song.previewUrl && song.previewUrl.startsWith('http')) {
-    return {
-      previewUrl: song.previewUrl,
-      artwork: song.artwork,
-    };
-  }
-
   if (dynamicPreviewCache.has(song.id)) {
     return dynamicPreviewCache.get(song.id)!;
   }
