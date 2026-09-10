@@ -41,7 +41,7 @@ export const StatsModal: React.FC<StatsModalProps> = ({ isOpen, onClose, stats }
           </div>
 
           <div className="flex flex-col items-center p-2.5 rounded-xl bg-[#1c1c27] border border-white/5">
-            <span className="text-xl font-bold text-[#1DB954] font-mono flex items-center">
+            <span className="text-xl font-bold text-white font-mono flex items-center">
               <Flame size={16} className="fill-current mr-0.5" />
               {stats.currentStreak}
             </span>
@@ -74,7 +74,7 @@ export const StatsModal: React.FC<StatsModalProps> = ({ isOpen, onClose, stats }
                   <div className="flex-1 bg-[#121217] rounded-full h-5 overflow-hidden flex items-center px-1">
                     <div
                       className={`h-4 rounded-full flex items-center justify-end pr-2 text-[10px] font-bold font-mono transition-all duration-500 ${
-                        count > 0 ? 'bg-[#1DB954] text-black' : 'bg-transparent text-gray-500'
+                        count > 0 ? 'bg-white text-black' : 'bg-transparent text-gray-500'
                       }`}
                       style={{ width: `${barWidth}%` }}
                     >

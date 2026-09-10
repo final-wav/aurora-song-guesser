@@ -117,16 +117,16 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
 
       {/* Primary Action Buttons Row */}
       <div className="w-full flex items-center justify-center gap-2 sm:gap-3">
-        {/* Big Green Play / Pause Button */}
+        {/* Big White Play / Pause Button */}
         <button
           onClick={isPlaying ? onStopSnippet : onPlaySnippet}
           disabled={isLoadingAudio}
           className={`flex-1 min-w-0 max-w-[280px] h-11 sm:h-12 rounded-full font-bold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-1.5 sm:gap-2 transition-all duration-200 shadow-lg cursor-pointer active:scale-95 ${
             isPlaying
-              ? 'bg-emerald-600 text-white animate-pulse'
+              ? 'bg-white text-black shadow-[0_0_24px_rgba(255,255,255,0.4)] animate-pulse'
               : isLoadingAudio
-              ? 'bg-[#1DB954]/60 text-black cursor-wait'
-              : 'bg-[#1DB954] hover:bg-[#1ed760] text-black hover:scale-[1.02]'
+              ? 'bg-white/60 text-black cursor-wait'
+              : 'bg-white hover:bg-gray-200 text-black hover:scale-[1.02]'
           }`}
         >
           {isLoadingAudio ? (
@@ -175,7 +175,7 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
               </>
             ) : (
               <>
-                <Plus size={13} className="text-[#1DB954] shrink-0" />
+                <Plus size={13} className="text-white shrink-0" />
                 <span>More</span>
               </>
             )}

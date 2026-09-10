@@ -48,7 +48,7 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
       <div className="relative h-14 sm:h-20 bg-[#121217] rounded-xl border border-white/5 p-2 sm:p-3 flex items-center justify-between overflow-hidden shadow-inner">
         {/* Unlocked audio highlight background glow */}
         <div
-          className="absolute top-0 bottom-0 bg-gradient-to-r from-emerald-500/10 to-emerald-500/5 transition-all duration-300 pointer-events-none"
+          className="absolute top-0 bottom-0 bg-gradient-to-r from-white/10 to-white/5 transition-all duration-300 pointer-events-none"
           style={{
             left: `${startRatio * 100}%`,
             width: `${(unlockedRatio - startRatio) * 100}%`,
@@ -64,7 +64,7 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
 
             let barColor = 'bg-[#282834]'; // locked / inactive
             if (isPlayed) {
-              barColor = 'bg-[#1DB954] shadow-[0_0_8px_#1DB954]'; // actively playing
+              barColor = 'bg-white shadow-[0_0_8px_white]'; // actively playing
             } else if (isUnlocked) {
               barColor = 'bg-[#6b7280] hover:bg-gray-300'; // unlocked
             }

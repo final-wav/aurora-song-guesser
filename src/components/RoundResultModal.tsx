@@ -56,7 +56,7 @@ export const RoundResultModal: React.FC<RoundResultModalProps> = ({
         <div className="flex items-center space-x-2 mb-3 sm:mb-4">
           {isGuessed ? (
             <>
-              <CheckCircle2 size={22} className="text-[#1DB954]" />
+              <CheckCircle2 size={22} className="text-white" />
               <span className="text-lg sm:text-xl font-bold text-white">CORRECT!</span>
             </>
           ) : (
@@ -70,10 +70,10 @@ export const RoundResultModal: React.FC<RoundResultModalProps> = ({
         {/* Album Cover Art */}
         <div className="relative group my-2">
           <img
-            src={song.artwork || 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg'}
+            src={song.artwork || 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-faa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg'}
             alt={song.album}
             onError={(e) => {
-              e.currentTarget.src = 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg';
+              e.currentTarget.src = 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-faa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg';
             }}
             className="w-44 h-44 rounded-2xl object-cover shadow-2xl ring-1 ring-white/10 bg-[#1c1c27]"
           />
@@ -83,7 +83,7 @@ export const RoundResultModal: React.FC<RoundResultModalProps> = ({
             title="Listen to 30s preview"
           >
             {isPlayingFull ? (
-              <Square size={18} className="fill-current text-[#1DB954]" />
+              <Square size={18} className="fill-current text-white" />
             ) : (
               <Play size={20} className="fill-current ml-0.5" />
             )}
@@ -100,7 +100,7 @@ export const RoundResultModal: React.FC<RoundResultModalProps> = ({
         <div className="flex items-center justify-center space-x-3 my-4 py-2 px-4 rounded-xl bg-[#1f1f2c] border border-white/5 w-full">
           <div className="flex flex-col">
             <span className="text-[10px] uppercase tracking-wider text-[#8e8ea0]">Points Earned</span>
-            <span className={`text-lg font-mono font-bold ${pointsEarned > 0 ? 'text-[#1DB954]' : 'text-gray-400'}`}>
+            <span className={`text-lg font-mono font-bold ${pointsEarned > 0 ? 'text-white' : 'text-gray-400'}`}>
               +{pointsEarned.toLocaleString()}
             </span>
           </div>
@@ -119,7 +119,7 @@ export const RoundResultModal: React.FC<RoundResultModalProps> = ({
             href={spotifySearchUrl}
             target="_blank"
             rel="noreferrer"
-            className="hover:text-[#1DB954] flex items-center space-x-1 transition-colors"
+            className="hover:text-white flex items-center space-x-1 transition-colors"
           >
             <span>Open on Spotify</span>
             <ExternalLink size={12} />
@@ -129,7 +129,7 @@ export const RoundResultModal: React.FC<RoundResultModalProps> = ({
             href={appleMusicSearchUrl}
             target="_blank"
             rel="noreferrer"
-            className="hover:text-rose-400 flex items-center space-x-1 transition-colors"
+            className="hover:text-white flex items-center space-x-1 transition-colors"
           >
             <span>Apple Music</span>
             <ExternalLink size={12} />
@@ -139,7 +139,7 @@ export const RoundResultModal: React.FC<RoundResultModalProps> = ({
         {/* Continue / Next Round Button */}
         <button
           onClick={onNextRound}
-          className="w-full h-12 rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold text-sm flex items-center justify-center space-x-2 transition-all hover:scale-[1.02] cursor-pointer shadow-lg"
+          className="w-full h-12 rounded-xl bg-white hover:bg-gray-200 text-black font-bold text-sm flex items-center justify-center space-x-2 transition-all hover:scale-[1.02] cursor-pointer shadow-lg"
         >
           <span>{isMatchFinished ? 'View Final Results' : `Next Song (${currentRound + 1}/${totalRounds})`}</span>
           <ArrowRight size={16} />

@@ -104,7 +104,7 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
                     'Missed'
                   )}
                 </span>
-                <span className={`font-mono font-bold ${r.pointsEarned > 0 ? 'text-[#1DB954]' : 'text-rose-400'}`}>
+                <span className={`font-mono font-bold ${r.pointsEarned > 0 ? 'text-white' : 'text-rose-400'}`}>
                   {r.pointsEarned > 0 ? `+${r.pointsEarned.toLocaleString()}` : '0'}
                 </span>
               </div>
@@ -112,15 +112,15 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
           ))}
         </div>
 
-        {/* Buttons: Share & Play Again */}
-        <div className="w-full flex flex-col sm:flex-row gap-2.5 mt-2">
+        {/* Play Again CTA */}
+        <div className="w-full flex gap-3 mt-2">
           <button
             onClick={handleShare}
             className="flex-1 h-12 rounded-xl bg-[#22222f] hover:bg-[#2c2c3d] text-white border border-white/10 font-bold text-xs flex items-center justify-center space-x-2 transition-colors cursor-pointer"
           >
             {copied ? (
               <>
-                <Check size={16} className="text-[#1DB954]" />
+                <Check size={16} className="text-white" />
                 <span>Copied to Clipboard!</span>
               </>
             ) : (
@@ -130,12 +130,11 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
               </>
             )}
           </button>
-
           <button
             onClick={onPlayAgain}
-            className="flex-1 h-12 rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold text-xs flex items-center justify-center space-x-2 transition-all hover:scale-[1.02] cursor-pointer shadow-lg"
+            className="flex-1 h-12 rounded-xl bg-white hover:bg-gray-200 text-black font-bold text-xs flex items-center justify-center space-x-2 transition-all hover:scale-[1.02] cursor-pointer shadow-lg"
           >
-            <RotateCcw size={16} />
+            <RotateCcw size={15} />
             <span>Play Again</span>
           </button>
         </div>

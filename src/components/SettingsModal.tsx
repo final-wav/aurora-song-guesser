@@ -28,7 +28,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         </button>
 
         <h3 className="text-xl font-bold text-white mb-5 flex items-center gap-2">
-          <Sparkles size={20} className="text-[#1DB954]" />
+          <Sparkles size={20} className="text-white" />
           <span>Game Settings & Info</span>
         </h3>
 
@@ -53,7 +53,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               step="0.01"
               value={volume}
               onChange={e => onVolumeChange(parseFloat(e.target.value))}
-              className="flex-1 accent-[#1DB954] cursor-pointer"
+              className="flex-1 accent-white cursor-pointer"
             />
           </div>
         </div>
@@ -65,7 +65,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           </span>
 
           <div className="p-2.5 rounded-xl bg-[#121218] border border-white/5 text-xs">
-            <strong className="text-emerald-400 block mb-0.5">EASY</strong>
+            <strong className="text-white block mb-0.5">EASY</strong>
             <span className="text-[#8e8ea0]">Greatest hits & singles (Runaway, Cure for Me, Into the Unknown). Starts at song intro.</span>
           </div>
 
@@ -93,7 +93,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         {/* Audio Source & Legal Credits */}
         <div className="p-3 rounded-xl bg-[#121218] border border-white/5 text-[11px] text-[#8e8ea0] space-y-1.5">
           <div className="flex items-center space-x-1.5 text-gray-300 font-semibold">
-            <ShieldCheck size={14} className="text-[#1DB954]" />
+            <ShieldCheck size={14} className="text-white" />
             <span>Audio & Copyright Disclaimer</span>
           </div>
           <p>

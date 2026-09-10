@@ -99,7 +99,7 @@ export const SongSearch: React.FC<SongSearchProps> = ({
           onKeyDown={handleKeyDown}
           disabled={disabled}
           placeholder={disabled ? "Round complete" : "Search songs..."}
-          className="w-full h-11 sm:h-12 pl-10 pr-10 bg-[#15151c] text-white placeholder-[#6e6e80] rounded-xl border border-white/10 focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954] outline-none text-base sm:text-sm transition-all shadow-inner disabled:opacity-50"
+          className="w-full h-11 sm:h-12 pl-10 pr-10 bg-[#15151c] text-white placeholder-[#6e6e80] rounded-xl border border-white/10 focus:border-white/40 focus:ring-1 focus:ring-white/30 outline-none text-base sm:text-sm transition-all shadow-inner disabled:opacity-50"
         />
 
         {query && (
