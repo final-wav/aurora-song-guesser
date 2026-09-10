@@ -44,11 +44,11 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
 
   return (
     <div className="w-full max-w-xl mx-auto px-2 sm:px-4 my-3 sm:my-6 select-none">
-      {/* Waveform Box */}
-      <div className="relative h-14 sm:h-20 bg-[#121217] rounded-xl border border-white/5 p-2 sm:p-3 flex items-center justify-between overflow-hidden shadow-inner">
+      {/* Waveform Glass Box */}
+      <div className="relative h-14 sm:h-20 bg-white/10 backdrop-blur-2xl rounded-2xl border border-white/15 p-2 sm:p-3 flex items-center justify-between overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.25)]">
         {/* Unlocked audio highlight background glow */}
         <div
-          className="absolute top-0 bottom-0 bg-gradient-to-r from-white/10 to-white/5 transition-all duration-300 pointer-events-none"
+          className="absolute top-0 bottom-0 bg-white/10 transition-all duration-300 pointer-events-none"
           style={{
             left: `${startRatio * 100}%`,
             width: `${(unlockedRatio - startRatio) * 100}%`,
@@ -62,11 +62,11 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
             const isUnlocked = barRatio >= startRatio && barRatio <= unlockedRatio;
             const isPlayed = isPlaying && barRatio <= currentPlayRatio;
 
-            let barColor = 'bg-[#282834]'; // locked / inactive
+            let barColor = 'bg-white/20'; // locked / inactive glass bar
             if (isPlayed) {
-              barColor = 'bg-white shadow-[0_0_8px_white]'; // actively playing
+              barColor = 'bg-white shadow-[0_0_10px_rgba(255,255,255,0.9)]'; // actively playing
             } else if (isUnlocked) {
-              barColor = 'bg-[#6b7280] hover:bg-gray-300'; // unlocked
+              barColor = 'bg-white/60 hover:bg-white/80'; // unlocked
             }
 
             return (
@@ -88,17 +88,17 @@ export const AudioWaveform: React.FC<AudioWaveformProps> = ({
 
         {/* Moving Scrubber Line */}
         <div
-          className="absolute top-0 bottom-0 w-[2px] sm:w-[2.5px] bg-white z-20 pointer-events-none transition-[left] duration-75 shadow-[0_0_10px_white]"
+          className="absolute top-0 bottom-0 w-[2px] sm:w-[2.5px] bg-white z-20 pointer-events-none transition-[left] duration-75 shadow-[0_0_12px_rgba(255,255,255,0.9)]"
           style={{
             left: `${Math.min(99.5, Math.max(0.5, currentPlayRatio * 100))}%`,
           }}
         >
-          <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 bg-white rounded-full -ml-[3px] -mt-1 shadow-md" />
+          <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 bg-white rounded-full -ml-[3.5px] -mt-1 shadow-lg ring-2 ring-black/20" />
         </div>
       </div>
 
       {/* Time indicators below the waveform */}
-      <div className="flex justify-between items-center mt-1.5 sm:mt-2 px-1 text-[10px] sm:text-xs text-[#8e8ea0] font-mono">
+      <div className="flex justify-between items-center mt-1.5 sm:mt-2 px-1 text-[10px] sm:text-xs text-white/60 font-mono">
         <span>{unlockedDuration < 1 ? `0.${Math.round(unlockedDuration * 100)}s` : `${unlockedDuration.toFixed(1)}s`}</span>
         <span className="text-white font-semibold text-xs sm:text-sm">
           {unlockedDuration >= 1 ? `${unlockedDuration.toFixed(2)}s` : `${unlockedDuration.toFixed(2)}s`}

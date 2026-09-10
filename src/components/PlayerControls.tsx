@@ -101,12 +101,12 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
               key={interval.step}
               onClick={() => isUnlocked && onSelectStepIndex(idx)}
               disabled={!isUnlocked}
-              className={`px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold transition-all duration-200 cursor-pointer active:scale-95 ${
+              className={`px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold transition-all duration-200 cursor-pointer active:scale-95 ${
                 isSelected
-                  ? 'bg-white text-black shadow-lg scale-105'
+                  ? 'bg-white text-black shadow-[0_4px_16px_rgba(255,255,255,0.3)] scale-105 font-bold'
                   : isUnlocked
-                  ? 'bg-[#22222d] text-gray-200 hover:bg-[#2e2e3c]'
-                  : 'bg-[#15151b] text-gray-600 cursor-not-allowed opacity-50'
+                  ? 'bg-white/15 hover:bg-white/25 text-white/90 border border-white/15 backdrop-blur-md'
+                  : 'bg-white/5 text-white/30 border border-white/5 cursor-not-allowed'
               }`}
             >
               {interval.label}
@@ -121,12 +121,12 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
         <button
           onClick={isPlaying ? onStopSnippet : onPlaySnippet}
           disabled={isLoadingAudio}
-          className={`flex-1 min-w-0 max-w-[280px] h-11 sm:h-12 rounded-full font-bold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-1.5 sm:gap-2 transition-all duration-200 shadow-lg cursor-pointer active:scale-95 ${
+          className={`flex-1 min-w-0 max-w-[280px] h-11 sm:h-12 rounded-full font-bold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-1.5 sm:gap-2 transition-all duration-200 shadow-[0_8px_24px_rgba(0,0,0,0.3)] cursor-pointer active:scale-95 border border-white/30 ${
             isPlaying
               ? 'bg-white text-black shadow-[0_0_24px_rgba(255,255,255,0.4)] animate-pulse'
               : isLoadingAudio
               ? 'bg-white/60 text-black cursor-wait'
-              : 'bg-white hover:bg-gray-200 text-black hover:scale-[1.02]'
+              : 'bg-white hover:bg-white/90 text-black hover:scale-[1.02]'
           }`}
         >
           {isLoadingAudio ? (
@@ -157,10 +157,10 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
           <button
             onClick={handleMoreClick}
             disabled={cooldownRemaining > 0}
-            className={`h-11 sm:h-12 px-3 sm:px-4 rounded-full border font-semibold text-[11px] sm:text-xs flex items-center gap-1 sm:gap-1.5 transition-all duration-200 select-none shrink-0 ${
+            className={`h-11 sm:h-12 px-3.5 sm:px-4 rounded-full border font-semibold text-[11px] sm:text-xs flex items-center gap-1 sm:gap-1.5 transition-all duration-200 select-none shrink-0 backdrop-blur-xl ${
               cooldownRemaining > 0
-                ? 'bg-[#14141a] text-gray-500 border-white/5 cursor-not-allowed opacity-60'
-                : 'bg-[#1c1c24] hover:bg-[#282834] text-white border-white/5 hover:scale-105 active:scale-95 cursor-pointer'
+                ? 'bg-white/5 text-white/30 border-white/5 cursor-not-allowed'
+                : 'bg-white/15 hover:bg-white/25 text-white border-white/20 shadow-lg hover:scale-105 active:scale-95 cursor-pointer'
             }`}
             title={
               cooldownRemaining > 0
@@ -170,7 +170,7 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
           >
             {cooldownRemaining > 0 ? (
               <>
-                <Clock size={12} className="text-gray-500 animate-spin shrink-0" />
+                <Clock size={12} className="text-white/40 animate-spin shrink-0" />
                 <span>More ({cooldownRemaining}s)</span>
               </>
             ) : (
@@ -185,7 +185,7 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
         {/* Skip / Next Attempt Button */}
         <button
           onClick={onSkipRound}
-          className="h-11 w-11 sm:h-12 sm:w-12 rounded-full bg-[#1c1c24] hover:bg-[#282834] text-[#8e8ea0] hover:text-white border border-white/5 flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shrink-0"
+          className="h-11 w-11 sm:h-12 sm:w-12 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/20 backdrop-blur-xl shadow-lg flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shrink-0"
           title="Skip / Give up this round"
         >
           <FastForward size={15} />
