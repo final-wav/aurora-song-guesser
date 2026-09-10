@@ -4,7 +4,7 @@ import { Play, Square, FastForward, Plus, Clock } from 'lucide-react';
 
 interface PlayerControlsProps {
   currentStepIndex: number;
-  onSelectStepIndex: (index: number) => void;
+  onSelectStepIndex?: (index: number) => void;
   onPlaySnippet: () => void;
   onStopSnippet: () => void;
   onUnlockNextStep: () => void;
@@ -15,7 +15,6 @@ interface PlayerControlsProps {
 
 export const PlayerControls: React.FC<PlayerControlsProps> = ({
   currentStepIndex,
-  onSelectStepIndex,
   onPlaySnippet,
   onStopSnippet,
   onUnlockNextStep,
@@ -90,27 +89,25 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
         </span>
       </div>
 
-      {/* Interval Selector Pills (0.10s, 0.50s, 1.0s, 3.0s...) */}
+      {/* Interval Progress Badges (0.10s, 0.50s, 1.0s, 3.0s...) */}
       <div className="flex items-center justify-center flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6">
         {STEP_INTERVALS.slice(0, 5).map((interval, idx) => {
-          const isUnlocked = idx <= currentStepIndex;
-          const isSelected = idx === currentStepIndex;
+          const isPassed = idx < currentStepIndex;
+          const isCurrent = idx === currentStepIndex;
 
           return (
-            <button
+            <div
               key={interval.step}
-              onClick={() => isUnlocked && onSelectStepIndex(idx)}
-              disabled={!isUnlocked}
-              className={`px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold transition-all duration-200 cursor-pointer active:scale-95 ${
-                isSelected
-                  ? 'bg-white text-black shadow-[0_4px_16px_rgba(255,255,255,0.3)] scale-105 font-bold'
-                  : isUnlocked
-                  ? 'bg-white/15 hover:bg-white/25 text-white/90 border border-white/15 backdrop-blur-md'
-                  : 'bg-white/5 text-white/30 border border-white/5 cursor-not-allowed'
+              className={`px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold transition-all duration-200 select-none ${
+                isCurrent
+                  ? 'bg-white text-black shadow-[0_4px_16px_rgba(255,255,255,0.3)] scale-105 font-bold border border-white'
+                  : isPassed
+                  ? 'bg-white/15 text-white/80 border border-white/15 backdrop-blur-md'
+                  : 'bg-white/5 text-white/25 border border-white/5 opacity-60'
               }`}
             >
               {interval.label}
-            </button>
+            </div>
           );
         })}
       </div>

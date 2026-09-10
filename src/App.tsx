@@ -384,11 +384,6 @@ export const App: React.FC = () => {
           {/* Player Controls (Pills, Play/Stop Button, +1s, Skip) */}
           <PlayerControls
             currentStepIndex={currentStepIndex}
-            onSelectStepIndex={(idx) => {
-              setCurrentStepIndex(idx);
-              const intv = STEP_INTERVALS[idx];
-              audioEngine.playSnippet(activeAudioUrl, intv.duration, startOffset);
-            }}
             onPlaySnippet={handlePlaySnippet}
             onStopSnippet={handleStopSnippet}
             onUnlockNextStep={handleUnlockNextStep}
