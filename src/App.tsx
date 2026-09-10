@@ -8,7 +8,7 @@ import {
   getDailySong,
   calculateSongStartOffset,
 } from './utils/gameLogic';
-import { Song, fetchLiveTrackPreview, AURORA_SONGS } from './data/auroraSongs';
+import { Song, AURORA_SONGS } from './data/auroraSongs';
 import { audioEngine } from './utils/audioEngine';
 import { loadUserStats, saveGameMatchResult, recordGuessStep, UserStats } from './utils/stats';
 
@@ -106,27 +106,20 @@ export const App: React.FC = () => {
     if (!currentSong) return;
 
     let isCancelled = false;
-    setIsLoadingAudio(true);
+    const url = currentSong.previewUrl;
+    setActiveAudioUrl(url);
+    setIsLoadingAudio(false);
     setPeaks([]);
     audioEngine.stop();
 
-    fetchLiveTrackPreview(currentSong).then(async (url) => {
-      if (isCancelled) return;
-      setActiveAudioUrl(url);
-
-      try {
-        const buffer = await audioEngine.loadAudio(url);
-        if (!isCancelled) {
-          const extractedPeaks = audioEngine.extractWaveformPeaks(buffer, 65);
-          setPeaks(extractedPeaks);
-          setIsLoadingAudio(false);
-        }
-      } catch (err) {
-        console.warn('Audio stream decode error:', err);
-        if (!isCancelled) {
-          setIsLoadingAudio(false);
-        }
+    // Preload audio buffer in background for precise waveform and instant playback
+    audioEngine.loadAudio(url).then((buffer) => {
+      if (!isCancelled) {
+        const extractedPeaks = audioEngine.extractWaveformPeaks(buffer, 65);
+        setPeaks(extractedPeaks);
       }
+    }).catch((err) => {
+      console.warn('Audio background decode fallback:', err);
     });
 
     return () => {
@@ -136,10 +129,11 @@ export const App: React.FC = () => {
 
   // Play snippet for currently active step
   const handlePlaySnippet = async () => {
-    if (!activeAudioUrl || isLoadingAudio) return;
+    const urlToPlay = activeAudioUrl || currentSong?.previewUrl;
+    if (!urlToPlay) return;
     const interval = STEP_INTERVALS[currentStepIndex] || STEP_INTERVALS[0];
     try {
-      await audioEngine.playSnippet(activeAudioUrl, interval.duration, startOffset);
+      await audioEngine.playSnippet(urlToPlay, interval.duration, startOffset);
     } catch (err) {
       console.error('Playback failed', err);
     }
