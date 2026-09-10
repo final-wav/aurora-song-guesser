@@ -1035,72 +1035,6 @@ export const AURORA_SONGS: Song[] = [
     "isCover": true
   },
   {
-    "id": "believer-cover",
-    "title": "Believer (Like A Version)",
-    "artist": "AURORA",
-    "album": "Triple J Like A Version (Cover)",
-    "year": 2019,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/ef/02/55/ef025575-aa1d-efc2-f789-04f592275b8a/888880335630.jpg/600x600bb.jpg",
-    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/f4/19/27/f4192777-be8e-1736-243e-329b359f42df/mzaf_7852179838183141150.plus.aac.p.m4a",
-    "difficulty": "expert",
-    "isCover": true
-  },
-  {
-    "id": "rasputin-cover",
-    "title": "Rasputin (Live)",
-    "artist": "AURORA",
-    "album": "Triple J Live Session (Cover)",
-    "year": 2019,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/cc/2d/69/cc2d69d3-61f2-1c69-159c-898bac81cc14/5056167113911.jpg/600x600bb.jpg",
-    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/4a/c0/83/4ac08365-5c1c-3b0d-dfc5-e5f8f90bbbe4/mzaf_16480749005953049581.plus.aac.p.m4a",
-    "difficulty": "expert",
-    "isCover": true
-  },
-  {
-    "id": "thank-u-cover",
-    "title": "Thank U (Like A Version)",
-    "artist": "AURORA",
-    "album": "Triple J Like A Version (Cover)",
-    "year": 2020,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/17/ee/5e/17ee5e67-1dcd-beab-a5d4-4845f9dbacbf/5056167167433.jpg/600x600bb.jpg",
-    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/31/3d/bf/313dbf07-8ff8-9bf1-d576-cfbf84e51147/mzaf_4098622115160867823.plus.aac.p.m4a",
-    "difficulty": "expert",
-    "isCover": true
-  },
-  {
-    "id": "life-on-mars-cover",
-    "title": "Life on Mars",
-    "artist": "AURORA",
-    "album": "Girls, Vol. 3 OST (Cover)",
-    "year": 2016,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/18/ad/13/18ad13c3-ff24-0b31-45c4-06b9064471cc/0044003184152_Cover.jpg/600x600bb.jpg",
-    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/71/e6/51/71e651eb-98ff-8a22-38d5-94f71a0d8e27/mzaf_10795498877526713801.plus.aac.p.m4a",
-    "difficulty": "expert",
-    "isCover": true
-  },
-  {
-    "id": "across-the-universe-cover",
-    "title": "Across the Universe",
-    "artist": "AURORA",
-    "album": "Acoustic Covers (Cover)",
-    "year": 2020,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/17/ee/5e/17ee5e67-1dcd-beab-a5d4-4845f9dbacbf/5056167167433.jpg/600x600bb.jpg",
-    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/a4/c0/83/4ac08365-5c1c-3b0d-dfc5-e5f8f90bbbe4/mzaf_16480749005953049581.plus.aac.p.m4a",
-    "difficulty": "expert",
-    "isCover": true
-  },
-  {
-    "id": "walking-in-the-air-cover",
-    "title": "Walking in the Air",
-    "artist": "AURORA",
-    "album": "Christmas Live (Cover)",
-    "year": 2016,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/e3/71/19/e3711920-b693-5893-e155-2f4e268370b3/886972025025.jpg/600x600bb.jpg",
-    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/91/9f/8e/919f8e02-4ae0-aebf-ebaa-3d3f2ea066df/mzaf_10014781467499142104.plus.aac.p.m4a",
-    "difficulty": "expert",
-    "isCover": true
-  },
-  {
     "id": "tomora-please",
     "title": "Please",
     "artist": "TOMORA (AURORA & Tom Rowlands)",
@@ -1285,26 +1219,39 @@ export const AURORA_SONGS: Song[] = [
 const dynamicPreviewCache = new Map<string, { previewUrl: string; artwork: string }>();
 
 /**
- * Searches and fetches real live preview URLs & artwork from iTunes API as fallback or enrichment
+ * Returns the verified preview URL and artwork for the song, strictly guarding against artist mismatches
  */
 export async function fetchLiveTrackDetails(song: Song): Promise<{ previewUrl: string; artwork: string }> {
+  // If the dataset already has a valid high-quality preview URL, use it directly (100% reliable)
+  if (song.previewUrl && song.previewUrl.startsWith('http')) {
+    return {
+      previewUrl: song.previewUrl,
+      artwork: song.artwork,
+    };
+  }
+
   if (dynamicPreviewCache.has(song.id)) {
     return dynamicPreviewCache.get(song.id)!;
   }
 
   try {
-    const cleanTitle = song.title.replace(/\s*\(feat\..*?\)/i, '').replace(/\s*\[.*?\]/i, '').trim();
+    const cleanTitle = song.title.replace(/\s*\(feat\..*?\)/i, '').replace(/\s*\[.*?\]/i, '').replace(/\s*\(.*?\)/i, '').trim();
     const artistTerm = song.artist.includes('TOMORA') ? 'TOMORA' : (song.artist.includes('Chemical Brothers') ? 'The Chemical Brothers' : 'AURORA');
     const query = encodeURIComponent(`${artistTerm} ${cleanTitle}`);
     const res = await fetch(`https://itunes.apple.com/search?term=${query}&entity=song&limit=5`);
     if (res.ok) {
       const data = await res.json();
       if (data.results && data.results.length > 0) {
-        const track = data.results.find((t: { previewUrl?: string }) => Boolean(t.previewUrl)) || data.results[0];
-        if (track) {
+        // STRICT verification: must be by AURORA or authorized project
+        const validMatch = data.results.find((t: { artistName?: string; previewUrl?: string }) => {
+          if (!t.previewUrl) return false;
+          const art = (t.artistName || '').toLowerCase();
+          return art.includes('aurora') || art.includes('tomora') || art.includes('chemical brothers') || art.includes('bring me the horizon');
+        });
+        if (validMatch) {
           const result = {
-            previewUrl: track.previewUrl || song.previewUrl,
-            artwork: track.artworkUrl100 ? track.artworkUrl100.replace('100x100bb.jpg', '600x600bb.jpg') : song.artwork,
+            previewUrl: validMatch.previewUrl,
+            artwork: validMatch.artworkUrl100 ? validMatch.artworkUrl100.replace('100x100bb.jpg', '600x600bb.jpg') : song.artwork,
           };
           dynamicPreviewCache.set(song.id, result);
           return result;
