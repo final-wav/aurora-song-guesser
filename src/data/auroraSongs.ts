@@ -920,57 +920,6 @@ export const AURORA_SONGS: Song[] = [
     ]
   },
   {
-    "id": "chemical-brothers-eve-of-destruction",
-    "title": "Eve of Destruction (feat. AURORA)",
-    "artist": "The Chemical Brothers & AURORA",
-    "album": "No Geography",
-    "year": 2019,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/65/20/7a/65207a0f-88d6-6808-e4d4-bdf814490f4b/00602577080241.rgb.jpg/600x600bb.jpg",
-    "previewUrl": "./audio/chemical-brothers-eve-of-destruction.m4a",
-    "difficulty": "hard",
-    "isFeature": true,
-    "tags": [
-      "The Chemical Brothers",
-      "No Geography",
-      "Tom Rowlands",
-      "Collab"
-    ]
-  },
-  {
-    "id": "chemical-brothers-bango",
-    "title": "Bango (feat. AURORA)",
-    "artist": "The Chemical Brothers & AURORA",
-    "album": "No Geography",
-    "year": 2019,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/65/20/7a/65207a0f-88d6-6808-e4d4-bdf814490f4b/00602577080241.rgb.jpg/600x600bb.jpg",
-    "previewUrl": "./audio/chemical-brothers-bango.m4a",
-    "difficulty": "hard",
-    "isFeature": true,
-    "tags": [
-      "The Chemical Brothers",
-      "No Geography",
-      "Tom Rowlands",
-      "Collab"
-    ]
-  },
-  {
-    "id": "chemical-brothers-no-geography",
-    "title": "No Geography (feat. AURORA)",
-    "artist": "The Chemical Brothers & AURORA",
-    "album": "No Geography",
-    "year": 2019,
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/65/20/7a/65207a0f-88d6-6808-e4d4-bdf814490f4b/00602577080241.rgb.jpg/600x600bb.jpg",
-    "previewUrl": "./audio/chemical-brothers-no-geography.m4a",
-    "difficulty": "hard",
-    "isFeature": true,
-    "tags": [
-      "The Chemical Brothers",
-      "No Geography",
-      "Tom Rowlands",
-      "Collab"
-    ]
-  },
-  {
     "id": "starvation",
     "title": "Starvation",
     "artist": "AURORA",
@@ -1089,6 +1038,36 @@ export const AURORA_SONGS: Song[] = [
     "artwork": "https://cdn-images.dzcdn.net/images/cover/185bd36a0dc427a9ae637248ea1f232a/1000x1000-000000-80-0-0.jpg",
     "previewUrl": "./audio/the-flood.mp3",
     "difficulty": "hard"
+  },
+  {
+    "id": "the-weight-of-missing",
+    "title": "The Weight Of Missing",
+    "artist": "AURORA",
+    "album": "What Happened To The Heart? (Deluxe)",
+    "year": 2024,
+    "artwork": "https://cdn-images.dzcdn.net/images/cover/185bd36a0dc427a9ae637248ea1f232a/1000x1000-000000-80-0-0.jpg",
+    "previewUrl": "./audio/the-weight-of-missing.mp3",
+    "difficulty": "hard",
+    "tags": [
+      "What Happened To The Heart?",
+      "2024",
+      "Deluxe"
+    ]
+  },
+  {
+    "id": "hearts-intuition",
+    "title": "Hearts Intuition",
+    "artist": "AURORA",
+    "album": "What Happened To The Heart? (Deluxe)",
+    "year": 2024,
+    "artwork": "https://cdn-images.dzcdn.net/images/cover/185bd36a0dc427a9ae637248ea1f232a/1000x1000-000000-80-0-0.jpg",
+    "previewUrl": "./audio/hearts-intuition.mp3",
+    "difficulty": "hard",
+    "tags": [
+      "What Happened To The Heart?",
+      "2024",
+      "Deluxe"
+    ]
   },
   {
     "id": "into-the-unknown",
@@ -1243,6 +1222,53 @@ export const AURORA_SONGS: Song[] = [
     "previewUrl": "./audio/helvegen-wardruna.mp3",
     "difficulty": "brutal",
     "isFeature": true
+  },
+  {
+    "id": "a-place-to-call-home",
+    "title": "A Place To Call Home",
+    "artist": "AURORA",
+    "album": "World of Warcraft: A Place To Call Home",
+    "year": 2024,
+    "artwork": "https://cdn-images.dzcdn.net/images/cover/3ab9b30857807ed34b000406258d743d/1000x1000-000000-80-0-0.jpg",
+    "previewUrl": "./audio/a-place-to-call-home.mp3",
+    "difficulty": "medium",
+    "isSoundtrack": true,
+    "tags": [
+      "World of Warcraft",
+      "Soundtrack",
+      "2024"
+    ]
+  },
+  {
+    "id": "you-cant-run-from-yourself",
+    "title": "You Can’t Run From Yourself",
+    "artist": "AURORA",
+    "album": "You Can’t Run From Yourself (From \"Kaiju No. 8\")",
+    "year": 2024,
+    "artwork": "https://cdn-images.dzcdn.net/images/cover/0aeea8129cbf144483040604b42549fd/1000x1000-000000-80-0-0.jpg",
+    "previewUrl": "./audio/you-cant-run-from-yourself.mp3",
+    "difficulty": "hard",
+    "isSoundtrack": true,
+    "tags": [
+      "Kaiju No. 8",
+      "Anime",
+      "Soundtrack",
+      "2024"
+    ]
+  },
+  {
+    "id": "animal-soul",
+    "title": "Animal Soul",
+    "artist": "AURORA",
+    "album": "Animal Soul",
+    "year": 2024,
+    "artwork": "https://cdn-images.dzcdn.net/images/cover/39594a62973b34fd34c4ba47593e141a/1000x1000-000000-80-0-0.jpg",
+    "previewUrl": "./audio/animal-soul.mp3",
+    "difficulty": "medium",
+    "tags": [
+      "Single",
+      "2024"
+    ]
   }
 ];
 
