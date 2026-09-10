@@ -65,11 +65,11 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center pl-1 shrink-0">
           <button
             onClick={() => onSelectGameMode(gameMode === 'match' ? 'daily' : 'match')}
-            className="flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/15 text-[10px] sm:text-[11px] font-medium text-gray-300 transition-colors border border-white/10 cursor-pointer active:scale-95 shrink-0"
+            className="flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 text-[11px] font-semibold text-white transition-all border border-white/15 cursor-pointer active:scale-95 shrink-0 backdrop-blur-md shadow-sm"
             title="Switch Game Mode"
           >
-            <Sparkles size={11} className="text-gray-300" />
-            <span className="capitalize">{gameMode === 'daily' ? 'Daily' : '5-Round'}</span>
+            <Sparkles size={12} className="text-white" />
+            <span className="capitalize">{gameMode === 'daily' ? 'Daily Mode' : '5-Round'}</span>
           </button>
         </div>
       </div>
@@ -77,41 +77,41 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Subheader Status: Score, Round, Actions */}
       <div className="flex items-center justify-between mt-3 sm:mt-4 text-sm gap-2">
         {/* Score indicator */}
-        <div className="flex items-baseline space-x-1 shrink-0">
-          <span className="text-lg sm:text-xl font-bold text-white tracking-tight font-mono">
+        <div className="flex items-baseline space-x-1.5 shrink-0">
+          <span className="text-lg sm:text-2xl font-extrabold text-white tracking-tight font-mono">
             {currentScore.toLocaleString()}
           </span>
-          <span className="text-[10px] sm:text-xs text-[#8e8ea0]">/ {maxPossibleScore.toLocaleString()}</span>
+          <span className="text-[10px] sm:text-xs text-white/40 font-mono">/ {maxPossibleScore.toLocaleString()}</span>
         </div>
 
         {/* Center / Round Tracker */}
-        <div className="text-[11px] sm:text-xs font-medium text-[#8e8ea0] tracking-wide text-center truncate">
+        <div className="text-[11px] sm:text-xs font-medium text-white/60 tracking-wide text-center truncate">
           {gameMode === 'match' ? (
-            <span>Round <strong className="text-white">{currentRound}</strong> / {totalRounds}</span>
+            <span>Round <strong className="text-white font-bold">{currentRound}</strong> of {totalRounds}</span>
           ) : (
-            <span className="text-emerald-400 font-semibold">Today's Daily</span>
+            <span className="text-white font-bold tracking-wide">Today's Daily Challenge</span>
           )}
         </div>
 
         {/* Action icons */}
-        <div className="flex items-center space-x-1 shrink-0">
+        <div className="flex items-center space-x-1.5 shrink-0">
           <button
             onClick={onResetGame}
-            className="p-1.5 sm:p-2 rounded-lg text-[#8e8ea0] hover:text-white hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+            className="p-2 rounded-xl text-white/70 hover:text-white bg-white/10 hover:bg-white/20 border border-white/10 active:scale-95 transition-all cursor-pointer backdrop-blur-md shadow-sm"
             title="Restart Match"
           >
             <RotateCcw size={15} />
           </button>
           <button
             onClick={onOpenStats}
-            className="p-1.5 sm:p-2 rounded-lg text-[#8e8ea0] hover:text-white hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+            className="p-2 rounded-xl text-white/70 hover:text-white bg-white/10 hover:bg-white/20 border border-white/10 active:scale-95 transition-all cursor-pointer backdrop-blur-md shadow-sm"
             title="Statistics & Streaks"
           >
             <BarChart3 size={15} />
           </button>
           <button
             onClick={onOpenSettings}
-            className="p-1.5 sm:p-2 rounded-lg text-[#8e8ea0] hover:text-white hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+            className="p-2 rounded-xl text-white/70 hover:text-white bg-white/10 hover:bg-white/20 border border-white/10 active:scale-95 transition-all cursor-pointer backdrop-blur-md shadow-sm"
             title="Settings & Audio"
           >
             <Settings2 size={15} />

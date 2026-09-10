@@ -47,64 +47,64 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in select-none">
-      <div className="w-full max-w-lg bg-[#16161f] border border-white/10 rounded-2xl p-6 shadow-2xl flex flex-col items-center text-center max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-md animate-fade-in select-none">
+      <div className="w-full max-w-lg bg-black/60 backdrop-blur-3xl border border-white/15 rounded-3xl p-5 sm:p-7 shadow-[0_24px_60px_rgba(0,0,0,0.6)] flex flex-col items-center text-center max-h-[90vh] overflow-y-auto">
         {/* Trophy icon & Final Score */}
-        <div className="w-14 h-14 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-3">
-          <Trophy size={28} className="text-amber-400" />
+        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center mb-3 shadow-lg">
+          <Trophy size={28} className="text-white" />
         </div>
 
-        <span className="text-xs font-semibold tracking-widest text-[#8e8ea0] uppercase">
+        <span className="text-xs font-semibold tracking-widest text-white/50 uppercase">
           Match Completed
         </span>
 
-        <h2 className="text-4xl font-extrabold text-white tracking-tight my-1 font-mono">
-          {finalScore.toLocaleString()} <span className="text-lg text-[#8e8ea0]">/ {maxPossibleScore.toLocaleString()}</span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight my-1 font-mono">
+          {finalScore.toLocaleString()} <span className="text-base sm:text-lg text-white/50">/ {maxPossibleScore.toLocaleString()}</span>
         </h2>
 
         {/* Rank Title */}
-        <div className="my-2 p-3 rounded-xl bg-[#1c1c27] border border-white/5 w-full">
-          <span className={`text-base font-bold ${rank.color} flex items-center justify-center gap-1.5`}>
-            <Sparkles size={16} />
+        <div className="my-2 p-3.5 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 w-full shadow-sm">
+          <span className="text-base font-bold text-white flex items-center justify-center gap-1.5 tracking-wide">
+            <Sparkles size={16} className="text-white" />
             {rank.title}
           </span>
-          <p className="text-xs text-[#8e8ea0] mt-1">{rank.subtitle}</p>
+          <p className="text-xs text-white/60 mt-1">{rank.subtitle}</p>
         </div>
 
         {/* Breakdown of 5 Rounds */}
         <div className="w-full my-4 flex flex-col gap-2">
-          <span className="text-[11px] font-semibold tracking-wider text-[#8e8ea0] uppercase text-left">
+          <span className="text-[11px] font-semibold tracking-wider text-white/50 uppercase text-left">
             Song Breakdown
           </span>
           {roundResults.map((r, idx) => (
             <div
               key={idx}
-              className="flex items-center justify-between p-2.5 rounded-xl bg-[#121218] border border-white/5 text-left text-xs"
+              className="flex items-center justify-between p-2.5 rounded-xl bg-white/10 backdrop-blur-xl border border-white/10 text-left text-xs hover:bg-white/15 transition-all"
             >
               <div className="flex items-center space-x-2.5 overflow-hidden">
                 <img
-                  src={r.song.artwork || 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg'}
+                  src={r.song.artwork || 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-faa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg'}
                   alt={r.song.title}
                   onError={(e) => {
-                    e.currentTarget.src = 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-4fa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg';
+                    e.currentTarget.src = 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-faa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/600x600bb.jpg';
                   }}
-                  className="w-8 h-8 rounded-lg object-cover flex-shrink-0"
+                  className="w-8 h-8 rounded-lg object-cover flex-shrink-0 border border-white/10"
                 />
                 <div className="flex flex-col min-w-0">
                   <span className="font-semibold text-white truncate">{r.song.title}</span>
-                  <span className="text-[#8e8ea0] truncate">{r.song.album}</span>
+                  <span className="text-white/50 truncate text-[11px]">{r.song.album}</span>
                 </div>
               </div>
 
               <div className="flex items-center space-x-2 flex-shrink-0">
-                <span className="font-mono font-bold text-gray-300">
+                <span className="font-mono font-semibold text-white/70">
                   {r.guessed ? (
                     r.unlockedStep === 0 ? '0.10s' : `${r.unlockedStep === 1 ? '0.50s' : `${r.unlockedStep === 2 ? '1.0s' : '3.0s+'}`}`
                   ) : (
                     'Missed'
                   )}
                 </span>
-                <span className={`font-mono font-bold ${r.pointsEarned > 0 ? 'text-white' : 'text-rose-400'}`}>
+                <span className={`font-mono font-bold ${r.pointsEarned > 0 ? 'text-white' : 'text-red-300'}`}>
                   {r.pointsEarned > 0 ? `+${r.pointsEarned.toLocaleString()}` : '0'}
                 </span>
               </div>
@@ -116,12 +116,12 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
         <div className="w-full flex gap-3 mt-2">
           <button
             onClick={handleShare}
-            className="flex-1 h-12 rounded-xl bg-[#22222f] hover:bg-[#2c2c3d] text-white border border-white/10 font-bold text-xs flex items-center justify-center space-x-2 transition-colors cursor-pointer"
+            className="flex-1 h-12 rounded-2xl bg-white/15 hover:bg-white/25 text-white border border-white/20 font-bold text-xs flex items-center justify-center space-x-2 transition-all backdrop-blur-xl cursor-pointer active:scale-95 shadow-sm"
           >
             {copied ? (
               <>
                 <Check size={16} className="text-white" />
-                <span>Copied to Clipboard!</span>
+                <span>Copied!</span>
               </>
             ) : (
               <>
@@ -132,7 +132,7 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
           </button>
           <button
             onClick={onPlayAgain}
-            className="flex-1 h-12 rounded-xl bg-white hover:bg-gray-200 text-black font-bold text-xs flex items-center justify-center space-x-2 transition-all hover:scale-[1.02] cursor-pointer shadow-lg"
+            className="flex-1 h-12 rounded-2xl bg-white hover:bg-white/90 text-black font-bold text-xs flex items-center justify-center space-x-2 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer shadow-[0_8px_24px_rgba(0,0,0,0.35)] border border-white/30"
           >
             <RotateCcw size={15} />
             <span>Play Again</span>
