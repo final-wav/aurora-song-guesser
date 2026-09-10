@@ -24,13 +24,50 @@ import { SettingsModal } from './components/SettingsModal';
 import { LeaderboardModal } from './components/LeaderboardModal';
 import { submitScore } from './utils/leaderboard';
 
+const LAST_DIFFICULTY_KEY = 'aurora_last_difficulty';
+const LAST_MODE_KEY = 'aurora_last_game_mode';
+const VALID_DIFFICULTIES: Difficulty[] = ['easy', 'medium', 'hard', 'expert', 'brutal'];
+
+const getSavedDifficulty = (): Difficulty => {
+  try {
+    const saved = localStorage.getItem(LAST_DIFFICULTY_KEY) as Difficulty;
+    if (saved && VALID_DIFFICULTIES.includes(saved)) {
+      return saved;
+    }
+  } catch {}
+  return 'easy';
+};
+
+const getSavedGameMode = (): GameMode => {
+  try {
+    const saved = localStorage.getItem(LAST_MODE_KEY) as GameMode;
+    if (saved === 'daily' || saved === 'match') {
+      return saved;
+    }
+  } catch {}
+  return 'match';
+};
+
 export const App: React.FC = () => {
-  // Game Setup State
-  const [difficulty, setDifficulty] = useState<Difficulty>('easy');
-  const [gameMode, setGameMode] = useState<GameMode>('match');
+  // Game Setup State (remembering where the player left off)
+  const [difficulty, setDifficulty] = useState<Difficulty>(getSavedDifficulty);
+  const [gameMode, setGameMode] = useState<GameMode>(getSavedGameMode);
   const [playlist, setPlaylist] = useState<Song[]>([]);
   const [currentSongIndex, setCurrentSongIndex] = useState<number>(0);
   const [startOffset, setStartOffset] = useState<number>(0);
+
+  // Persist difficulty & gameMode whenever they change
+  useEffect(() => {
+    try {
+      localStorage.setItem(LAST_DIFFICULTY_KEY, difficulty);
+    } catch {}
+  }, [difficulty]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(LAST_MODE_KEY, gameMode);
+    } catch {}
+  }, [gameMode]);
 
   // Round State
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
