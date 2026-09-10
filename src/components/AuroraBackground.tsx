@@ -1,59 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AURORA_SONGS } from '../data/auroraSongs';
-
-interface AuroraBackgroundProps {
-  activeArtwork?: string;
-}
 
 // Get all unique artwork URLs from catalog
 const ALL_COVER_ARTWORKS: string[] = Array.from(
   new Set(AURORA_SONGS.map((s) => s.artwork).filter(Boolean))
 );
 
-export const AuroraBackground: React.FC<AuroraBackgroundProps> = ({
-  activeArtwork,
-}) => {
-  // Shuffle list so all covers appear with equal frequency
-  const [shuffledList] = useState<string[]>(() => {
-    const list = [...ALL_COVER_ARTWORKS];
-    for (let i = list.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [list[i], list[j]] = [list[j], list[i]];
-    }
-    return list;
-  });
+function shuffleArray(array: string[]): string[] {
+  const list = [...array];
+  for (let i = list.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [list[i], list[j]] = [list[j], list[i]];
+  }
+  return list;
+}
 
-  const [, setCurrentIndex] = useState<number>(0);
-  const [currentCover, setCurrentCover] = useState<string>(
-    activeArtwork || shuffledList[0] || ALL_COVER_ARTWORKS[0]
-  );
+export const AuroraBackground: React.FC = () => {
+  const listRef = useRef<string[]>(shuffleArray(ALL_COVER_ARTWORKS));
+  const indexRef = useRef<number>(0);
+
+  const [currentCover, setCurrentCover] = useState<string>(() => {
+    return listRef.current[0] || ALL_COVER_ARTWORKS[0];
+  });
   const [previousCover, setPreviousCover] = useState<string | null>(null);
 
-  // If activeArtwork changes (e.g. round change), prioritize it
-  useEffect(() => {
-    if (activeArtwork && activeArtwork !== currentCover) {
-      setPreviousCover(currentCover);
-      setCurrentCover(activeArtwork);
-      const timeout = setTimeout(() => setPreviousCover(null), 1000);
-      return () => clearTimeout(timeout);
-    }
-  }, [activeArtwork, currentCover]);
-
-  // Rotate smoothly through all covers every 7 seconds if idle
+  // Rotate smoothly through all covers randomly & independently of current playing song
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIdx) => {
-        const nextIdx = (prevIdx + 1) % shuffledList.length;
-        const nextCover = shuffledList[nextIdx];
-        setPreviousCover(currentCover);
-        setCurrentCover(nextCover);
-        setTimeout(() => setPreviousCover(null), 1000);
-        return nextIdx;
+      indexRef.current += 1;
+      if (indexRef.current >= listRef.current.length) {
+        listRef.current = shuffleArray(ALL_COVER_ARTWORKS);
+        indexRef.current = 0;
+      }
+      const nextCover = listRef.current[indexRef.current] || ALL_COVER_ARTWORKS[0];
+
+      setCurrentCover((prevCurrent) => {
+        setPreviousCover(prevCurrent);
+        setTimeout(() => setPreviousCover(null), 1200);
+        return nextCover;
       });
-    }, 7000);
+    }, 8000);
 
     return () => clearInterval(interval);
-  }, [shuffledList, currentCover]);
+  }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none bg-[#0a0a0e]">
@@ -65,7 +54,7 @@ export const AuroraBackground: React.FC<AuroraBackgroundProps> = ({
         />
       )}
 
-      {/* Current cover layer - clearly visible with soft blur */}
+      {/* Current cover layer - clearly visible with soft blur, purely random */}
       <div
         className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out scale-105 filter blur-[18px] sm:blur-[24px] opacity-85 brightness-95"
         style={{ backgroundImage: `url(${currentCover})` }}

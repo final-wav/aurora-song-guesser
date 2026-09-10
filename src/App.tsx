@@ -273,7 +273,7 @@ export const App: React.FC = () => {
   return (
     <div className="min-h-[100dvh] bg-[#08080c] text-white flex flex-col justify-between relative overflow-x-hidden">
       {/* Clean blurred cover / Aurora backdrop */}
-      <AuroraBackground activeArtwork={currentSong?.artwork} />
+      <AuroraBackground />
 
       {/* Top Header */}
       <div className="relative z-10 w-full">
