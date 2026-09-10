@@ -1,51 +1,80 @@
 import React, { useState, useEffect } from 'react';
+import { AURORA_SONGS } from '../data/auroraSongs';
 
 interface AuroraBackgroundProps {
   activeArtwork?: string;
-  isPlaying?: boolean;
 }
 
-// Curated authentic AURORA album covers and photos
-const AURORA_BACKDROPS = [
-  'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0f/22/02/0f22026c-d2c6-4d0f-faa1-c0ef0be18bfe/24UMGIM27788.rgb.jpg/1200x1200bb.jpg', // What Happened To The Heart?
-  'https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/18/ad/13/18ad13c3-ff24-0b31-45c4-06b9064471cc/0044003184152_Cover.jpg/1200x1200bb.jpg', // All My Demons
-  'https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/ff/e1/62/ffe16290-9d3d-d81e-9270-5bb31d7d3ebc/44003199699.jpg/1200x1200bb.jpg', // Infections Step 1
-  'https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/cc/2d/69/cc2d69d3-61f2-1c69-159c-898bac81cc14/5056167113911.jpg/1200x1200bb.jpg', // Different Kind Step 2
-  'https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/17/ee/5e/17ee5e67-1dcd-beab-a5d4-4845f9dbacbf/5056167167433.jpg/1200x1200bb.jpg', // The Gods We Can Touch
-  'https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b1/9f/df/b19fdfbf-f497-17d6-9328-b1f38343f707/198391418907.jpg/1200x1200bb.jpg', // AURORA Portrait
-  'https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/66/cf/70/66cf7012-98ed-b201-21ed-b1ee0e9ad26f/19UM1IM00155.rgb.jpg/1200x1200bb.jpg', // Into The Unknown
-  'https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/ad/c2/bf/adc2bf81-b51f-642a-2f4a-251f08cb3854/22UMGIM50532.rgb.jpg/1200x1200bb.jpg', // Cure For Me
-];
+// Get all unique artwork URLs from catalog
+const ALL_COVER_ARTWORKS: string[] = Array.from(
+  new Set(AURORA_SONGS.map((s) => s.artwork).filter(Boolean))
+);
 
 export const AuroraBackground: React.FC<AuroraBackgroundProps> = ({
   activeArtwork,
 }) => {
-  const [bgImage, setBgImage] = useState<string>(() => {
-    return activeArtwork || AURORA_BACKDROPS[Math.floor(Math.random() * AURORA_BACKDROPS.length)];
+  // Shuffle list so all covers appear with equal frequency
+  const [shuffledList] = useState<string[]>(() => {
+    const list = [...ALL_COVER_ARTWORKS];
+    for (let i = list.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [list[i], list[j]] = [list[j], list[i]];
+    }
+    return list;
   });
 
+  const [, setCurrentIndex] = useState<number>(0);
+  const [currentCover, setCurrentCover] = useState<string>(
+    activeArtwork || shuffledList[0] || ALL_COVER_ARTWORKS[0]
+  );
+  const [previousCover, setPreviousCover] = useState<string | null>(null);
+
+  // If activeArtwork changes (e.g. round change), prioritize it
   useEffect(() => {
-    if (activeArtwork) {
-      setBgImage(activeArtwork);
+    if (activeArtwork && activeArtwork !== currentCover) {
+      setPreviousCover(currentCover);
+      setCurrentCover(activeArtwork);
+      const timeout = setTimeout(() => setPreviousCover(null), 1000);
+      return () => clearTimeout(timeout);
     }
-  }, [activeArtwork]);
+  }, [activeArtwork, currentCover]);
+
+  // Rotate smoothly through all covers every 7 seconds if idle
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIdx) => {
+        const nextIdx = (prevIdx + 1) % shuffledList.length;
+        const nextCover = shuffledList[nextIdx];
+        setPreviousCover(currentCover);
+        setCurrentCover(nextCover);
+        setTimeout(() => setPreviousCover(null), 1000);
+        return nextIdx;
+      });
+    }, 7000);
+
+    return () => clearInterval(interval);
+  }, [shuffledList, currentCover]);
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none bg-[#0c0c0f]">
-      {/* Blurred Cover / Photo Background */}
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none bg-[#0a0a0e]">
+      {/* Previous cover crossfade layer */}
+      {previousCover && (
+        <div
+          className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out scale-105 filter blur-[18px] sm:blur-[24px] opacity-0 brightness-95"
+          style={{ backgroundImage: `url(${previousCover})` }}
+        />
+      )}
+
+      {/* Current cover layer - clearly visible with soft blur */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out scale-110 filter blur-[45px] sm:blur-[60px] opacity-75 sm:opacity-85"
-        style={{ backgroundImage: `url(${bgImage})` }}
+        className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out scale-105 filter blur-[18px] sm:blur-[24px] opacity-85 brightness-95"
+        style={{ backgroundImage: `url(${currentCover})` }}
       />
 
-      {/* Subtle Dark Vignette Overlay for Readability */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: 'radial-gradient(circle at center, rgba(0,0,0,0.25) 0%, rgba(12,12,15,0.65) 100%)',
-        }}
-      />
+      {/* Soft dark gradient vignette so UI text & controls remain perfectly clear */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-black/60" />
     </div>
   );
 };
+
 
