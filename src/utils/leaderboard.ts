@@ -55,8 +55,8 @@ export function getLeaderboardSync(mode: GameMode = 'daily'): LeaderboardEntry[]
     if (cached) {
       const parsed: LeaderboardEntry[] = JSON.parse(cached);
       if (Array.isArray(parsed)) {
-        // Filter out any legacy dummy seed entries
-        const realOnly = parsed.filter(p => p && !p.id?.startsWith('seed-'));
+        // Filter out any legacy dummy seed entries and anonymous warrior
+        const realOnly = parsed.filter(p => p && !p.id?.startsWith('seed-') && p.username?.toLowerCase() !== 'anonymous warrior');
         realOnly.sort((a, b) => b.score - a.score || (a.unlockedDuration || 30) - (b.unlockedDuration || 30));
         return realOnly;
       }
@@ -130,7 +130,7 @@ export async function fetchLeaderboard(
     if (res.ok) {
       const data = await res.json();
       if (data.leaderboard && Array.isArray(data.leaderboard)) {
-        const realOnly = data.leaderboard.filter((e: LeaderboardEntry) => e && !e.id?.startsWith('seed-'));
+        const realOnly = data.leaderboard.filter((e: LeaderboardEntry) => e && !e.id?.startsWith('seed-') && e.username?.toLowerCase() !== 'anonymous warrior');
         // Cache in localStorage for offline resiliency
         try {
           localStorage.setItem(`${LOCAL_LEADERBOARD_KEY}_${mode}`, JSON.stringify(realOnly));
@@ -156,7 +156,11 @@ export async function submitScore(params: {
   unlockedDuration?: number;
   totalRoundsWon?: number;
 }): Promise<{ success: boolean; rank?: number | null; entry?: LeaderboardEntry }> {
-  const username = params.username || getSavedUsername() || 'Anonymous Warrior';
+  const username = (params.username || getSavedUsername() || '').trim();
+  if (!username || username.toLowerCase() === 'anonymous warrior') {
+    return { success: false };
+  }
+
   const playerId = getPlayerId();
   const payload = {
     playerId,

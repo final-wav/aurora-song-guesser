@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GameMode } from '../utils/gameLogic';
 import { LeaderboardEntry, fetchLeaderboard, getLeaderboardSync, getSavedUsername, saveUsername } from '../utils/leaderboard';
-import { X, Trophy, User, Edit2, Check, Sparkles, Calendar } from 'lucide-react';
+import { X, Trophy, User, Edit2, Sparkles, Calendar } from 'lucide-react';
 
 interface LeaderboardModalProps {
   isOpen: boolean;
@@ -242,31 +242,35 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
         <div className="p-3 sm:p-4 bg-black/40 border-t border-white/10 flex items-center justify-between text-xs">
           <div className="flex items-center space-x-2 flex-1 min-w-0 mr-2">
             <User size={15} className="text-white/60 shrink-0" />
-            {isEditingName ? (
+            {isEditingName || !username ? (
               <div className="flex items-center space-x-1.5 flex-1 min-w-0">
                 <input
                   type="text"
                   value={nameInput}
                   onChange={e => setNameInput(e.target.value)}
                   maxLength={20}
-                  placeholder="Enter username..."
+                  placeholder="Enter your username..."
                   className="bg-white/10 border border-white/20 rounded-lg px-2.5 py-1 text-xs text-white placeholder-white/40 outline-none w-full"
-                  autoFocus
-                  onKeyDown={e => e.key === 'Enter' && handleSaveName()}
+                  autoFocus={!username}
+                  onKeyDown={e => e.key === 'Enter' && nameInput.trim() && handleSaveName()}
                 />
                 <button
                   onClick={handleSaveName}
-                  className="p-1 rounded-lg bg-white text-black font-bold cursor-pointer active:scale-95"
+                  disabled={!nameInput.trim()}
+                  className="px-2.5 py-1 rounded-lg bg-white text-black font-bold cursor-pointer active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  <Check size={14} />
+                  Save
                 </button>
               </div>
             ) : (
               <div className="flex items-center space-x-1.5 truncate">
                 <span className="text-white/60">Player:</span>
-                <strong className="text-white truncate">{username || 'Anonymous Warrior'}</strong>
+                <strong className="text-white truncate">{username}</strong>
                 <button
-                  onClick={() => setIsEditingName(true)}
+                  onClick={() => {
+                    setNameInput(username);
+                    setIsEditingName(true);
+                  }}
                   className="text-white/50 hover:text-white p-1 rounded-md hover:bg-white/10 cursor-pointer transition-colors"
                   title="Edit Player Name"
                 >

@@ -22,7 +22,7 @@ import { GameCompleteModal } from './components/GameCompleteModal';
 import { StatsModal } from './components/StatsModal';
 import { SettingsModal } from './components/SettingsModal';
 import { LeaderboardModal } from './components/LeaderboardModal';
-import { submitScore, fetchLeaderboard } from './utils/leaderboard';
+import { submitScore, fetchLeaderboard, getSavedUsername } from './utils/leaderboard';
 
 const LAST_DIFFICULTY_KEY = 'aurora_last_difficulty';
 const LAST_MODE_KEY = 'aurora_last_game_mode';
@@ -266,14 +266,18 @@ export const App: React.FC = () => {
       setIsLastGuessCorrect(true);
       setIsRoundModalOpen(true);
 
-      // Auto-submit daily score if daily mode
+      // Auto-submit daily score if daily mode and username is set
       if (gameMode === 'daily') {
-        submitScore({
-          score: points,
-          mode: 'daily',
-          unlockedDuration: interval.duration,
-          totalRoundsWon: 1,
-        });
+        const savedUser = getSavedUsername();
+        if (savedUser && savedUser.toLowerCase() !== 'anonymous warrior') {
+          submitScore({
+            username: savedUser,
+            score: points,
+            mode: 'daily',
+            unlockedDuration: interval.duration,
+            totalRoundsWon: 1,
+          });
+        }
       }
     } else {
       // Wrong guess
@@ -302,14 +306,18 @@ export const App: React.FC = () => {
         setIsLastGuessCorrect(false);
         setIsRoundModalOpen(true);
 
-        // Auto-submit daily score (0 pts) if daily mode
+        // Auto-submit daily score (0 pts) if daily mode and username is set
         if (gameMode === 'daily') {
-          submitScore({
-            score: 0,
-            mode: 'daily',
-            unlockedDuration: 30.0,
-            totalRoundsWon: 0,
-          });
+          const savedUser = getSavedUsername();
+          if (savedUser && savedUser.toLowerCase() !== 'anonymous warrior') {
+            submitScore({
+              username: savedUser,
+              score: 0,
+              mode: 'daily',
+              unlockedDuration: 30.0,
+              totalRoundsWon: 0,
+            });
+          }
         }
       }
     }
@@ -338,14 +346,18 @@ export const App: React.FC = () => {
       setUserStats(updatedStats);
       setIsGameCompleteModalOpen(true);
 
-      // Submit match score to leaderboard
+      // Submit match score to leaderboard if username is set
       if (gameMode === 'match') {
-        submitScore({
-          score: matchScore,
-          mode: 'match',
-          difficulty: difficulty,
-          totalRoundsWon: wonCount,
-        });
+        const savedUser = getSavedUsername();
+        if (savedUser && savedUser.toLowerCase() !== 'anonymous warrior') {
+          submitScore({
+            username: savedUser,
+            score: matchScore,
+            mode: 'match',
+            difficulty: difficulty,
+            totalRoundsWon: wonCount,
+          });
+        }
       }
     }
   };
@@ -449,6 +461,7 @@ export const App: React.FC = () => {
         roundResults={roundResults}
         difficulty={difficulty}
         gameMode={gameMode}
+        unlockedDuration={roundResults[0]?.unlockedStep !== undefined ? STEP_INTERVALS[roundResults[0].unlockedStep]?.duration : 30.0}
         onPlayAgain={() => initGame(difficulty, gameMode)}
         onOpenLeaderboard={() => {
           setLeaderboardInitialMode(gameMode);

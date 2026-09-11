@@ -55,7 +55,7 @@ export default {
         if (env.LEADERBOARD_KV) {
           const cached = await env.LEADERBOARD_KV.get(storageKey, 'json');
           if (cached && Array.isArray(cached)) {
-            scores = cached.filter((s: ScoreEntry) => s && !s.id?.startsWith('seed-'));
+            scores = cached.filter((s: ScoreEntry) => s && !s.id?.startsWith('seed-') && s.username?.toLowerCase() !== 'anonymous warrior');
           }
         }
 
@@ -93,7 +93,14 @@ export default {
         if (body.action === 'rename') {
           const playerId = (body.playerId || '').toString().trim();
           const rawUsername = (body.username || '').toString().trim();
-          const newUsername = rawUsername.replace(/[^\w\s-]/gi, '').slice(0, 20) || 'Anonymous Warrior';
+          const newUsername = rawUsername.replace(/[^\w\s-]/gi, '').slice(0, 20);
+          if (!newUsername || newUsername.toLowerCase() === 'anonymous warrior') {
+            return new Response(JSON.stringify({ success: false, error: 'Valid username is required' }), {
+              status: 400,
+              headers: CORS_HEADERS,
+            });
+          }
+
           const targetDate = (body.date || new Date().toISOString().split('T')[0]).slice(0, 10);
           const previousEntryId = (body.previousEntryId || '').toString().trim();
 
@@ -124,9 +131,17 @@ export default {
 
         // Action: Normal Score Submission
         const playerId = (body.playerId || '').toString().trim();
-        const rawUsername = (body.username || 'Anonymous Warrior').toString().trim();
-        const username = rawUsername.replace(/[^\w\s-]/gi, '').slice(0, 20) || 'Anonymous Warrior';
-        const isAnonymous = username.toLowerCase() === 'anonymous warrior';
+        const rawUsername = (body.username || '').toString().trim();
+        const username = rawUsername.replace(/[^\w\s-]/gi, '').slice(0, 20);
+
+        // Username is strictly required
+        if (!username || username.toLowerCase() === 'anonymous warrior') {
+          return new Response(JSON.stringify({ success: false, error: 'Username is required to submit score' }), {
+            status: 400,
+            headers: CORS_HEADERS,
+          });
+        }
+
         const score = Math.max(0, Math.min(50000, Number(body.score) || 0));
         const mode = body.mode === 'daily' ? 'daily' : 'match';
         const difficulty = body.difficulty || 'easy';
@@ -166,10 +181,10 @@ export default {
           if (playerId && e.playerId && e.playerId === playerId) {
             return e.score > score; // Keep existing only if it was strictly higher
           }
-          if (!isAnonymous && e.username.toLowerCase() === username.toLowerCase()) {
+          if (e.username && e.username.toLowerCase() === username.toLowerCase()) {
             return e.score > score; // Keep existing named user only if strictly higher
           }
-          return true; // Keep all other entries (including other anonymous players)
+          return true;
         });
 
         // Add and sort scores
