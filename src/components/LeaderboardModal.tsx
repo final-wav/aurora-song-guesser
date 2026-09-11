@@ -124,8 +124,8 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                 <Trophy size={24} />
               </div>
               <div className="space-y-1">
-                <p className="text-sm font-semibold text-white/80">Noch keine Einträge vorhanden</p>
-                <p className="text-xs text-white/40">Spiele jetzt eine Runde und sichere dir Platz #1!</p>
+                <p className="text-sm font-semibold text-white/80">No scores recorded yet</p>
+                <p className="text-xs text-white/40">Play a round now to claim #1 on the leaderboard!</p>
               </div>
             </div>
           )}
