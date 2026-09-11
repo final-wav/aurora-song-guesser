@@ -40,7 +40,12 @@ export function getPlayerId(): string {
  */
 export function getSavedUsername(): string {
   try {
-    return localStorage.getItem(USERNAME_KEY) || '';
+    const val = localStorage.getItem(USERNAME_KEY);
+    if (!val || val.trim().toLowerCase() === 'anonymous warrior') {
+      localStorage.removeItem(USERNAME_KEY);
+      return '';
+    }
+    return val;
   } catch {
     return '';
   }
