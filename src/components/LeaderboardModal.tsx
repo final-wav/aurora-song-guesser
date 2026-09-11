@@ -35,7 +35,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
   const loadScores = async (mode: GameMode) => {
     try {
       const data = await fetchLeaderboard(mode);
-      if (data && data.length > 0) {
+      if (Array.isArray(data)) {
         setEntries(data);
       }
     } catch {
@@ -117,62 +117,81 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
 
         {/* Scrollable Leaderboard Area */}
         <div className="p-4 sm:p-5 overflow-y-auto flex-1 space-y-4 touch-pan-y overscroll-contain">
+          {/* Empty State */}
+          {entries.length === 0 && (
+            <div className="flex flex-col items-center justify-center py-16 text-white/50 space-y-3">
+              <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40">
+                <Trophy size={24} />
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm font-semibold text-white/80">Noch keine Einträge vorhanden</p>
+                <p className="text-xs text-white/40">Spiele jetzt eine Runde und sichere dir Platz #1!</p>
+              </div>
+            </div>
+          )}
+
           {/* Top 3 Podium Cards */}
           {top3.length > 0 && (
-            <div className="grid grid-cols-3 gap-2 pt-2 pb-1">
+            <div className="grid grid-cols-3 gap-2 pt-2 pb-1 items-end">
               {/* 2nd Place */}
-              {top3[1] && (
-                <div className="h-[105px] flex flex-col items-center justify-center p-2 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 relative mt-3 shadow-sm">
-                  <div className="w-6 h-6 rounded-full bg-slate-300 text-black font-extrabold text-[11px] flex items-center justify-center absolute -top-3 shadow-md">
-                    2
+              <div className="col-start-1">
+                {top3[1] ? (
+                  <div className="h-[105px] flex flex-col items-center justify-center p-2 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 relative shadow-sm">
+                    <div className="w-6 h-6 rounded-full bg-slate-300 text-black font-extrabold text-[11px] flex items-center justify-center absolute -top-3 shadow-md">
+                      2
+                    </div>
+                    <span className="text-[11px] font-bold text-white truncate max-w-[80px] mt-1">
+                      {top3[1].username}
+                    </span>
+                    <span className="text-xs font-extrabold text-white font-mono mt-0.5">
+                      {top3[1].score.toLocaleString()}
+                    </span>
+                    <span className="text-[9px] text-white/50 font-mono">
+                      {activeTab === 'daily' ? `${top3[1].unlockedDuration}s` : (top3[1].difficulty?.toUpperCase() || '5 RND')}
+                    </span>
                   </div>
-                  <span className="text-[11px] font-bold text-white truncate max-w-[80px] mt-1">
-                    {top3[1].username}
-                  </span>
-                  <span className="text-xs font-extrabold text-white font-mono mt-0.5">
-                    {top3[1].score.toLocaleString()}
-                  </span>
-                  <span className="text-[9px] text-white/50 font-mono">
-                    {activeTab === 'daily' ? `${top3[1].unlockedDuration}s` : (top3[1].difficulty?.toUpperCase() || '5 RND')}
-                  </span>
-                </div>
-              )}
+                ) : <div />}
+              </div>
 
               {/* 1st Place (Center / Taller) */}
-              {top3[0] && (
-                <div className="h-[118px] flex flex-col items-center justify-center p-2.5 rounded-2xl bg-white/15 backdrop-blur-xl border border-white/30 relative shadow-lg">
-                  <div className="w-7 h-7 rounded-full bg-amber-300 text-black font-extrabold text-xs flex items-center justify-center absolute -top-3.5 shadow-md ring-2 ring-amber-300/40">
-                    👑
+              <div className="col-start-2">
+                {top3[0] && (
+                  <div className="h-[118px] flex flex-col items-center justify-center p-2.5 rounded-2xl bg-white/15 backdrop-blur-xl border border-white/30 relative shadow-lg">
+                    <div className="w-7 h-7 rounded-full bg-amber-300 text-black font-extrabold text-xs flex items-center justify-center absolute -top-3.5 shadow-md ring-2 ring-amber-300/40">
+                      👑
+                    </div>
+                    <span className="text-xs font-extrabold text-white truncate max-w-[90px] mt-1.5">
+                      {top3[0].username}
+                    </span>
+                    <span className="text-sm font-extrabold text-white font-mono mt-0.5">
+                      {top3[0].score.toLocaleString()}
+                    </span>
+                    <span className="text-[10px] text-amber-200/80 font-mono font-semibold">
+                      {activeTab === 'daily' ? `${top3[0].unlockedDuration}s` : (top3[0].difficulty?.toUpperCase() || 'CHAMPION')}
+                    </span>
                   </div>
-                  <span className="text-xs font-extrabold text-white truncate max-w-[90px] mt-1.5">
-                    {top3[0].username}
-                  </span>
-                  <span className="text-sm font-extrabold text-white font-mono mt-0.5">
-                    {top3[0].score.toLocaleString()}
-                  </span>
-                  <span className="text-[10px] text-amber-200/80 font-mono font-semibold">
-                    {activeTab === 'daily' ? `${top3[0].unlockedDuration}s` : (top3[0].difficulty?.toUpperCase() || 'CHAMPION')}
-                  </span>
-                </div>
-              )}
+                )}
+              </div>
 
               {/* 3rd Place */}
-              {top3[2] && (
-                <div className="h-[105px] flex flex-col items-center justify-center p-2 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 relative mt-3 shadow-sm">
-                  <div className="w-6 h-6 rounded-full bg-amber-700 text-white font-extrabold text-[11px] flex items-center justify-center absolute -top-3 shadow-md">
-                    3
+              <div className="col-start-3">
+                {top3[2] ? (
+                  <div className="h-[105px] flex flex-col items-center justify-center p-2 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 relative shadow-sm">
+                    <div className="w-6 h-6 rounded-full bg-amber-700 text-white font-extrabold text-[11px] flex items-center justify-center absolute -top-3 shadow-md">
+                      3
+                    </div>
+                    <span className="text-[11px] font-bold text-white truncate max-w-[80px] mt-1">
+                      {top3[2].username}
+                    </span>
+                    <span className="text-xs font-extrabold text-white font-mono mt-0.5">
+                      {top3[2].score.toLocaleString()}
+                    </span>
+                    <span className="text-[9px] text-white/50 font-mono">
+                      {activeTab === 'daily' ? `${top3[2].unlockedDuration}s` : (top3[2].difficulty?.toUpperCase() || '5 RND')}
+                    </span>
                   </div>
-                  <span className="text-[11px] font-bold text-white truncate max-w-[80px] mt-1">
-                    {top3[2].username}
-                  </span>
-                  <span className="text-xs font-extrabold text-white font-mono mt-0.5">
-                    {top3[2].score.toLocaleString()}
-                  </span>
-                  <span className="text-[9px] text-white/50 font-mono">
-                    {activeTab === 'daily' ? `${top3[2].unlockedDuration}s` : (top3[2].difficulty?.toUpperCase() || '5 RND')}
-                  </span>
-                </div>
-              )}
+                ) : <div />}
+              </div>
             </div>
           )}
 
