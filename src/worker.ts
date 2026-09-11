@@ -26,6 +26,7 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   'Content-Type': 'application/json',
+  'Cache-Control': 'no-store, no-cache, must-revalidate',
 };
 
 
@@ -70,7 +71,7 @@ export default {
           date,
           difficulty,
           count: filteredScores.length,
-          leaderboard: filteredScores.slice(0, 50),
+          leaderboard: filteredScores,
         }), {
           status: 200,
           headers: CORS_HEADERS,
@@ -182,8 +183,8 @@ export default {
           return b.timestamp - a.timestamp;
         });
 
-        // Keep top 100
-        const trimmed = currentScores.slice(0, 100);
+        // Keep top 1000
+        const trimmed = currentScores.slice(0, 1000);
 
         // Find user rank
         const rank = trimmed.findIndex(e => e.id === newEntry.id) + 1;
@@ -197,7 +198,7 @@ export default {
           success: true,
           rank: rank > 0 ? rank : null,
           entry: newEntry,
-          leaderboard: trimmed.slice(0, 50),
+          leaderboard: trimmed,
         }), {
           status: 200,
           headers: CORS_HEADERS,

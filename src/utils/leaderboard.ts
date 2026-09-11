@@ -58,7 +58,7 @@ export function getLeaderboardSync(mode: GameMode = 'daily'): LeaderboardEntry[]
         // Filter out any legacy dummy seed entries
         const realOnly = parsed.filter(p => p && !p.id?.startsWith('seed-'));
         realOnly.sort((a, b) => b.score - a.score || (a.unlockedDuration || 30) - (b.unlockedDuration || 30));
-        return realOnly.slice(0, 50);
+        return realOnly;
       }
     }
   } catch {}
@@ -123,10 +123,10 @@ export async function fetchLeaderboard(
   dateStr?: string
 ): Promise<LeaderboardEntry[]> {
   const targetDate = dateStr || new Date().toISOString().split('T')[0];
-  const url = `${API_BASE_URL}/api/leaderboard?mode=${mode}&difficulty=${difficulty}&date=${targetDate}`;
+  const url = `${API_BASE_URL}/api/leaderboard?mode=${mode}&difficulty=${difficulty}&date=${targetDate}&_t=${Date.now()}`;
 
   try {
-    const res = await fetch(url, { headers: { Accept: 'application/json' } });
+    const res = await fetch(url, { headers: { Accept: 'application/json' }, cache: 'no-store' });
     if (res.ok) {
       const data = await res.json();
       if (data.leaderboard && Array.isArray(data.leaderboard)) {
@@ -214,9 +214,8 @@ export async function submitScore(params: {
     const existing = currentList.filter(e => !(e.username.toLowerCase() === username.toLowerCase() && e.score <= params.score));
     existing.push(localEntry);
     existing.sort((a, b) => b.score - a.score || (a.unlockedDuration || 30) - (b.unlockedDuration || 30));
-    const finalTop = existing.slice(0, 50);
-    localStorage.setItem(key, JSON.stringify(finalTop));
-    const rank = finalTop.findIndex(e => e.id === localEntry.id) + 1;
+    localStorage.setItem(key, JSON.stringify(existing));
+    const rank = existing.findIndex(e => e.id === localEntry.id) + 1;
     return { success: true, rank, entry: localEntry };
   } catch {
     return { success: true, rank: 1, entry: localEntry };

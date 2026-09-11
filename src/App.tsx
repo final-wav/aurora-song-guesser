@@ -22,7 +22,7 @@ import { GameCompleteModal } from './components/GameCompleteModal';
 import { StatsModal } from './components/StatsModal';
 import { SettingsModal } from './components/SettingsModal';
 import { LeaderboardModal } from './components/LeaderboardModal';
-import { submitScore } from './utils/leaderboard';
+import { submitScore, fetchLeaderboard } from './utils/leaderboard';
 
 const LAST_DIFFICULTY_KEY = 'aurora_last_difficulty';
 const LAST_MODE_KEY = 'aurora_last_game_mode';
@@ -139,6 +139,12 @@ export const App: React.FC = () => {
   useEffect(() => {
     initGame(difficulty, gameMode);
   }, [difficulty, gameMode, initGame]);
+
+  // Prefetch live global leaderboards on initial load
+  useEffect(() => {
+    fetchLeaderboard('daily').catch(() => {});
+    fetchLeaderboard('match').catch(() => {});
+  }, []);
 
   // Load and decode audio buffer whenever current song changes
   useEffect(() => {
