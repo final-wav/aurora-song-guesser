@@ -14,6 +14,7 @@ export interface LeaderboardEntry {
 
 const USERNAME_KEY = 'aurora_player_username';
 const LOCAL_LEADERBOARD_KEY = 'aurora_cached_leaderboard';
+const API_BASE_URL = 'https://aurora-song-guesser.hakan-dadayli.workers.dev';
 
 // Default / fallback rich community leaderboard (15+ real-looking community entries per mode)
 const SEEDED_SCORES: LeaderboardEntry[] = [
@@ -128,7 +129,7 @@ export async function fetchLeaderboard(
   dateStr?: string
 ): Promise<LeaderboardEntry[]> {
   const targetDate = dateStr || new Date().toISOString().split('T')[0];
-  const url = `/api/leaderboard?mode=${mode}&difficulty=${difficulty}&date=${targetDate}`;
+  const url = `${API_BASE_URL}/api/leaderboard?mode=${mode}&difficulty=${difficulty}&date=${targetDate}`;
 
   try {
     const res = await fetch(url, { headers: { Accept: 'application/json' } });
@@ -172,7 +173,7 @@ export async function submitScore(params: {
   };
 
   try {
-    const res = await fetch('/api/score', {
+    const res = await fetch(`${API_BASE_URL}/api/score`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),

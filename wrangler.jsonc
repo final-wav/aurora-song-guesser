@@ -8,6 +8,12 @@
     "binding": "ASSETS",
     "not_found_handling": "single-page-application"
   },
+  "kv_namespaces": [
+    {
+      "binding": "LEADERBOARD_KV",
+      "id": "57267448142f47b185c84ff82adb3289"
+    }
+  ],
   "observability": {
     "enabled": true
   }
