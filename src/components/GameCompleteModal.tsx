@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Difficulty, GameMode, RoundResult, getRankTitle, generateShareText } from '../utils/gameLogic';
 import { Trophy, Share2, RotateCcw, Check, Sparkles, Edit2 } from 'lucide-react';
-import { getSavedUsername, saveUsername } from '../utils/leaderboard';
+import { getSavedUsername, saveUsername, submitScore } from '../utils/leaderboard';
 import confetti from 'canvas-confetti';
 
 interface GameCompleteModalProps {
@@ -98,6 +98,13 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
                       const saved = saveUsername(nameInput);
                       setUsername(saved || 'Anonymous Warrior');
                       setIsEditingName(false);
+                      submitScore({
+                        username: saved || 'Anonymous Warrior',
+                        score: finalScore,
+                        mode: gameMode,
+                        difficulty: difficulty,
+                        totalRoundsWon: roundResults.filter((r) => r.guessed).length,
+                      }).catch(() => {});
                     }
                   }}
                   className="bg-white/10 border border-white/20 rounded-lg px-2 py-0.5 text-xs text-white outline-none w-full"
@@ -107,6 +114,13 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
                     const saved = saveUsername(nameInput);
                     setUsername(saved || 'Anonymous Warrior');
                     setIsEditingName(false);
+                    submitScore({
+                      username: saved || 'Anonymous Warrior',
+                      score: finalScore,
+                      mode: gameMode,
+                      difficulty: difficulty,
+                      totalRoundsWon: roundResults.filter((r) => r.guessed).length,
+                    }).catch(() => {});
                   }}
                   className="p-1 rounded-lg bg-white text-black font-bold cursor-pointer active:scale-95 text-[10px]"
                 >

@@ -2,6 +2,7 @@ import { Difficulty, GameMode } from './gameLogic';
 
 export interface LeaderboardEntry {
   id: string;
+  playerId?: string;
   username: string;
   score: number;
   mode: GameMode;
@@ -13,9 +14,26 @@ export interface LeaderboardEntry {
 }
 
 const USERNAME_KEY = 'aurora_player_username';
+const PLAYER_ID_KEY = 'aurora_player_uid';
+const LAST_ENTRY_ID_KEY = 'aurora_last_score_id';
 const LOCAL_LEADERBOARD_KEY = 'aurora_cached_leaderboard';
 const API_BASE_URL = 'https://aurora-song-guesser.hakan-dadayli.workers.dev';
 
+/**
+ * Get or generate persistent unique player ID for this device
+ */
+export function getPlayerId(): string {
+  try {
+    let id = localStorage.getItem(PLAYER_ID_KEY);
+    if (!id) {
+      id = `usr_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+      localStorage.setItem(PLAYER_ID_KEY, id);
+    }
+    return id;
+  } catch {
+    return `usr_${Date.now()}`;
+  }
+}
 
 /**
  * Get saved player username
@@ -48,13 +66,16 @@ export function getLeaderboardSync(mode: GameMode = 'daily'): LeaderboardEntry[]
 }
 
 /**
- * Save player username
+ * Save player username and immediately sync name update with Cloudflare backend
  */
 export function saveUsername(name: string): string {
   const clean = name.trim().replace(/[^\w\s-]/gi, '').slice(0, 20);
   try {
     if (clean) {
       localStorage.setItem(USERNAME_KEY, clean);
+      const playerId = getPlayerId();
+      const lastEntryId = localStorage.getItem(LAST_ENTRY_ID_KEY) || undefined;
+
       // Update any local player scores in cache with the new username
       ['daily', 'match'].forEach(mode => {
         const key = `${LOCAL_LEADERBOARD_KEY}_${mode}`;
@@ -63,7 +84,7 @@ export function saveUsername(name: string): string {
           const list: LeaderboardEntry[] = JSON.parse(raw);
           let modified = false;
           list.forEach(e => {
-            if (e.id.startsWith('local-') || e.username === 'Anonymous Warrior') {
+            if (e.playerId === playerId || (lastEntryId && e.id === lastEntryId) || e.id.startsWith('local-') || e.username === 'Anonymous Warrior') {
               e.username = clean;
               modified = true;
             }
@@ -73,6 +94,19 @@ export function saveUsername(name: string): string {
           }
         }
       });
+
+      // Synchronize rename with Cloudflare Worker live
+      fetch(`${API_BASE_URL}/api/score`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'rename',
+          playerId,
+          previousEntryId: lastEntryId,
+          username: clean,
+          date: new Date().toISOString().split('T')[0],
+        }),
+      }).catch(() => {});
     } else {
       localStorage.removeItem(USERNAME_KEY);
     }
@@ -123,7 +157,9 @@ export async function submitScore(params: {
   totalRoundsWon?: number;
 }): Promise<{ success: boolean; rank?: number | null; entry?: LeaderboardEntry }> {
   const username = params.username || getSavedUsername() || 'Anonymous Warrior';
+  const playerId = getPlayerId();
   const payload = {
+    playerId,
     username,
     score: params.score,
     mode: params.mode,
@@ -142,6 +178,11 @@ export async function submitScore(params: {
 
     if (res.ok) {
       const data = await res.json();
+      if (data.entry?.id) {
+        try {
+          localStorage.setItem(LAST_ENTRY_ID_KEY, data.entry.id);
+        } catch {}
+      }
       return {
         success: true,
         rank: data.rank,
@@ -155,6 +196,7 @@ export async function submitScore(params: {
   // Fallback optimistic local record
   const localEntry: LeaderboardEntry = {
     id: `local-${Date.now()}`,
+    playerId,
     username,
     score: params.score,
     mode: params.mode,

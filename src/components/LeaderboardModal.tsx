@@ -54,6 +54,9 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
     const saved = saveUsername(nameInput);
     setUsername(saved);
     setIsEditingName(false);
+    setTimeout(() => {
+      loadScores(activeTab);
+    }, 250);
   };
 
   if (!isOpen) return null;

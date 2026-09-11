@@ -1,5 +1,6 @@
 export interface ScoreEntry {
   id: string;
+  playerId?: string;
   username: string;
   score: number;
   mode: 'daily' | 'match';
@@ -82,12 +83,49 @@ export default {
       }
     }
 
-    // API: Submit Score
+    // API: Submit Score & Rename
     if (url.pathname === '/api/score' && request.method === 'POST') {
       try {
-        const body = await request.json() as Partial<ScoreEntry>;
+        const body = await request.json() as any;
+
+        // Action: Rename existing player's scores
+        if (body.action === 'rename') {
+          const playerId = (body.playerId || '').toString().trim();
+          const rawUsername = (body.username || '').toString().trim();
+          const newUsername = rawUsername.replace(/[^\w\s-]/gi, '').slice(0, 20) || 'Anonymous Warrior';
+          const targetDate = (body.date || new Date().toISOString().split('T')[0]).slice(0, 10);
+          const previousEntryId = (body.previousEntryId || '').toString().trim();
+
+          if (env.LEADERBOARD_KV && (playerId || previousEntryId)) {
+            const keysToUpdate = [`leaderboard:daily:${targetDate}`, `leaderboard:match`];
+            for (const key of keysToUpdate) {
+              const cached = await env.LEADERBOARD_KV.get(key, 'json');
+              if (Array.isArray(cached) && cached.length > 0) {
+                let modified = false;
+                cached.forEach((e: ScoreEntry) => {
+                  if ((playerId && e.playerId === playerId) || (previousEntryId && e.id === previousEntryId)) {
+                    e.username = newUsername;
+                    modified = true;
+                  }
+                });
+                if (modified) {
+                  await env.LEADERBOARD_KV.put(key, JSON.stringify(cached), { expirationTtl: 86400 * 30 });
+                }
+              }
+            }
+          }
+
+          return new Response(JSON.stringify({ success: true, username: newUsername }), {
+            status: 200,
+            headers: CORS_HEADERS,
+          });
+        }
+
+        // Action: Normal Score Submission
+        const playerId = (body.playerId || '').toString().trim();
         const rawUsername = (body.username || 'Anonymous Warrior').toString().trim();
         const username = rawUsername.replace(/[^\w\s-]/gi, '').slice(0, 20) || 'Anonymous Warrior';
+        const isAnonymous = username.toLowerCase() === 'anonymous warrior';
         const score = Math.max(0, Math.min(50000, Number(body.score) || 0));
         const mode = body.mode === 'daily' ? 'daily' : 'match';
         const difficulty = body.difficulty || 'easy';
@@ -98,6 +136,7 @@ export default {
 
         const newEntry: ScoreEntry = {
           id: `score-${timestamp}-${Math.random().toString(36).slice(2, 7)}`,
+          playerId: playerId || undefined,
           username,
           score,
           mode,
@@ -113,13 +152,24 @@ export default {
         let currentScores: ScoreEntry[] = [];
         if (env.LEADERBOARD_KV) {
           const cached = await env.LEADERBOARD_KV.get(storageKey, 'json');
-          if (cached && Array.isArray(cached)) {
+          if (Array.isArray(cached)) {
             currentScores = cached.filter((s: ScoreEntry) => s && !s.id?.startsWith('seed-'));
           }
         }
 
-        // Filter out previous lower score from same user if existing
-        currentScores = currentScores.filter(e => !(e.username.toLowerCase() === username.toLowerCase() && e.score <= score));
+        // Deduplication rules:
+        // 1. If this device has a playerId, replace this player's own previous score if newScore >= oldScore
+        // 2. If a custom username was used (not Anonymous Warrior), replace only if newScore >= oldScore
+        // 3. Different Anonymous Warriors must NEVER overwrite each other!
+        currentScores = currentScores.filter(e => {
+          if (playerId && e.playerId && e.playerId === playerId) {
+            return e.score > score; // Keep existing only if it was strictly higher
+          }
+          if (!isAnonymous && e.username.toLowerCase() === username.toLowerCase()) {
+            return e.score > score; // Keep existing named user only if strictly higher
+          }
+          return true; // Keep all other entries (including other anonymous players)
+        });
 
         // Add and sort scores
         currentScores.push(newEntry);
