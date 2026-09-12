@@ -10,9 +10,11 @@ import {
 } from './utils/gameLogic';
 import { Song, AURORA_SONGS } from './data/auroraSongs';
 import { audioEngine } from './utils/audioEngine';
-import { loadUserStats, saveGameMatchResult, recordGuessStep, UserStats } from './utils/stats';
+import { loadUserStats, saveGameMatchResult, recordGuessStep, recordDailyResult, getTodayDailyResult, UserStats } from './utils/stats';
 
 import { Header } from './components/Header';
+import { GameModeSelector } from './components/GameModeSelector';
+import { DailyCompletedView } from './components/DailyCompletedView';
 import { AuroraBackground } from './components/AuroraBackground';
 import { AudioWaveform } from './components/AudioWaveform';
 import { PlayerControls } from './components/PlayerControls';
@@ -93,6 +95,7 @@ export const App: React.FC = () => {
   const [isLeaderboardOpen, setIsLeaderboardOpen] = useState<boolean>(false);
   const [leaderboardInitialMode, setLeaderboardInitialMode] = useState<GameMode>('daily');
   const [userStats, setUserStats] = useState<UserStats>(loadUserStats());
+  const [todayDailyResult, setTodayDailyResult] = useState<{ score: number; won: boolean } | null>(() => getTodayDailyResult());
 
   const currentSong: Song | undefined = playlist[currentSongIndex];
   const totalRounds = gameMode === 'daily' ? 1 : 5;
@@ -236,6 +239,22 @@ export const App: React.FC = () => {
     setRoundResults((prev) => [...prev, result]);
     setIsLastGuessCorrect(false);
     setIsRoundModalOpen(true);
+
+    if (gameMode === 'daily') {
+      const updated = recordDailyResult(0, false);
+      setUserStats(updated);
+      setTodayDailyResult(getTodayDailyResult());
+      const savedUser = getSavedUsername();
+      if (savedUser && savedUser.toLowerCase() !== 'anonymous warrior') {
+        submitScore({
+          username: savedUser,
+          score: 0,
+          mode: 'daily',
+          unlockedDuration: 30.0,
+          totalRoundsWon: 0,
+        });
+      }
+    }
   };
 
   // Handle user selecting a song guess
@@ -268,6 +287,9 @@ export const App: React.FC = () => {
 
       // Auto-submit daily score if daily mode and username is set
       if (gameMode === 'daily') {
+        const updated = recordDailyResult(points, true);
+        setUserStats(updated);
+        setTodayDailyResult(getTodayDailyResult());
         const savedUser = getSavedUsername();
         if (savedUser && savedUser.toLowerCase() !== 'anonymous warrior') {
           submitScore({
@@ -308,6 +330,9 @@ export const App: React.FC = () => {
 
         // Auto-submit daily score (0 pts) if daily mode and username is set
         if (gameMode === 'daily') {
+          const updated = recordDailyResult(0, false);
+          setUserStats(updated);
+          setTodayDailyResult(getTodayDailyResult());
           const savedUser = getSavedUsername();
           if (savedUser && savedUser.toLowerCase() !== 'anonymous warrior') {
             submitScore({
@@ -378,10 +403,6 @@ export const App: React.FC = () => {
             initGame(diff, gameMode);
           }}
           gameMode={gameMode}
-          onSelectGameMode={(mode) => {
-            setGameMode(mode);
-            initGame(difficulty, mode);
-          }}
           currentScore={matchScore}
           maxPossibleScore={maxPossibleScore}
           currentRound={currentSongIndex + 1}
@@ -396,37 +417,65 @@ export const App: React.FC = () => {
         />
       </div>
 
+      {/* Dedicated Mode Selector Bar (Daily vs 5-Round) */}
+      <div className="relative z-10 w-full mt-1 sm:mt-2">
+        <GameModeSelector
+          gameMode={gameMode}
+          onSelectMode={(mode) => {
+            if (mode === gameMode) return;
+            setGameMode(mode);
+            initGame(difficulty, mode);
+          }}
+          isDailyCompletedToday={!!todayDailyResult}
+        />
+      </div>
+
       {/* Main Interactive Stage */}
       <main className="relative z-30 flex-1 flex flex-col items-center justify-center py-2 sm:py-6 px-2 sm:px-4 pb-16 sm:pb-20 w-full max-w-2xl mx-auto">
-        <div className="w-full glass-panel border border-white/10 rounded-2xl sm:rounded-3xl p-3 sm:p-7 shadow-[0_24px_60px_rgba(0,0,0,0.7)] backdrop-blur-2xl flex flex-col items-center">
-          {/* Audio Waveform Scrubber */}
-          <AudioWaveform
-            unlockedDuration={currentInterval.duration}
-            totalMaxDuration={30.0}
-            playbackProgressRatio={playbackRatio}
-            isPlaying={isPlaying}
-            peaks={peaks}
-            startOffset={startOffset}
+        {gameMode === 'daily' && todayDailyResult ? (
+          <DailyCompletedView
+            score={todayDailyResult.score}
+            won={todayDailyResult.won}
+            onPlayMatch={() => {
+              setGameMode('match');
+              initGame(difficulty, 'match');
+            }}
+            onOpenLeaderboard={() => {
+              setLeaderboardInitialMode('daily');
+              setIsLeaderboardOpen(true);
+            }}
           />
+        ) : (
+          <div className="w-full glass-panel border border-white/10 rounded-2xl sm:rounded-3xl p-3 sm:p-7 shadow-[0_24px_60px_rgba(0,0,0,0.7)] backdrop-blur-2xl flex flex-col items-center">
+            {/* Audio Waveform Scrubber */}
+            <AudioWaveform
+              unlockedDuration={currentInterval.duration}
+              totalMaxDuration={30.0}
+              playbackProgressRatio={playbackRatio}
+              isPlaying={isPlaying}
+              peaks={peaks}
+              startOffset={startOffset}
+            />
 
-          {/* Player Controls (Pills, Play/Stop Button, +1s, Skip) */}
-          <PlayerControls
-            currentStepIndex={currentStepIndex}
-            onPlaySnippet={handlePlaySnippet}
-            onStopSnippet={handleStopSnippet}
-            onUnlockNextStep={handleUnlockNextStep}
-            onSkipRound={handleSkipRound}
-            isPlaying={isPlaying}
-            isLoadingAudio={isLoadingAudio}
-          />
+            {/* Player Controls (Pills, Play/Stop Button, +1s, Skip) */}
+            <PlayerControls
+              currentStepIndex={currentStepIndex}
+              onPlaySnippet={handlePlaySnippet}
+              onStopSnippet={handleStopSnippet}
+              onUnlockNextStep={handleUnlockNextStep}
+              onSkipRound={handleSkipRound}
+              isPlaying={isPlaying}
+              isLoadingAudio={isLoadingAudio}
+            />
 
-          {/* Real-time Song Search & Autocomplete Dropdown */}
-          <SongSearch
-            onSelectSong={handleSelectSong}
-            wrongGuesses={wrongGuesses}
-            disabled={isRoundModalOpen || isGameCompleteModalOpen}
-          />
-        </div>
+            {/* Real-time Song Search & Autocomplete Dropdown */}
+            <SongSearch
+              onSelectSong={handleSelectSong}
+              wrongGuesses={wrongGuesses}
+              disabled={isRoundModalOpen || isGameCompleteModalOpen}
+            />
+          </div>
+        )}
       </main>
 
       {/* Footer Branding & Track Count */}
@@ -466,6 +515,10 @@ export const App: React.FC = () => {
         onOpenLeaderboard={() => {
           setLeaderboardInitialMode(gameMode);
           setIsLeaderboardOpen(true);
+        }}
+        onSwitchMode={(mode) => {
+          setGameMode(mode);
+          initGame(difficulty, mode);
         }}
       />
 

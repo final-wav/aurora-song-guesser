@@ -14,6 +14,7 @@ interface GameCompleteModalProps {
   unlockedDuration?: number;
   onPlayAgain: () => void;
   onOpenLeaderboard?: () => void;
+  onSwitchMode?: (mode: GameMode) => void;
 }
 
 export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
@@ -26,6 +27,7 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
   unlockedDuration,
   onPlayAgain,
   onOpenLeaderboard,
+  onSwitchMode,
 }) => {
   const [copied, setCopied] = useState(false);
   const [username, setUsername] = useState<string>(() => {
@@ -260,13 +262,28 @@ export const GameCompleteModal: React.FC<GameCompleteModalProps> = ({
             )}
           </button>
 
-          <button
-            onClick={onPlayAgain}
-            className="w-full sm:flex-1 h-12 rounded-2xl bg-white hover:bg-white/90 text-black font-bold text-xs flex items-center justify-center space-x-2 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer shadow-[0_8px_24px_rgba(0,0,0,0.35)] border border-white/30"
-          >
-            <RotateCcw size={15} />
-            <span>Play Again</span>
-          </button>
+          {gameMode === 'daily' ? (
+            <button
+              onClick={() => {
+                if (onSwitchMode) {
+                  onSwitchMode('match');
+                } else {
+                  onPlayAgain();
+                }
+              }}
+              className="w-full sm:flex-1 h-12 rounded-2xl bg-white hover:bg-white/90 text-black font-bold text-xs flex items-center justify-center space-x-2 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer shadow-[0_8px_24px_rgba(0,0,0,0.35)] border border-white/30"
+            >
+              <span>Play 5-Round Match</span>
+            </button>
+          ) : (
+            <button
+              onClick={onPlayAgain}
+              className="w-full sm:flex-1 h-12 rounded-2xl bg-white hover:bg-white/90 text-black font-bold text-xs flex items-center justify-center space-x-2 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer shadow-[0_8px_24px_rgba(0,0,0,0.35)] border border-white/30"
+            >
+              <RotateCcw size={15} />
+              <span>Play Again</span>
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -71,3 +71,41 @@ export function recordGuessStep(stepIndex: number) {
     console.warn('Could not update guess distribution', e);
   }
 }
+
+export function recordDailyResult(score: number, won: boolean, dateStr?: string): UserStats {
+  const stats = loadUserStats();
+  const date = dateStr || new Date().toISOString().split('T')[0];
+  if (!stats.dailyCompleted) {
+    stats.dailyCompleted = {};
+  }
+  stats.dailyCompleted[date] = { score, won };
+  stats.gamesPlayed += 1;
+  if (won) {
+    stats.gamesWon += 1;
+    stats.currentStreak += 1;
+    if (stats.currentStreak > stats.maxStreak) {
+      stats.maxStreak = stats.currentStreak;
+    }
+  } else {
+    stats.currentStreak = 0;
+  }
+  stats.totalScore += score;
+  if (score > stats.highScore) {
+    stats.highScore = score;
+  }
+  stats.lastPlayedDate = date;
+
+  try {
+    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+  } catch (e) {
+    console.warn('Could not save daily stats', e);
+  }
+  return stats;
+}
+
+export function getTodayDailyResult(dateStr?: string): { score: number; won: boolean } | null {
+  const stats = loadUserStats();
+  const date = dateStr || new Date().toISOString().split('T')[0];
+  return stats.dailyCompleted?.[date] || null;
+}
+
