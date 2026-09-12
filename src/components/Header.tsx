@@ -1,10 +1,8 @@
 import React from 'react';
-import { Difficulty, GameMode } from '../utils/gameLogic';
+import { GameMode } from '../utils/gameLogic';
 import { BarChart3, Settings2, RotateCcw, Trophy } from 'lucide-react';
 
 interface HeaderProps {
-  difficulty: Difficulty;
-  onSelectDifficulty: (diff: Difficulty) => void;
   gameMode: GameMode;
   currentScore: number;
   maxPossibleScore: number;
@@ -16,17 +14,7 @@ interface HeaderProps {
   onOpenLeaderboard: () => void;
 }
 
-const DIFFICULTIES: { key: Difficulty; label: string }[] = [
-  { key: 'easy', label: 'EASY' },
-  { key: 'medium', label: 'MEDIUM' },
-  { key: 'hard', label: 'HARD' },
-  { key: 'expert', label: 'EXPERT' },
-  { key: 'brutal', label: 'BRUTAL' },
-];
-
 export const Header: React.FC<HeaderProps> = ({
-  difficulty,
-  onSelectDifficulty,
   gameMode,
   currentScore,
   maxPossibleScore,
@@ -38,29 +26,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenLeaderboard,
 }) => {
   return (
-    <header className="w-full max-w-2xl mx-auto pt-3 sm:pt-4 pb-2 px-3 sm:px-4 select-none">
-      {/* Top Difficulty Navigation Tabs */}
-      <div className="flex items-center justify-between border-b border-white/10 pb-2 text-xs font-semibold tracking-wider text-[#8e8ea0]">
-        <div className="flex items-center space-x-3 sm:space-x-7 overflow-x-auto no-scrollbar py-1 touch-pan-x flex-1 min-w-0">
-          {DIFFICULTIES.map(d => {
-            const isActive = difficulty === d.key;
-            return (
-              <button
-                key={d.key}
-                onClick={() => onSelectDifficulty(d.key)}
-                className={`transition-colors duration-200 relative pb-1 whitespace-nowrap cursor-pointer text-[11px] sm:text-xs shrink-0 active:scale-95 ${
-                  isActive ? 'text-white font-bold' : 'hover:text-gray-300 text-gray-400'
-                }`}
-              >
-                {d.label}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-white rounded-full" />
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+    <header className="w-full max-w-2xl mx-auto pt-3 sm:pt-4 pb-1 px-3 sm:px-4 select-none">
 
       {/* Subheader Status: Score, Round, Actions */}
       <div className="flex items-center justify-between mt-3 sm:mt-4 text-sm gap-2">

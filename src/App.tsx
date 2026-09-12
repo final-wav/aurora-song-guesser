@@ -397,11 +397,6 @@ export const App: React.FC = () => {
       {/* Top Header */}
       <div className="relative z-10 w-full">
         <Header
-          difficulty={difficulty}
-          onSelectDifficulty={(diff) => {
-            setDifficulty(diff);
-            initGame(diff, gameMode);
-          }}
           gameMode={gameMode}
           currentScore={matchScore}
           maxPossibleScore={maxPossibleScore}
@@ -417,7 +412,7 @@ export const App: React.FC = () => {
         />
       </div>
 
-      {/* Dedicated Mode Selector Bar (Daily vs 5-Round) */}
+      {/* Dedicated Mode Selector Bar (Daily vs 5-Round) & Difficulties */}
       <div className="relative z-10 w-full mt-1 sm:mt-2">
         <GameModeSelector
           gameMode={gameMode}
@@ -425,6 +420,11 @@ export const App: React.FC = () => {
             if (mode === gameMode) return;
             setGameMode(mode);
             initGame(difficulty, mode);
+          }}
+          difficulty={difficulty}
+          onSelectDifficulty={(diff) => {
+            setDifficulty(diff);
+            initGame(diff, gameMode);
           }}
           isDailyCompletedToday={!!todayDailyResult}
         />
